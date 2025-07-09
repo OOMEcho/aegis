@@ -13,7 +13,7 @@
     <version>1.0.0</version>
     <name>aegis</name>
     <description>通用后台系统基座</description>
-    <url>https://github.com/your-org/your-project</url>
+    <url>https://github.com/OOMEcho/aegis.git</url>
 
     <licenses>
         <license>
@@ -32,10 +32,10 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git://github.com/your-org/your-project.git</connection>
-        <developerConnection>scm:git:ssh://git@github.com:your-org/your-project.git</developerConnection>
+        <connection>scm:git:git://github.com/OOMEcho/aegis.git</connection>
+        <developerConnection>scm:git:ssh://git@github.com:OOMEcho/aegis.git</developerConnection>
         <tag>HEAD</tag>
-        <url>https://github.com/your-org/your-project</url>
+        <url>https://github.com/OOMEcho/aegis.git</url>
     </scm>
 
     <properties>
