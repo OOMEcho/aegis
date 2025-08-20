@@ -1,0 +1,53 @@
+spring:
+  application:
+    name: aegis # 应用名称
+  servlet:
+    multipart:
+      max-file-size: 100MB # 上传文件大小限制
+      max-request-size: 100MB # 上传文件总大小限制
+  redis:
+    host: 127.0.0.1 # 地址
+    port: 6379 # 端口
+    password: aegis # 密码
+    database: 0 # Redis数据库索引
+    lettuce:
+      pool: # Redis连接池配置
+        max-idle: 16 # 连接池中的最大空闲连接
+        min-idle: 8 # 连接池中的最小空闲连接
+        max-active: 32 # 最大连接数
+  datasource: # 数据库配置
+    url: jdbc:mysql:///aegis?serverTimezone=Asia/Shanghai&useSSL=false # 连接地址
+    username: root # 账号
+    password: aegis # 密码
+    driver-class-name: com.mysql.cj.jdbc.Driver # 驱动
+    hikari:
+      # 连接池核心配置
+      minimum-idle: 10           # 最小空闲连接数，保持一定连接数量减少延迟
+      maximum-pool-size: 50      # 最大连接数，根据业务并发调整
+      idle-timeout: 600000       # 空闲连接最大存活时间 10 分钟
+      max-lifetime: 1800000      # 连接最大生命周期 30 分钟，避免 MySQL 超时
+      connection-timeout: 30000  # 获取连接超时时间 30 秒
+      pool-name: HikariPool-Prod # 连接池名字，便于监控
+      # 测试连接有效性
+      validation-timeout: 5000   # 验证连接的超时时间
+      leak-detection-threshold: 20000 # 连接泄漏检测阈值 20 秒
+      connection-test-query: SELECT 1 # 检查连接是否可用的 SQL
+
+mybatis-plus:
+  mapper-locations: classpath*:com/aegis/modules/**/mapper/*Mapper.xml # 映射xml文件
+  configuration:
+    map-underscore-to-camel-case: true # 下划线转驼峰
+  global-config:
+    banner: false
+    db-config:
+      id-type: ASSIGN_ID
+      logic-delete-field: deleted # 全局逻辑删除字段名
+      logic-delete-value: 1 # 逻辑已删除值。可选，默认值为 1
+      logic-not-delete-value: 0 # 逻辑未删除值。可选，默认值为 0
+      table-prefix: t_   # 可选表前缀
+
+logging:
+  file:
+    path: ./logs # 日志路径
+  level:
+    com.aegis: DEBUG
