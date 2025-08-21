@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aegis.modules.log.mapper.SysOperateLogMapper">
+
+    <resultMap id="BaseResultMap" type="com.aegis.modules.log.domain.entity.SysOperateLog">
+        <id property="id" column="id"/>
+        <result property="moduleTitle" column="module_title"/>
+        <result property="businessType" column="business_type"/>
+        <result property="requestUrl" column="request_url"/>
+        <result property="requestIp" column="request_ip"/>
+        <result property="requestLocal" column="request_local"/>
+        <result property="requestType" column="request_type"/>
+        <result property="requestMethod" column="request_method"/>
+        <result property="requestArgs" column="request_args"/>
+        <result property="responseResult" column="response_result"/>
+        <result property="errorMessage" column="error_message"/>
+        <result property="operateUser" column="operate_user"/>
+        <result property="operateTime" column="operate_time"/>
+        <result property="operateStatus" column="operate_status"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,module_title,business_type,request_url,request_ip,request_local,
+        request_type,request_method,request_args,response_result,error_message,
+        operate_user,operate_time,operate_status
+    </sql>
+</mapper>

@@ -1,7 +1,11 @@
 package com.aegis.common.log;
 
-
+import com.aegis.common.ip2region.Ip2regionService;
+import com.aegis.common.listener.LogEventPublish;
+import com.aegis.modules.log.domain.entity.SysOperateLog;
 import com.aegis.utils.IpUtils;
+import com.aegis.utils.JacksonUtils;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
@@ -29,6 +33,8 @@ import java.util.Date;
 public class WebLogAspect {
 
     private final LogEventPublish logEventPublish;
+
+    private final Ip2regionService ip2regionService;
 
     private static final ThreadLocal<Object[]> initialArgsHolder = new ThreadLocal<>();
 
@@ -59,18 +65,19 @@ public class WebLogAspect {
         sysOperateLog.setBusinessType(operationLog.businessType().ordinal());
         sysOperateLog.setRequestUrl(request.getRequestURI());
         sysOperateLog.setRequestIp(ip);
-        sysOperateLog.setRequestLocal(AddressUtils.getRealAddressByIp(ip));
+        sysOperateLog.setRequestLocal(ip2regionService.getRegion(ip));
         sysOperateLog.setRequestType(request.getMethod());
         sysOperateLog.setRequestMethod(joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
-        sysOperateLog.setRequestArgs(JSONUtil.toJsonStr(initialArgsHolder.get()));
-        sysOperateLog.setOperateUser(SecurityUtils.getUsername());
+        sysOperateLog.setRequestArgs(JacksonUtils.toJson(initialArgsHolder.get()));
+        // TODO 获取当前登录用户
+        sysOperateLog.setOperateUser(null);
         sysOperateLog.setOperateTime(new Date());
         if (e != null) {
             sysOperateLog.setErrorMessage(e.getMessage());
             sysOperateLog.setOperateStatus("1");
         }
-        if (BeanUtil.isNotEmpty(result)) {
-            sysOperateLog.setResponseResult(JSONUtil.toJsonStr(result));
+        if (ObjectUtils.isNotEmpty(result)) {
+            sysOperateLog.setResponseResult(JacksonUtils.toJson(result));
         }
         logEventPublish.publishEvent(sysOperateLog);
     }
