@@ -2,7 +2,7 @@ package com.aegis.common.result;
 
 /**
  * @Author: xuesong.lei
- * @Date: 2022/11/18 19:00
+ * @Date: 2025/08/21 13:08
  * @Description: 提供自定义异常所需的方法
  */
 public interface ResultCodeInterface {

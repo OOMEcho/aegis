@@ -2,7 +2,7 @@ package com.aegis.common.result;
 
 /**
  * @Author: xuesong.lei
- * @Date: 2022/11/15 11:32
+ * @Date: 2025/08/21 13:08
  * @Description: 状态码枚举
  */
 public enum ResultCodeEnum implements ResultCodeInterface {
