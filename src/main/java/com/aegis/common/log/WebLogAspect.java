@@ -19,7 +19,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * @Author: xuesong.lei
@@ -71,7 +71,7 @@ public class WebLogAspect {
         sysOperateLog.setRequestArgs(JacksonUtils.toJson(initialArgsHolder.get()));
         // TODO 获取当前登录用户
         sysOperateLog.setOperateUser(null);
-        sysOperateLog.setOperateTime(new Date());
+        sysOperateLog.setOperateTime(LocalDateTime.now());
         if (e != null) {
             sysOperateLog.setErrorMessage(e.getMessage());
             sysOperateLog.setOperateStatus("1");
