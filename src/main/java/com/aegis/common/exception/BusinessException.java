@@ -13,9 +13,15 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class BusinessException extends RuntimeException {
 
-    private Integer code = ResultCodeEnum.ERROR.getCode();
+    private Integer code;
 
     private String message;
+
+    public BusinessException(Integer code, String message) {
+        super(message);
+        this.code = code;
+        this.message = message;
+    }
 
     public BusinessException(ResultCodeEnum resultCodeEnum) {
         super(resultCodeEnum.getMessage());
@@ -25,7 +31,19 @@ public class BusinessException extends RuntimeException {
 
     public BusinessException(String message) {
         super(message);
+        this.code = ResultCodeEnum.ERROR.getCode();
         this.message = message;
     }
 
+    public static BusinessException of(ResultCodeEnum resultCodeEnum) {
+        return new BusinessException(resultCodeEnum);
+    }
+
+    public static BusinessException of(String message) {
+        return new BusinessException(message);
+    }
+
+    public static BusinessException of(Integer code, String message) {
+        return new BusinessException(code, message);
+    }
 }

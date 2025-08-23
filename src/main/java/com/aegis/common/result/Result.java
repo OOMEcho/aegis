@@ -14,7 +14,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Result<T> implements Serializable {
 
-    private static final long serialVersionUID = 6738387175874422264L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * 状态码
@@ -59,18 +59,6 @@ public class Result<T> implements Serializable {
     }
 
     public static <T> Result<T> success(ResultCodeEnum resultCodeEnum, T data) {
-        return new Result<>(resultCodeEnum, data);
-    }
-
-    public static <T> Result<T> failure() {
-        return new Result<>(ResultCodeEnum.ERROR, null);
-    }
-
-    public static <T> Result<T> failure(ResultCodeEnum resultCodeEnum) {
-        return new Result<>(resultCodeEnum, null);
-    }
-
-    public static <T> Result<T> failure(ResultCodeEnum resultCodeEnum, T data) {
         return new Result<>(resultCodeEnum, data);
     }
 

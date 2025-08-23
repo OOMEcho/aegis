@@ -1,18 +1,20 @@
 package com.aegis.common.result;
 
+import lombok.Getter;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025/08/21 13:08
  * @Description: 状态码枚举
  */
-public enum ResultCodeEnum implements ResultCodeInterface {
+@Getter
+public enum ResultCodeEnum {
 
-    // 成功
     SUCCESS(200, "成功"),
+    BAD_REQUEST(400, "请求参数错误"),
     NOT_LOGGED_IN(401, "用户未登录或登录过期"),
-    // 当前没有权限访问
     LACK_OF_AUTHORITY(403, "当前没有权限访问"),
-    // 出错
+    NOT_FOUND(404, "请求资源不存在"),
     ERROR(500, "系统异常,请稍后重试"),
     ;
 
@@ -23,15 +25,5 @@ public enum ResultCodeEnum implements ResultCodeInterface {
     ResultCodeEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
-    }
-
-    @Override
-    public Integer getCode() {
-        return code;
-    }
-
-    @Override
-    public String getMessage() {
-        return message;
     }
 }
