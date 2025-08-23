@@ -20,10 +20,20 @@ public @interface RepeatSubmit {
     /**
      * 防重复操作限时标记数值
      */
-    String value() default "submit duplication";
+    String message() default "请勿重复提交";
 
     /**
-     * 防重复操作过期时间(ms)
+     * 防重复操作过期时间(秒)
      */
     long expireSeconds() default 60;
+
+    /**
+     * 是否包含用户信息到key中
+     */
+    boolean includeUser() default true;
+
+    /**
+     * 自定义key前缀
+     */
+    String keyPrefix() default "repeat_submit";
 }

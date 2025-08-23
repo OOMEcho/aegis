@@ -1,9 +1,11 @@
 package com.aegis.common.repeat;
 
 import com.aegis.common.exception.BusinessException;
+import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.JacksonUtils;
 import com.aegis.utils.RedisUtils;
+import com.aegis.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -18,7 +20,9 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -40,37 +44,142 @@ public class RepeatSubmitAspect {
     }
 
     @Around("pointcut()")
-    public Object around(ProceedingJoinPoint joinPoint) {
-        HttpServletRequest request = getRequest();
-        Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
-        RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
-        String url = request.getRequestURI();
-        String ip = IpUtils.getIpAddr(request);
-        String redisKey = url.concat(ip).concat(getMethodSign(method, joinPoint.getArgs()));
-        if (!redisUtils.hasKey(redisKey)) {
-            redisUtils.set(redisKey, annotation.value(), annotation.expireSeconds(), TimeUnit.SECONDS);
-            try {
+    public Object around(ProceedingJoinPoint joinPoint) throws Throwable {
+        try {
+            HttpServletRequest request = getRequest();
+            if (request == null) {
+                log.warn("无法获取HTTP请求，跳过防重复检查");
                 return joinPoint.proceed();
-            } catch (Throwable e) {
-                redisUtils.delete(redisKey);
-                throw new RuntimeException(e.getMessage());
             }
-        } else {
-            throw new BusinessException("请勿重复提交");
+
+            Method method = ((MethodSignature) joinPoint.getSignature()).getMethod();
+            RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
+
+            String redisKey = buildRedisKey(request, method, annotation, joinPoint.getArgs());
+
+            // 检查是否重复提交
+            if (isRepeatSubmit(redisKey)) {
+                throw new BusinessException(annotation.message());
+            }
+
+            // 设置防重复标记
+            setRepeatFlag(redisKey, annotation);
+
+            try {
+                // 执行原方法
+                return joinPoint.proceed();
+            } catch (BusinessException e) {
+                // 业务异常不清理缓存，避免恶意重试
+                throw e;
+            } catch (Exception e) {
+                // 系统异常清理缓存，允许重试
+                clearRepeatFlag(redisKey);
+                throw e;
+            }
+
+        } catch (BusinessException e) {
+            throw e;
+        } catch (Exception e) {
+            log.error("防重复提交检查异常", e);
+            // Redis异常时不影响业务执行
+            return joinPoint.proceed();
         }
     }
 
     /**
-     * 生成方法标记：采用数字签名算法SHA1对方法签名字符串加签
+     * 构建Redis键
      */
-    private String getMethodSign(Method method, Object... args) {
-        StringBuilder sb = new StringBuilder(method.toString());
-        for (Object arg : args) {
-            sb.append(toString(arg));
+    private String buildRedisKey(HttpServletRequest request, Method method, RepeatSubmit annotation, Object[] args) {
+        StringBuilder keyBuilder = new StringBuilder();
+        keyBuilder.append(annotation.keyPrefix()).append(":");
+
+        // URL
+        keyBuilder.append(request.getRequestURI()).append(":");
+
+        // IP地址
+        String ip = IpUtils.getIpAddr(request);
+        keyBuilder.append(ip).append(":");
+
+        // 用户信息（如果需要）
+        if (annotation.includeUser()) {
+            try {
+                String username = SecurityUtils.getUsername();
+                if (username != null) {
+                    keyBuilder.append(username).append(":");
+                }
+            } catch (Exception e) {
+                log.debug("获取用户ID失败，使用会话ID", e);
+                String sessionId = request.getSession(false) != null ?
+                        request.getSession().getId() : "anonymous";
+                keyBuilder.append(sessionId).append(":");
+            }
         }
-        return sha1Hex(sb.toString());
+
+        // 方法签名
+        keyBuilder.append(getMethodSign(method, args));
+
+        return keyBuilder.toString();
     }
 
+    /**
+     * 检查是否重复提交
+     */
+    private boolean isRepeatSubmit(String redisKey) {
+        try {
+            return redisUtils.hasKey(redisKey);
+        } catch (Exception e) {
+            log.error("检查重复提交状态失败: {}", redisKey, e);
+            // Redis异常时放行，避免影响业务
+            return false;
+        }
+    }
+
+    /**
+     * 设置防重复标记
+     */
+    private void setRepeatFlag(String redisKey, RepeatSubmit annotation) {
+        try {
+            redisUtils.set(redisKey, System.currentTimeMillis(),
+                    annotation.expireSeconds(), TimeUnit.SECONDS);
+        } catch (Exception e) {
+            log.error("设置防重复标记失败: {}", redisKey, e);
+            // 设置失败时抛出异常，避免防重复失效
+            throw BusinessException.of(ResultCodeEnum.ERROR);
+        }
+    }
+
+    /**
+     * 清理防重复标记
+     */
+    private void clearRepeatFlag(String redisKey) {
+        try {
+            redisUtils.delete(redisKey);
+        } catch (Exception e) {
+            log.error("清理防重复标记失败: {}", redisKey, e);
+            // 清理失败不影响主流程
+        }
+    }
+
+    /**
+     * 生成方法签名：采用SHA-256算法
+     */
+    private String getMethodSign(Method method, Object... args) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(method.getDeclaringClass().getName())
+                .append("#")
+                .append(method.getName());
+
+        // 添加参数
+        for (Object arg : args) {
+            sb.append("#").append(toString(arg));
+        }
+
+        return sha256Hex(sb.toString());
+    }
+
+    /**
+     * 对象转字符串
+     */
     private String toString(Object arg) {
         if (Objects.isNull(arg)) {
             return "null";
@@ -78,31 +187,52 @@ public class RepeatSubmitAspect {
         if (arg instanceof Number) {
             return arg.toString();
         }
-        return JacksonUtils.toJson(arg);
+        try {
+            return JacksonUtils.toJson(arg);
+        } catch (Exception e) {
+            return arg.toString();
+        }
     }
 
+    /**
+     * 获取请求属性
+     */
     private ServletRequestAttributes getRequestAttributes() {
         RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
         return (ServletRequestAttributes) attributes;
     }
 
+    /**
+     * 获取HTTP请求
+     */
     private HttpServletRequest getRequest() {
-        return getRequestAttributes().getRequest();
+        try {
+            ServletRequestAttributes attributes = getRequestAttributes();
+            return attributes != null ? attributes.getRequest() : null;
+        } catch (Exception e) {
+            log.debug("获取HTTP请求失败", e);
+            return null;
+        }
     }
 
-    private String sha1Hex(String data) {
+    /**
+     * SHA-256加密
+     */
+    private String sha256Hex(String data) {
         try {
-            MessageDigest md = MessageDigest.getInstance("SHA-1");
-            byte[] digest = md.digest(data.getBytes());
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] digest = md.digest(data.getBytes(StandardCharsets.UTF_8));
             StringBuilder hex = new StringBuilder();
             for (byte b : digest) {
                 String h = Integer.toHexString(0xff & b);
-                if (h.length() == 1) hex.append('0');
+                if (h.length() == 1) {
+                    hex.append('0');
+                }
                 hex.append(h);
             }
             return hex.toString();
-        } catch (Exception e) {
-            throw new BusinessException("SHA1计算失败");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("SHA-256算法不可用", e);
         }
     }
 }
