@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+/**
+ * @Author: xuesong.lei
+ * @Date: 2025/08/23 18:08
+ * @Description: Mybatis-Plus 自动填充配置
+ */
 @Slf4j
 @Component
 public class MPMetaObjectHandler implements MetaObjectHandler {
