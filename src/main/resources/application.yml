@@ -59,6 +59,12 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值。可选，默认值为 1
       logic-not-delete-value: 0 # 逻辑未删除值。可选，默认值为 0
 
+minio: # MinIO配置
+  endpoint: http://127.0.0.1:9000 # 地址(需要改成你的MinIO地址)
+  accessKey: aegis # 账号(需要改成你的MinIO账号)
+  secretKey: aegis # 密码(需要改成你的MinIO密码)
+  bucketName: aegis # 存储桶名称(需要改成你的存储桶名称)
+
 logging:
   file:
     path: ./logs # 日志路径
