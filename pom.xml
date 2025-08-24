@@ -43,6 +43,7 @@
         <mybatis-plus.version>3.5.12</mybatis-plus.version>
         <mapstruct.version>1.6.3</mapstruct.version>
         <ip2region.version>2.7.0</ip2region.version>
+        <minio.version>8.5.17</minio.version>
     </properties>
 
     <dependencies>
@@ -93,6 +94,11 @@
             <groupId>org.lionsoul</groupId>
             <artifactId>ip2region</artifactId>
             <version>${ip2region.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>${minio.version}</version>
         </dependency>
         <dependency>
             <groupId>com.mysql</groupId>
