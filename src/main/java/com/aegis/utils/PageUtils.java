@@ -20,7 +20,11 @@ import java.util.stream.Collectors;
  * @Date: 2025/08/23 18:08
  * @Description: 分页工具类
  */
-public class PageUtils {
+public final class PageUtils {
+
+    private PageUtils() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
 
     /**
      * 设置分页参数 - 基础版本

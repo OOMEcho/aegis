@@ -11,12 +11,16 @@ import java.net.UnknownHostException;
  * @Date: 2025/08/20 12:25
  * @Description: Ip工具类
  */
-public class IpUtils {
+public final class IpUtils {
 
     /**
      * 未知
      */
     public static final String UNKNOWN = "unknown";
+
+    private IpUtils() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
 
     /**
      * 获取客户端IP

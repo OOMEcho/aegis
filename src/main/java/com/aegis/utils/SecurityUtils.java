@@ -8,7 +8,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
  * @Date: 2025/08/22 14:20
  * @Description: Security工具类
  */
-public class SecurityUtils {
+public final class SecurityUtils {
+
+    private SecurityUtils() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
 
     public static String getUsername() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

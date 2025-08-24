@@ -1,14 +1,14 @@
 spring:
   application:
     name: aegis # 应用名称
-  servlet:
+  servlet: # 文件上传配置
     multipart:
       max-file-size: 100MB # 上传文件大小限制
       max-request-size: 100MB # 上传文件总大小限制
-  redis:
-    host: 127.0.0.1 # 地址
+  redis: # Redis配置
+    host: 127.0.0.1 # 地址(需要改成你的Redis地址)
     port: 6379 # 端口
-    password: aegis # 密码
+    password: aegis # 密码(需要改成你的Redis密码)
     database: 1 # Redis数据库索引
     lettuce:
       pool: # Redis连接池配置
@@ -16,9 +16,9 @@ spring:
         min-idle: 8 # 连接池中的最小空闲连接
         max-active: 32 # 最大连接数
   datasource: # 数据库配置
-    url: jdbc:mysql:///aegis?serverTimezone=Asia/Shanghai&useSSL=false # 连接地址
-    username: root # 账号
-    password: aegis # 密码
+    url: jdbc:mysql://127.0.0.1/aegis?serverTimezone=Asia/Shanghai&useSSL=false # 连接地址(需要改成你的MySQL地址)
+    username: root # 账号(需要改成你的MySQL账号)
+    password: aegis # 密码(需要改成你的MySQL密码)
     driver-class-name: com.mysql.cj.jdbc.Driver # 驱动
     hikari:
       # 连接池核心配置
@@ -32,6 +32,20 @@ spring:
       validation-timeout: 5000   # 验证连接的超时时间
       leak-detection-threshold: 20000 # 连接泄漏检测阈值 20 秒
       connection-test-query: SELECT 1 # 检查连接是否可用的 SQL
+  mail: # 邮件配置
+    host: smtp.163.com # 协议服务器地址(需要改成你的邮箱的SMTP服务器地址)
+    port: 25 # 端口
+    protocol: smtp # 协议
+    default-encoding: UTF-8 # 编码
+    username: aegis_system@163.com # 账号(需要改成你的邮箱账号)
+    password: aegis # 授权码(需要改成你的邮箱授权码)
+  freemarker: # freemarker配置
+    cache: false # 开发环境设置为false，生产环境设置为true
+    charset: UTF-8 # 文件编码
+    check-template-location: true # 检查模板位置
+    content-type: text/html # 内容类型
+    suffix: .ftl # 模版后缀名 默认为ftl
+    template-loader-path: classpath:/templates/ # 邮件模板路径
 
 mybatis-plus:
   mapper-locations: classpath*:com/aegis/modules/**/mapper/*Mapper.xml # 映射xml文件

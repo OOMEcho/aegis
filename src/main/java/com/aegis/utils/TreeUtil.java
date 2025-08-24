@@ -12,7 +12,11 @@ import java.util.stream.Collectors;
  * @Date: 2025/08/20 15:24
  * @Description: 树形工具类
  */
-public class TreeUtil {
+public final class TreeUtil {
+
+    private TreeUtil() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
 
     /**
      * 构建树

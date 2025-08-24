@@ -9,7 +9,11 @@ import java.time.temporal.ChronoUnit;
  * @Date: 2025/08/20 14:28
  * @Description: 时间工具类
  */
-public class DateUtils {
+public final class DateUtils {
+
+    private DateUtils() {
+        throw new UnsupportedOperationException("Utility class cannot be instantiated");
+    }
 
     // 获取当前日期
     public static LocalDate getCurrentDate() {
