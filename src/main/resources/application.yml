@@ -16,7 +16,7 @@ spring:
         min-idle: 8 # 连接池中的最小空闲连接
         max-active: 32 # 最大连接数
   datasource: # 数据库配置
-    url: jdbc:mysql://127.0.0.1/aegis?serverTimezone=Asia/Shanghai&useSSL=false # 连接地址(需要改成你的MySQL地址)
+    url: jdbc:mysql://127.0.0.1:3306/aegis?serverTimezone=Asia/Shanghai&useSSL=false # 连接地址(需要改成你的MySQL地址)
     username: root # 账号(需要改成你的MySQL账号)
     password: aegis # 密码(需要改成你的MySQL密码)
     driver-class-name: com.mysql.cj.jdbc.Driver # 驱动
