@@ -18,7 +18,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 @RequiredArgsConstructor
-public class RedisUtils {
+public final class RedisUtils {
 
     private final StringRedisTemplate redisTemplate;
 

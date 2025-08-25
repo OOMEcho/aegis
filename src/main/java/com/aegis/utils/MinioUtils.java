@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
  * @Description: MinIO工具类
  */
 @Slf4j
-public class MinioUtils {
+public final class MinioUtils {
 
     private static MinioClient minioClient;
 
@@ -37,9 +37,6 @@ public class MinioUtils {
     private static final String FILE_FOLDER = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
     private static final String SEPARATOR = "/";
-
-    private MinioUtils() {
-    }
 
     public MinioUtils(String endpoint, String bucketName, String accessKey, String secretKey) {
         MinioUtils.endpoint = endpoint;

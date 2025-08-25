@@ -30,7 +30,7 @@ public class MyBatisPlusTests {
     @Test
     void testSysOperateLogMapper() {
         LambdaQueryWrapper<SysOperateLog> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(SysOperateLog::getId, 1L);
+        queryWrapper.select(SysOperateLog::getId, SysOperateLog::getOperateTime,SysOperateLog::getOperateStatus).like(SysOperateLog::getId, 1L);
         PageVO<SysOperateLog> paging = PageUtils.setPage(1, 10, "id", "desc").paging(sysOperateLogMapper, queryWrapper);
         System.out.println(paging);
     }

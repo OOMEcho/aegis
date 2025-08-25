@@ -29,7 +29,7 @@ import java.util.Map;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class EmailUtils {
+public final class EmailUtils {
 
     private final JavaMailSender mailSender;
 
