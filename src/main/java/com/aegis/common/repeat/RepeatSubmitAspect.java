@@ -1,9 +1,10 @@
 package com.aegis.common.repeat;
 
+import cn.hutool.crypto.digest.DigestUtil;
+import cn.hutool.json.JSONUtil;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.utils.IpUtils;
-import com.aegis.utils.JacksonUtils;
 import com.aegis.utils.RedisUtils;
 import com.aegis.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -174,7 +172,7 @@ public class RepeatSubmitAspect {
             sb.append("#").append(toString(arg));
         }
 
-        return sha256Hex(sb.toString());
+        return DigestUtil.sha256Hex(sb.toString());
     }
 
     /**
@@ -188,7 +186,7 @@ public class RepeatSubmitAspect {
             return arg.toString();
         }
         try {
-            return JacksonUtils.toJson(arg);
+            return JSONUtil.toJsonStr(arg);
         } catch (Exception e) {
             return arg.toString();
         }
@@ -212,27 +210,6 @@ public class RepeatSubmitAspect {
         } catch (Exception e) {
             log.debug("获取HTTP请求失败", e);
             return null;
-        }
-    }
-
-    /**
-     * SHA-256加密
-     */
-    private String sha256Hex(String data) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] digest = md.digest(data.getBytes(StandardCharsets.UTF_8));
-            StringBuilder hex = new StringBuilder();
-            for (byte b : digest) {
-                String h = Integer.toHexString(0xff & b);
-                if (h.length() == 1) {
-                    hex.append('0');
-                }
-                hex.append(h);
-            }
-            return hex.toString();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException("SHA-256算法不可用", e);
         }
     }
 }

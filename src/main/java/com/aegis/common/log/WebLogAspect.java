@@ -1,10 +1,11 @@
 package com.aegis.common.log;
 
+import cn.hutool.json.JSONUtil;
 import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.common.listener.LogEventPublish;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
 import com.aegis.utils.IpUtils;
-import com.aegis.utils.JacksonUtils;
+import com.aegis.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,16 +69,15 @@ public class WebLogAspect {
         sysOperateLog.setRequestLocal(ip2regionService.getRegion(ip));
         sysOperateLog.setRequestType(request.getMethod());
         sysOperateLog.setRequestMethod(joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
-        sysOperateLog.setRequestArgs(JacksonUtils.toJson(initialArgsHolder.get()));
-        // TODO 获取当前登录用户
-        sysOperateLog.setOperateUser(null);
+        sysOperateLog.setRequestArgs(JSONUtil.toJsonStr(initialArgsHolder.get()));
+        sysOperateLog.setOperateUser(SecurityUtils.getUsername());
         sysOperateLog.setOperateTime(LocalDateTime.now());
         if (e != null) {
             sysOperateLog.setErrorMessage(e.getMessage());
             sysOperateLog.setOperateStatus("1");
         }
         if (ObjectUtils.isNotEmpty(result)) {
-            sysOperateLog.setResponseResult(JacksonUtils.toJson(result));
+            sysOperateLog.setResponseResult(JSONUtil.toJsonStr(result));
         }
         logEventPublish.publishEvent(sysOperateLog);
     }

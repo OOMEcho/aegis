@@ -1,5 +1,6 @@
 package com.aegis.utils;
 
+import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -26,14 +27,14 @@ public final class RedisUtils {
      * 数据缓存至Redis
      */
     public <K, V> void set(K key, V value) {
-        redisTemplate.opsForValue().set(String.valueOf(key), JacksonUtils.toJson(value));
+        redisTemplate.opsForValue().set(String.valueOf(key), JSONUtil.toJsonStr(value));
     }
 
     /**
      * 数据缓存至Redis,并设置过期时间
      */
     public <K, V> void set(K key, V value, long timeout, TimeUnit unit) {
-        redisTemplate.opsForValue().set(String.valueOf(key), JacksonUtils.toJson(value), timeout, unit);
+        redisTemplate.opsForValue().set(String.valueOf(key), JSONUtil.toJsonStr(value), timeout, unit);
     }
 
     /**
@@ -50,7 +51,7 @@ public final class RedisUtils {
         String value = this.get(key);
         V result = null;
         if (StringUtils.isNotEmpty(value)) {
-            result = JacksonUtils.fromJson(value, clazz);
+            result = JSONUtil.toBean(value, clazz);
         }
         return result;
     }
@@ -62,7 +63,7 @@ public final class RedisUtils {
         String value = this.get(key);
         List<V> result = Collections.emptyList();
         if (StringUtils.isNotEmpty(value)) {
-            result = JacksonUtils.fromJsonToList(value, clazz);
+            result = JSONUtil.toList(value, clazz);
         }
         return result;
     }

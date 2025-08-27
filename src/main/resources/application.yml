@@ -59,11 +59,31 @@ mybatis-plus:
       logic-delete-value: 1 # 逻辑已删除值。可选，默认值为 1
       logic-not-delete-value: 0 # 逻辑未删除值。可选，默认值为 0
 
-minio: # MinIO配置
-  endpoint: http://127.0.0.1:9000 # 地址(需要改成你的MinIO地址)
-  accessKey: aegis # 账号(需要改成你的MinIO账号)
-  secretKey: aegis # 密码(需要改成你的MinIO密码)
-  bucketName: aegis # 存储桶名称(需要改成你的存储桶名称)
+file:
+  upload:
+    # 当前使用的存储平台: LOCAL,MINIO,ALIYUN_OSS,TENCENT_COS
+    platform: LOCAL
+    # 本地存储配置
+    local:
+      path: /opt/uploads/
+    # Minio配置
+    minio:
+      endpoint: http://127.0.0.1:9000
+      accessKey: your-access-key
+      secretKey: your-secret-key
+      bucketName: your-bucket-name
+    # 阿里云OSS配置
+    aliyun:
+      endpoint: https://oss-cn-hangzhou.aliyuncs.com
+      access-key-id: your-access-key-id
+      access-key-secret: your-access-key-secret
+      bucket-name: your-bucket-name
+    # 腾讯云COS配置
+    tencent:
+      region: ap-beijing
+      secret-id: your-secret-id
+      secret-key: your-secret-key
+      bucket-name: your-bucket-name
 
 logging:
   file:

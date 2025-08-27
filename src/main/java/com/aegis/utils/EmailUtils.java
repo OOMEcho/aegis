@@ -1,5 +1,6 @@
 package com.aegis.utils;
 
+import com.aegis.common.exception.BusinessException;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -56,7 +57,7 @@ public final class EmailUtils {
             mailSender.send(message);
         } catch (Exception e) {
             log.error("发送简单邮件失败->{}", e.getMessage());
-            throw new RuntimeException("发送简单邮件失败", e);
+            throw new BusinessException("发送简单邮件失败: " + e.getMessage());
         }
     }
 
@@ -104,7 +105,7 @@ public final class EmailUtils {
             mailSender.send(message);
         } catch (MessagingException e) {
             log.error("发送HTML邮件失败->{}", e.getMessage());
-            throw new RuntimeException("发送HTML邮件失败", e);
+            throw new BusinessException("发送HTML邮件失败: " + e.getMessage());
         }
     }
 
@@ -146,7 +147,7 @@ public final class EmailUtils {
             sendHtmlEmail(to, subject, htmlContent);
         } catch (IOException | TemplateException e) {
             log.error("发送 {} 模板邮件失败 {}", templateName, e.getMessage());
-            throw new RuntimeException("发送模板邮件失败", e);
+            throw new BusinessException("发送模板邮件失败: " + e.getMessage());
         }
     }
 
@@ -165,7 +166,7 @@ public final class EmailUtils {
             sendBatchHtmlMail(recipients, subject, htmlContent);
         } catch (IOException | TemplateException e) {
             log.error("批量发送 {} 模板邮件失败 {}", templateName, e.getMessage());
-            throw new RuntimeException("发送模板邮件失败", e);
+            throw new BusinessException("发送模板邮件失败: " + e);
         }
     }
 
@@ -233,7 +234,7 @@ public final class EmailUtils {
             mailSender.send(message);
         } catch (MessagingException e) {
             log.error("发送抄送密送邮件失败->{}", e.getMessage());
-            throw new RuntimeException("发送抄送密送邮件失败", e);
+            throw new BusinessException("发送抄送密送邮件失败" + e.getMessage());
         }
     }
 

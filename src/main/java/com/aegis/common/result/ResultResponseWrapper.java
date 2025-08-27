@@ -1,6 +1,6 @@
 package com.aegis.common.result;
 
-import com.aegis.utils.JacksonUtils;
+import cn.hutool.json.JSONUtil;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -38,7 +38,7 @@ public class ResultResponseWrapper implements ResponseBodyAdvice<Object> {
 
         // String类型特殊处理，避免序列化问题
         if (body instanceof String) {
-            return JacksonUtils.toJson(Result.success(body));
+            return JSONUtil.toJsonStr(Result.success(body));
         }
 
         // 其他类型统一包装

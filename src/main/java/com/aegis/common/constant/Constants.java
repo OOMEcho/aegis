@@ -1,5 +1,10 @@
 package com.aegis.common.constant;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025/08/21 15:08
@@ -56,4 +61,24 @@ public class Constants {
      * 无权限标识
      */
     public static final String NONE = "none";
+
+    /**
+     * 分隔符
+     */
+    public static final String SEPARATOR = "/";
+
+    /**
+     * 文件存储目录
+     * 按照日期进行分类存储，格式为yyyy-MM-dd
+     */
+    public static final String FILE_FOLDER = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+    /**
+     * 允许上传的文件类型
+     */
+    public static final List<String> ALLOWED_TYPES = Arrays.asList(
+            "image/jpeg", "image/png", "image/gif", "image/bmp",
+            "application/pdf", "text/plain", "application/msword",
+            "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    );
 }
