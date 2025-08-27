@@ -130,4 +130,21 @@ public final class RedisUtils {
         return redisTemplate.getExpire(key);
     }
 
+    /**
+     * 尝试获取分布式锁
+     */
+    public boolean tryLock(String key, String value, long expire, TimeUnit timeUnit) {
+        Boolean success = redisTemplate.opsForValue().setIfAbsent(key, value, expire, timeUnit);
+        return Boolean.TRUE.equals(success);
+    }
+
+    /**
+     * 释放分布式锁
+     */
+    public void unlock(String key, String value) {
+        String currentValue = redisTemplate.opsForValue().get(key);
+        if (value.equals(currentValue)) {
+            redisTemplate.delete(key);
+        }
+    }
 }
