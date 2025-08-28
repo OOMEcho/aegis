@@ -2,7 +2,7 @@ package com.aegis.common.log;
 
 import cn.hutool.json.JSONUtil;
 import com.aegis.common.ip2region.Ip2regionService;
-import com.aegis.common.listener.LogEventPublish;
+import com.aegis.common.log.listener.LogEventPublish;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.SecurityUtils;

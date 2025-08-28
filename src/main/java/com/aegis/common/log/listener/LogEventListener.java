@@ -1,4 +1,4 @@
-package com.aegis.common.listener;
+package com.aegis.common.log.listener;
 
 import com.aegis.modules.log.domain.entity.SysOperateLog;
 import com.aegis.modules.log.mapper.SysOperateLogMapper;
