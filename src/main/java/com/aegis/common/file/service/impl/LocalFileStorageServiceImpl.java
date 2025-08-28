@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.aegis.common.constant.Constants;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileUploadProperties;
 import com.aegis.common.file.FileUploadResult;
@@ -26,7 +27,7 @@ import java.time.LocalDateTime;
  * @Description: 本地文件存储服务实现
  */
 @Slf4j
-@Service("localFileStorageService")
+@Service(FileConstants.LOCAL)
 @RequiredArgsConstructor
 public class LocalFileStorageServiceImpl implements FileStorageService {
 

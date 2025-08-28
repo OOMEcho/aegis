@@ -5,6 +5,7 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.aegis.common.constant.Constants;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileUploadProperties;
 import com.aegis.common.file.FileUploadResult;
@@ -26,7 +27,7 @@ import java.time.LocalDateTime;
  * @Description: 阿里云OSS文件存储服务实现
  */
 @Slf4j
-@Service("aliyunOssFileStorageService")
+@Service(FileConstants.ALIYUN)
 @RequiredArgsConstructor
 public class AliyunOssFileStorageServiceImpl implements FileStorageService {
 

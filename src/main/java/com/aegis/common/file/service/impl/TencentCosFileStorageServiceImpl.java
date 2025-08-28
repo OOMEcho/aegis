@@ -5,13 +5,17 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.digest.DigestUtil;
 import com.aegis.common.constant.Constants;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileUploadProperties;
 import com.aegis.common.file.FileUploadResult;
 import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.file.service.FileStorageService;
 import com.qcloud.cos.COSClient;
-import com.qcloud.cos.model.*;
+import com.qcloud.cos.model.DeleteObjectRequest;
+import com.qcloud.cos.model.GetObjectRequest;
+import com.qcloud.cos.model.ObjectMetadata;
+import com.qcloud.cos.model.PutObjectRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -26,7 +30,7 @@ import java.time.LocalDateTime;
  * @Description: 腾讯云OSS文件存储服务实现
  */
 @Slf4j
-@Service("tencentCosFileStorageService")
+@Service(FileConstants.TENCENT)
 @RequiredArgsConstructor
 public class TencentCosFileStorageServiceImpl implements FileStorageService {
 

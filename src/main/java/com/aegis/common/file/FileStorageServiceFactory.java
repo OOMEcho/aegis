@@ -1,5 +1,6 @@
 package com.aegis.common.file;
 
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.service.FileStorageService;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +37,13 @@ public class FileStorageServiceFactory {
     private String getServiceName(StoragePlatform platform) {
         switch (platform) {
             case LOCAL:
-                return "localFileStorageService";
+                return FileConstants.LOCAL;
             case MINIO:
-                return "minioFileStorageService";
+                return FileConstants.MINIO;
             case ALIYUN_OSS:
-                return "aliyunOssFileStorageService";
+                return FileConstants.ALIYUN;
             case TENCENT_COS:
-                return "tencentCosFileStorageService";
+                return FileConstants.TENCENT;
             default:
                 throw new BusinessException("不支持的存储平台: " + platform);
         }
