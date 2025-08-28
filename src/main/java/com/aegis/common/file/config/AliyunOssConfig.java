@@ -6,6 +6,7 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.CannedAccessControlList;
 import com.aliyun.oss.model.CreateBucketRequest;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: 阿里云OSS配置类
  */
 @Configuration
+@ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "aliyun_oss")
 public class AliyunOssConfig {
 
     @Bean
@@ -26,11 +28,9 @@ public class AliyunOssConfig {
                 config.getAccessKeyId(),
                 config.getAccessKeySecret());
 
-        // 确保 bucket 存在
         try {
             if (!oss.doesBucketExist(config.getBucketName())) {
                 CreateBucketRequest createBucketRequest = new CreateBucketRequest(config.getBucketName());
-                // 根据需要设置存储类型/权限
                 createBucketRequest.setCannedACL(CannedAccessControlList.Private);
                 oss.createBucket(createBucketRequest);
             }

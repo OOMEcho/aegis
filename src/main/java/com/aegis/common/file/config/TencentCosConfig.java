@@ -6,6 +6,7 @@ import com.qcloud.cos.ClientConfig;
 import com.qcloud.cos.auth.BasicCOSCredentials;
 import com.qcloud.cos.auth.COSCredentials;
 import com.qcloud.cos.region.Region;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: 腾讯云COS配置类
  */
 @Configuration
+@ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "tencent_cos")
 public class TencentCosConfig {
 
     @Bean

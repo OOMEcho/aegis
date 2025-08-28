@@ -5,6 +5,7 @@ import com.aegis.common.file.FileUploadProperties;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @Description: Minio配置类
  */
 @Configuration
+@ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "minio")
 public class MinioConfig {
 
     @Bean
@@ -25,7 +27,6 @@ public class MinioConfig {
                 .credentials(config.getAccessKey(), config.getSecretKey())
                 .build();
 
-        // 确保 bucket 存在
         try {
             boolean exists = minioClient.bucketExists(
                     BucketExistsArgs.builder().bucket(config.getBucketName()).build()

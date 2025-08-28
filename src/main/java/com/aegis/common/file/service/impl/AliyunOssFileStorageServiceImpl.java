@@ -1,25 +1,20 @@
 package com.aegis.common.file.service.impl;
 
-import cn.hutool.core.io.FileUtil;
-import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.digest.DigestUtil;
-import com.aegis.common.constant.Constants;
 import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileUploadProperties;
 import com.aegis.common.file.FileUploadResult;
 import com.aegis.common.file.StoragePlatform;
-import com.aegis.common.file.service.FileStorageService;
+import com.aegis.common.file.service.AbstractFileStorageService;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.model.ObjectMetadata;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
-import java.time.LocalDateTime;
 
 /**
  * @Author: xuesong.lei
@@ -28,45 +23,36 @@ import java.time.LocalDateTime;
  */
 @Slf4j
 @Service(FileConstants.ALIYUN)
-@RequiredArgsConstructor
-public class AliyunOssFileStorageServiceImpl implements FileStorageService {
-
-    private final FileUploadProperties properties;
+@ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "aliyun_oss")
+public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService {
 
     private final OSS ossClient;
+
+    public AliyunOssFileStorageServiceImpl(FileUploadProperties properties, OSS ossClient) {
+        super(properties);
+        this.ossClient = ossClient;
+    }
 
     @Override
     public FileUploadResult upload(MultipartFile file, String directory) {
         try {
             FileUploadProperties.AliyunConfig config = properties.getAliyun();
 
-            String originalFileName = file.getOriginalFilename();
-            String extension = FileUtil.extName(originalFileName);
-            String fileName = IdUtil.simpleUUID() + Constants.POINT + extension;
+            byte[] fileBytes = file.getBytes();
+            validateFile(file, fileBytes);
 
-            String objectName = (StrUtil.isNotBlank(directory) ? directory + Constants.SEPARATOR : "")
-                    + Constants.FILE_FOLDER + Constants.SEPARATOR + fileName;
+            String fileName = generateFileName(file.getOriginalFilename());
+            String objectName = buildObjectName(directory, fileName);
 
             ObjectMetadata metadata = new ObjectMetadata();
-            metadata.setContentLength(file.getSize());
-            metadata.setContentType(file.getContentType());
+            metadata.setContentLength(fileBytes.length);
+            metadata.setContentType(getContentType(file));
 
-            ossClient.putObject(config.getBucketName(), objectName, file.getInputStream(), metadata);
+            ossClient.putObject(config.getBucketName(), objectName,
+                    new ByteArrayInputStream(fileBytes), metadata);
 
-            String md5 = DigestUtil.md5Hex(file.getInputStream());
-
-            return FileUploadResult.builder()
-                    .fileName(fileName)
-                    .originalFileName(file.getOriginalFilename())
-                    .suffix(extension)
-                    .filePath(objectName)
-                    .fileUrl(getFileUrl(objectName))
-                    .fileSize(file.getSize())
-                    .contentType(file.getContentType())
-                    .platform(StoragePlatform.ALIYUN_OSS.name())
-                    .uploadTime(LocalDateTime.now())
-                    .md5(md5)
-                    .build();
+            return buildFileUploadResult(file, fileName, objectName, fileBytes,
+                    StoragePlatform.ALIYUN_OSS.name());
 
         } catch (Exception e) {
             log.error("阿里云OSS文件上传失败", e);
@@ -101,7 +87,7 @@ public class AliyunOssFileStorageServiceImpl implements FileStorageService {
     public String getFileUrl(String filePath) {
         FileUploadProperties.AliyunConfig config = properties.getAliyun();
         return "https://" + config.getBucketName() + "." +
-                config.getEndpoint().replace("https://", "") + Constants.SEPARATOR + filePath;
+                config.getEndpoint().replace("https://", "") + FileConstants.SEPARATOR + filePath;
     }
 
     @Override
