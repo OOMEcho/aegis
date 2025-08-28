@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.InputStream;
+import java.nio.file.Files;
 import java.time.LocalDateTime;
 
 /**
@@ -43,7 +44,7 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
             // 生成唯一文件名
             String originalFileName = file.getOriginalFilename();
             String extension = FileUtil.extName(originalFileName);
-            String fileName = IdUtil.simpleUUID() + "." + extension;
+            String fileName = IdUtil.simpleUUID() + Constants.POINT+ extension;
 
             // 完整文件路径
             String filePath = fullDirectory + Constants.SEPARATOR + fileName;
@@ -76,8 +77,16 @@ public class LocalFileStorageServiceImpl implements FileStorageService {
 
     @Override
     public InputStream download(String filePath) {
-
-        return null;
+        try {
+            File file = new File(filePath);
+            if (!file.exists()) {
+                throw new BusinessException("文件不存在: " + filePath);
+            }
+            return Files.newInputStream(file.toPath());
+        } catch (Exception e) {
+            log.error("获取本地文件流失败: {}", filePath, e);
+            throw new BusinessException("获取文件流失败: " + e.getMessage());
+        }
     }
 
     @Override

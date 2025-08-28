@@ -68,6 +68,11 @@ public class Constants {
     public static final String SEPARATOR = "/";
 
     /**
+     * 点
+     */
+    public static final String POINT = ".";
+
+    /**
      * 文件存储目录
      * 按照日期进行分类存储，格式为yyyy-MM-dd
      */
