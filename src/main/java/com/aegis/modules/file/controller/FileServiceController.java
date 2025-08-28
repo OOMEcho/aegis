@@ -1,5 +1,6 @@
 package com.aegis.modules.file.controller;
 
+import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileStorageServiceFactory;
 import com.aegis.common.file.FileUploadResult;
 import com.aegis.common.file.StoragePlatform;
@@ -9,6 +10,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,6 +49,35 @@ public class FileServiceController {
                 .collect(Collectors.toList());
         log.info("批量文件上传成功，共{}个文件", results.size());
         return results;
+    }
+
+    @GetMapping("/download")
+    public void download(@RequestParam("filePath") String filePath, HttpServletResponse response) throws Exception {
+        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
+
+        // 从 filePath 解析文件名
+        String fileName = Paths.get(filePath).getFileName().toString();
+
+        try (InputStream inputStream = storageService.download(filePath);
+             ServletOutputStream outputStream = response.getOutputStream()) {
+
+            // 设置响应头
+            response.reset();
+            response.setContentType("application/octet-stream");
+            response.setHeader("Content-Disposition",
+                    "attachment; filename=\"" + URLEncoder.encode(fileName, String.valueOf(StandardCharsets.UTF_8)) + "\"");
+            // 不设置 Content-Length，浏览器会自动处理流结束
+
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+
+            outputStream.flush();
+        } catch (Exception e) {
+            throw new BusinessException("文件下载失败" + e);
+        }
     }
 
     @PostMapping("/upload/{platform}")
