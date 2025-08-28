@@ -28,16 +28,17 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
 
     private final OSS ossClient;
 
+    private final FileUploadProperties.AliyunConfig config;
+
     public AliyunOssFileStorageServiceImpl(FileUploadProperties properties, OSS ossClient) {
         super(properties);
         this.ossClient = ossClient;
+        this.config = properties.getAliyun();
     }
 
     @Override
     public FileUploadResult upload(MultipartFile file, String directory) {
         try {
-            FileUploadProperties.AliyunConfig config = properties.getAliyun();
-
             byte[] fileBytes = file.getBytes();
             validateFile(file, fileBytes);
 
@@ -63,7 +64,6 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
     @Override
     public InputStream download(String filePath) {
         try {
-            FileUploadProperties.AliyunConfig config = properties.getAliyun();
             return ossClient.getObject(config.getBucketName(), filePath).getObjectContent();
         } catch (Exception e) {
             log.error("获取阿里云OSS文件流失败: {}", filePath, e);
@@ -74,7 +74,6 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
     @Override
     public boolean delete(String filePath) {
         try {
-            FileUploadProperties.AliyunConfig config = properties.getAliyun();
             ossClient.deleteObject(config.getBucketName(), filePath);
             return true;
         } catch (Exception e) {
@@ -85,7 +84,6 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
 
     @Override
     public String getFileUrl(String filePath) {
-        FileUploadProperties.AliyunConfig config = properties.getAliyun();
         return "https://" + config.getBucketName() + "." +
                 config.getEndpoint().replace("https://", "") + FileConstants.SEPARATOR + filePath;
     }
@@ -93,7 +91,6 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
     @Override
     public boolean exists(String filePath) {
         try {
-            FileUploadProperties.AliyunConfig config = properties.getAliyun();
             return ossClient.doesObjectExist(config.getBucketName(), filePath);
         } catch (Exception e) {
             log.error("检查阿里云OSS文件是否存在失败: {}", filePath, e);

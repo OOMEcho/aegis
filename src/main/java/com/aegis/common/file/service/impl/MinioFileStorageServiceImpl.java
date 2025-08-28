@@ -27,16 +27,17 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
 
     private final MinioClient minioClient;
 
+    private final FileUploadProperties.MinioConfig config;
+
     public MinioFileStorageServiceImpl(FileUploadProperties properties, MinioClient minioClient) {
         super(properties);
         this.minioClient = minioClient;
+        this.config = properties.getMinio();
     }
 
     @Override
     public FileUploadResult upload(MultipartFile file, String directory) {
         try {
-            FileUploadProperties.MinioConfig config = properties.getMinio();
-
             String fileName = generateFileName(file.getOriginalFilename());
             String objectName = buildObjectName(directory, fileName);
 
@@ -64,7 +65,6 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public InputStream download(String filePath) {
         try {
-            FileUploadProperties.MinioConfig config = properties.getMinio();
             return minioClient.getObject(GetObjectArgs.builder()
                     .bucket(config.getBucketName())
                     .object(filePath)
@@ -78,7 +78,6 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public boolean delete(String filePath) {
         try {
-            FileUploadProperties.MinioConfig config = properties.getMinio();
             minioClient.removeObject(RemoveObjectArgs.builder()
                     .bucket(config.getBucketName())
                     .object(filePath)
@@ -92,14 +91,12 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
 
     @Override
     public String getFileUrl(String filePath) {
-        FileUploadProperties.MinioConfig config = properties.getMinio();
         return config.getEndpoint() + FileConstants.SEPARATOR + config.getBucketName() + FileConstants.SEPARATOR + filePath;
     }
 
     @Override
     public boolean exists(String filePath) {
         try {
-            FileUploadProperties.MinioConfig config = properties.getMinio();
             minioClient.statObject(StatObjectArgs.builder()
                     .bucket(config.getBucketName())
                     .object(filePath)

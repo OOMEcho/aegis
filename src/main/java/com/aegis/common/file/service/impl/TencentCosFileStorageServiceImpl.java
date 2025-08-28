@@ -31,16 +31,17 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
 
     private final COSClient cosClient;
 
+    private final FileUploadProperties.TencentConfig config;
+
     public TencentCosFileStorageServiceImpl(FileUploadProperties properties, COSClient cosClient) {
         super(properties);
         this.cosClient = cosClient;
+        this.config = properties.getTencent();
     }
 
     @Override
     public FileUploadResult upload(MultipartFile file, String directory) {
         try {
-            FileUploadProperties.TencentConfig config = properties.getTencent();
-
             String fileName = generateFileName(file.getOriginalFilename());
             String objectName = buildObjectName(directory, fileName);
 
@@ -73,7 +74,6 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
     @Override
     public InputStream download(String filePath) {
         try {
-            FileUploadProperties.TencentConfig config = properties.getTencent();
             return cosClient.getObject(new GetObjectRequest(config.getBucketName(), filePath)).getObjectContent();
         } catch (Exception e) {
             log.error("获取腾讯云COS文件流失败: {}", filePath, e);
@@ -84,7 +84,6 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
     @Override
     public boolean delete(String filePath) {
         try {
-            FileUploadProperties.TencentConfig config = properties.getTencent();
             cosClient.deleteObject(new DeleteObjectRequest(config.getBucketName(), filePath));
             return true;
         } catch (Exception e) {
@@ -95,14 +94,12 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
 
     @Override
     public String getFileUrl(String filePath) {
-        FileUploadProperties.TencentConfig config = properties.getTencent();
         return "https://" + config.getBucketName() + ".cos." + config.getRegion() + ".myqcloud.com/" + filePath;
     }
 
     @Override
     public boolean exists(String filePath) {
         try {
-            FileUploadProperties.TencentConfig config = properties.getTencent();
             return cosClient.doesObjectExist(config.getBucketName(), filePath);
         } catch (Exception e) {
             return false;

@@ -27,14 +27,16 @@ import java.nio.file.Files;
 @ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "local")
 public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
 
+    private final String basePath;
+
     public LocalFileStorageServiceImpl(FileUploadProperties properties) {
         super(properties);
+        this.basePath = properties.getLocal().getPath();
     }
 
     @Override
     public FileUploadResult upload(MultipartFile file, String directory) {
         try {
-            String basePath = properties.getLocal().getPath();
             String fullDirectory = basePath + FileConstants.SEPARATOR +
                     (StrUtil.isNotBlank(directory) ? directory + FileConstants.SEPARATOR : "") +
                     FileConstants.FILE_FOLDER;
@@ -84,7 +86,6 @@ public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public String getFileUrl(String filePath) {
         // 本地文件需要通过web服务访问，这里返回相对路径
-        String basePath = properties.getLocal().getPath();
         return filePath.replace(basePath, "/files");
     }
 
