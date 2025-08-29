@@ -50,7 +50,7 @@ public class FileConstants {
      * 文件存储目录
      * 按照日期进行分类存储，格式为yyyy-MM-dd
      */
-    public static final String FILE_FOLDER = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    public static final String FILE_FOLDER = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
 
     /**
      * 允许的文件类型
