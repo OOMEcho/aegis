@@ -7,10 +7,8 @@ import com.aegis.common.file.FileUploadResult;
 import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.file.service.AbstractFileStorageService;
 import com.qcloud.cos.COSClient;
-import com.qcloud.cos.model.DeleteObjectRequest;
-import com.qcloud.cos.model.GetObjectRequest;
-import com.qcloud.cos.model.ObjectMetadata;
-import com.qcloud.cos.model.PutObjectRequest;
+import com.qcloud.cos.http.HttpMethodName;
+import com.qcloud.cos.model.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -18,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.Duration;
+import java.util.Date;
 
 /**
  * @Author: xuesong.lei
@@ -103,6 +103,43 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
             return cosClient.doesObjectExist(config.getBucketName(), filePath);
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public String generatePresignedUploadUrl(String filePath, Duration expiration) {
+        try {
+            Date expirationDate = new Date(System.currentTimeMillis() + expiration.toMillis());
+            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
+                    config.getBucketName(),
+                    filePath,
+                    HttpMethodName.PUT
+            );
+            request.setExpiration(expirationDate);
+            request.setContentType("application/octet-stream");
+
+            return cosClient.generatePresignedUrl(request).toString();
+        } catch (Exception e) {
+            log.error("生成腾讯云COS预签名上传URL失败: {}", filePath, e);
+            throw new BusinessException("生成预签名上传URL失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String getTemporaryDownloadUrl(String filePath, Duration expiration) {
+        try {
+            Date expirationDate = new Date(System.currentTimeMillis() + expiration.toMillis());
+            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
+                    config.getBucketName(),
+                    filePath,
+                    HttpMethodName.GET
+            );
+            request.setExpiration(expirationDate);
+
+            return cosClient.generatePresignedUrl(request).toString();
+        } catch (Exception e) {
+            log.error("生成腾讯云COS临时下载URL失败: {}", filePath, e);
+            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
         }
     }
 }

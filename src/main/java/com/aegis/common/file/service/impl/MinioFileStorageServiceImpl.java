@@ -7,6 +7,7 @@ import com.aegis.common.file.FileUploadResult;
 import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.file.service.AbstractFileStorageService;
 import io.minio.*;
+import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.Duration;
 
 /**
  * @Author: xuesong.lei
@@ -104,6 +106,40 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public String generatePresignedUploadUrl(String filePath, Duration expiration) {
+        try {
+            return minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.PUT)
+                            .bucket(config.getBucketName())
+                            .object(filePath)
+                            .expiry((int) expiration.getSeconds())
+                            .build()
+            );
+        } catch (Exception e) {
+            log.error("生成MinIO预签名上传URL失败: {}", filePath, e);
+            throw new BusinessException("生成预签名上传URL失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String getTemporaryDownloadUrl(String filePath, Duration expiration) {
+        try {
+            return minioClient.getPresignedObjectUrl(
+                    GetPresignedObjectUrlArgs.builder()
+                            .method(Method.GET)
+                            .bucket(config.getBucketName())
+                            .object(filePath)
+                            .expiry((int) expiration.getSeconds())
+                            .build()
+            );
+        } catch (Exception e) {
+            log.error("生成MinIO临时下载URL失败: {}", filePath, e);
+            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
         }
     }
 }

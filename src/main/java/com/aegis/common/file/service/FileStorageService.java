@@ -4,6 +4,7 @@ import com.aegis.common.file.FileUploadResult;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
+import java.time.Duration;
 
 /**
  * @Author: xuesong.lei
@@ -37,4 +38,13 @@ public interface FileStorageService {
      */
     boolean exists(String filePath);
 
+    /**
+     * 生成预签名URL（用于直接上传到云存储）
+     */
+    String generatePresignedUploadUrl(String filePath, Duration expiration);
+
+    /**
+     * 获取文件的临时下载链接
+     */
+    String getTemporaryDownloadUrl(String filePath, Duration expiration);
 }

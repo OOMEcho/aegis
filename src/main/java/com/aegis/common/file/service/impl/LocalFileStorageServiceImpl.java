@@ -2,6 +2,7 @@ package com.aegis.common.file.service.impl;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.crypto.digest.DigestUtil;
 import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileUploadProperties;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.time.Duration;
 
 /**
  * @Author: xuesong.lei
@@ -92,5 +94,31 @@ public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public boolean exists(String filePath) {
         return FileUtil.exist(filePath);
+    }
+
+    @Override
+    public String generatePresignedUploadUrl(String filePath, Duration expiration) {
+        log.warn("本地存储不支持预签名上传URL，返回空字符串");
+        return "";
+    }
+
+    @Override
+    public String getTemporaryDownloadUrl(String filePath, Duration expiration) {
+        // 本地存储生成带时间戳和签名的临时下载链接
+        try {
+            if (!exists(filePath)) {
+                throw new BusinessException("文件不存在: " + filePath);
+            }
+
+            // 生成带时间戳的临时下载链接
+            long timestamp = System.currentTimeMillis() + expiration.toMillis();
+            String token = DigestUtil.md5Hex(filePath + timestamp + "secret_key"); // 使用配置的密钥
+
+            String relativePath = filePath.replace(basePath, "/files");
+            return relativePath + "?token=" + token + "&expires=" + timestamp;
+        } catch (Exception e) {
+            log.error("生成本地存储临时下载URL失败: {}", filePath, e);
+            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
+        }
     }
 }

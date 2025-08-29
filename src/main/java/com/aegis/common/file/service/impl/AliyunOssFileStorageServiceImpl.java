@@ -6,7 +6,9 @@ import com.aegis.common.file.FileUploadProperties;
 import com.aegis.common.file.FileUploadResult;
 import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.file.service.AbstractFileStorageService;
+import com.aliyun.oss.HttpMethod;
 import com.aliyun.oss.OSS;
+import com.aliyun.oss.model.GeneratePresignedUrlRequest;
 import com.aliyun.oss.model.ObjectMetadata;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,6 +17,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.Duration;
+import java.util.Date;
 
 /**
  * @Author: xuesong.lei
@@ -95,6 +99,43 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
         } catch (Exception e) {
             log.error("检查阿里云OSS文件是否存在失败: {}", filePath, e);
             return false;
+        }
+    }
+
+    @Override
+    public String generatePresignedUploadUrl(String filePath, Duration expiration) {
+        try {
+            Date expirationDate = new Date(System.currentTimeMillis() + expiration.toMillis());
+            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
+                    config.getBucketName(),
+                    filePath,
+                    HttpMethod.PUT
+            );
+            request.setExpiration(expirationDate);
+            request.setContentType("application/octet-stream");
+
+            return ossClient.generatePresignedUrl(request).toString();
+        } catch (Exception e) {
+            log.error("生成阿里云OSS预签名上传URL失败: {}", filePath, e);
+            throw new BusinessException("生成预签名上传URL失败: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public String getTemporaryDownloadUrl(String filePath, Duration expiration) {
+        try {
+            Date expirationDate = new Date(System.currentTimeMillis() + expiration.toMillis());
+            GeneratePresignedUrlRequest request = new GeneratePresignedUrlRequest(
+                    config.getBucketName(),
+                    filePath,
+                    HttpMethod.GET
+            );
+            request.setExpiration(expirationDate);
+
+            return ossClient.generatePresignedUrl(request).toString();
+        } catch (Exception e) {
+            log.error("生成阿里云OSS临时下载URL失败: {}", filePath, e);
+            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
         }
     }
 }

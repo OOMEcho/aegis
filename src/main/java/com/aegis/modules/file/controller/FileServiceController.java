@@ -1,5 +1,9 @@
 package com.aegis.modules.file.controller;
 
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.IdUtil;
+import cn.hutool.core.util.StrUtil;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileStorageServiceFactory;
 import com.aegis.common.file.FileUploadResult;
@@ -16,8 +20,11 @@ import java.io.InputStream;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.time.Duration;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -115,5 +122,57 @@ public class FileServiceController {
     @GetMapping("/platforms")
     public List<StoragePlatform> getSupportedPlatforms() {
         return Arrays.asList(StoragePlatform.values());
+    }
+
+    /**
+     * 获取预签名上传URL - 用于前端直传
+     */
+    @PostMapping("/presigned-upload-url")
+    public Map<String, String> getPresignedUploadUrl(
+            @RequestParam String fileName,
+            @RequestParam(required = false) String directory) {
+
+        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
+
+        String filePath = buildFilePath(directory, fileName);
+        Duration expiration = Duration.ofMinutes(10); // 10分钟过期
+
+        String presignedUrl = storageService.generatePresignedUploadUrl(filePath, expiration);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("uploadUrl", presignedUrl);
+        response.put("filePath", filePath);
+        response.put("expiresIn", "600"); // 秒
+
+        return response;
+    }
+
+    /**
+     * 获取临时下载URL
+     */
+    @GetMapping("/temporary-download-url")
+    public Map<String, String> getTemporaryDownloadUrl(
+            @RequestParam String filePath,
+            @RequestParam(required = false, defaultValue = "3600") long expirationSeconds) {
+        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
+
+        if (!storageService.exists(filePath)) {
+            return null;
+        }
+
+        Duration expiration = Duration.ofSeconds(expirationSeconds);
+        String temporaryUrl = storageService.getTemporaryDownloadUrl(filePath, expiration);
+
+        Map<String, String> response = new HashMap<>();
+        response.put("downloadUrl", temporaryUrl);
+        response.put("expiresIn", String.valueOf(expirationSeconds));
+
+        return response;
+    }
+
+    private String buildFilePath(String directory, String fileName) {
+        String uniqueFileName = IdUtil.simpleUUID() + FileConstants.POINT + FileUtil.extName(fileName);
+        return (StrUtil.isNotBlank(directory) ? directory + FileConstants.SEPARATOR : "")
+                + FileConstants.FILE_FOLDER + FileConstants.SEPARATOR + uniqueFileName;
     }
 }
