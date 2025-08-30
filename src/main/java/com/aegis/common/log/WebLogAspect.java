@@ -1,6 +1,8 @@
 package com.aegis.common.log;
 
 import cn.hutool.json.JSONUtil;
+import com.aegis.common.constant.Constants;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.common.log.listener.LogEventPublish;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
@@ -39,26 +41,41 @@ public class WebLogAspect {
 
     private static final ThreadLocal<Object[]> initialArgsHolder = new ThreadLocal<>();
 
+    private static final ThreadLocal<Long> startTimeHolder = new ThreadLocal<>();
+
     @Before("@annotation(operationLog)")
     public void doBefore(JoinPoint joinPoint, OperationLog operationLog) {
         initialArgsHolder.set(joinPoint.getArgs());
+        startTimeHolder.set(System.currentTimeMillis());
     }
 
     @AfterReturning(pointcut = "@annotation(operationLog)", returning = "result")
     public void doAfterReturning(JoinPoint joinPoint, OperationLog operationLog, Object result) {
-        handleLog(joinPoint, operationLog, result, null);
-        initialArgsHolder.remove();
+        long executionTime = calculateExecutionTime();
+        handleLog(joinPoint, operationLog, result, null, executionTime);
+        cleanupThreadLocals();
     }
 
     @AfterThrowing(pointcut = "@annotation(operationLog)", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, OperationLog operationLog, Throwable e) {
-        handleLog(joinPoint, operationLog, null, e);
-        String method = joinPoint.getSignature().getDeclaringTypeName() + "." + joinPoint.getSignature().getName();
+        long executionTime = calculateExecutionTime();
+        handleLog(joinPoint, operationLog, null, e, executionTime);
+        String method = joinPoint.getSignature().getDeclaringTypeName() + FileConstants.POINT + joinPoint.getSignature().getName();
         log.error("执行方法【{}】出错，异常为:【{}】", method, e.getMessage());
-        initialArgsHolder.remove();
+        cleanupThreadLocals();
     }
 
-    private void handleLog(JoinPoint joinPoint, OperationLog operationLog, Object result, Throwable e) {
+    private long calculateExecutionTime() {
+        Long startTime = startTimeHolder.get();
+        return startTime != null ? System.currentTimeMillis() - startTime : 0L;
+    }
+
+    private void cleanupThreadLocals() {
+        initialArgsHolder.remove();
+        startTimeHolder.remove();
+    }
+
+    private void handleLog(JoinPoint joinPoint, OperationLog operationLog, Object result, Throwable e, long executionTime) {
         HttpServletRequest request = getRequest();
         String ip = IpUtils.getIpAddr(request);
         SysOperateLog sysOperateLog = new SysOperateLog();
@@ -68,13 +85,15 @@ public class WebLogAspect {
         sysOperateLog.setRequestIp(ip);
         sysOperateLog.setRequestLocal(ip2regionService.getRegion(ip));
         sysOperateLog.setRequestType(request.getMethod());
-        sysOperateLog.setRequestMethod(joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()");
+        sysOperateLog.setRequestMethod(joinPoint.getTarget().getClass().getName() + FileConstants.POINT + joinPoint.getSignature().getName() + "()");
         sysOperateLog.setRequestArgs(JSONUtil.toJsonStr(initialArgsHolder.get()));
         sysOperateLog.setOperateUser(SecurityUtils.getUsername());
         sysOperateLog.setOperateTime(LocalDateTime.now());
+        sysOperateLog.setDepleteTime(executionTime);
+
         if (e != null) {
             sysOperateLog.setErrorMessage(e.getMessage());
-            sysOperateLog.setOperateStatus("1");
+            sysOperateLog.setOperateStatus(Constants.DISABLE_STATUS);
         }
         if (ObjectUtils.isNotEmpty(result)) {
             sysOperateLog.setResponseResult(JSONUtil.toJsonStr(result));

@@ -18,12 +18,13 @@
         <result property="errorMessage" column="error_message"/>
         <result property="operateUser" column="operate_user"/>
         <result property="operateTime" column="operate_time"/>
+        <result property="depleteTime" column="deplete_time"/>
         <result property="operateStatus" column="operate_status"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,module_title,business_type,request_url,request_ip,request_local,
         request_type,request_method,request_args,response_result,error_message,
-        operate_user,operate_time,operate_status
+        operate_user,operate_time,deplete_time,operate_status
     </sql>
 </mapper>

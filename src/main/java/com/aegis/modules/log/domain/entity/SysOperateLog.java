@@ -107,6 +107,12 @@ public class SysOperateLog implements Serializable {
     private LocalDateTime operateTime;
 
     /**
+     * 消耗时间(单位：毫秒)
+     */
+    @TableField(value = "deplete_time")
+    private Long depleteTime;
+
+    /**
      * 操作状态(0-成功,1-失败)
      */
     @TableField(value = "operate_status")

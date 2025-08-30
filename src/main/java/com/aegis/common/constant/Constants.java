@@ -18,12 +18,12 @@ public class Constants {
     public static final String MENUS = "menus";
 
     /**
-     * 正常标识
+     * 正常/成功
      */
     public static final String NORMAL_STATUS = "0";
 
     /**
-     * 停用标识
+     * 停用/失败
      */
     public static final String DISABLE_STATUS = "1";
 
