@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.aegis.modules.role.mapper.RoleDeptMapper">
+
+    <resultMap id="BaseResultMap" type="com.aegis.modules.role.domain.entity.RoleDept">
+        <id property="roleId" column="role_id"/>
+        <id property="deptId" column="dept_id"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        role_id,dept_id
+    </sql>
+</mapper>

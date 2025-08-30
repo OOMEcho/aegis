@@ -196,8 +196,8 @@ CREATE TABLE `t_notice_user`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '通知接收记录表';
 
-DROP TABLE IF EXISTS `t_dict_type`;
-CREATE TABLE `t_dict_type`
+DROP TABLE IF EXISTS `t_dictionary`;
+CREATE TABLE `t_dictionary`
 (
     `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
     `create_by`   VARCHAR(64)              DEFAULT NULL COMMENT '创建人',
