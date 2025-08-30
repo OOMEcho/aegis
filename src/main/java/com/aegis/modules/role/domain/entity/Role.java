@@ -89,8 +89,8 @@ public class Role implements Serializable {
     /**
      * 角色权限字符串
      */
-    @TableField(value = "role_key")
-    private String roleKey;
+    @TableField(value = "role_code")
+    private String roleCode;
 
     /**
      * 显示顺序

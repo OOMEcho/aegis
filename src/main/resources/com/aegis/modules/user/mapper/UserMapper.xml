@@ -26,10 +26,33 @@
         <result property="lastLoginTime" column="last_login_time"/>
     </resultMap>
 
+    <resultMap id="SecurityUser" type="com.aegis.modules.user.domain.entity.User">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <result property="password" column="password"/>
+        <result property="status" column="status"/>
+        <collection property="roleList" ofType="com.aegis.modules.role.domain.entity.Role">
+            <result column="role_code" property="roleCode"/>
+        </collection>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id,create_by,update_by,create_time,update_time,deleted,
         version,remark,dept_id,username,password,
         nickname,email,sex,phone,avatar,
         status,last_login_ip,last_login_time
     </sql>
+
+    <select id="loadUserByUsername" resultMap="SecurityUser">
+        select tu.id,
+               tu.username,
+               tu.password,
+               tu.status,
+               tr.role_code as role_code
+        from t_user tu
+                 left join t_user_role tur on tur.user_id = tu.id
+                 left join t_role tr on tur.role_id = tr.id
+        where username = #{username}
+           or email = #{username}
+    </select>
 </mapper>

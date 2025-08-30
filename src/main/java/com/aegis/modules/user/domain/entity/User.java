@@ -1,5 +1,6 @@
 package com.aegis.modules.user.domain.entity;
 
+import com.aegis.modules.role.domain.entity.Role;
 import com.baomidou.mybatisplus.annotation.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: xuesong.lei
@@ -148,4 +150,9 @@ public class User implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;
 
+    /**
+     * 角色列表
+     */
+    @TableField(exist = false)
+    private List<Role> roleList;
 }

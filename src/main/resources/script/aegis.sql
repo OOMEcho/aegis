@@ -80,7 +80,7 @@ CREATE TABLE `t_role`
     `version`             INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
     `remark`              VARCHAR(100)             DEFAULT NULL COMMENT '备注',
     `role_name`           VARCHAR(30)     NOT NULL COMMENT '角色名称',
-    `role_key`            VARCHAR(100)    NOT NULL COMMENT '角色权限字符串',
+    `role_code`           VARCHAR(100)    NOT NULL COMMENT '角色权限字符串',
     `role_sort`           INT             NOT NULL DEFAULT 0 COMMENT '显示顺序',
     `data_scope`          CHAR(1)         NOT NULL DEFAULT '1' COMMENT '数据范围(1-全部数据权限,2-自定数据权限,3-本部门数据权限,4-本部门及以下数据权限)',
     `menu_check_strictly` INT                      DEFAULT 1 COMMENT '菜单树选择项是否关联显示',

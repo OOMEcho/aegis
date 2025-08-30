@@ -85,6 +85,12 @@ file:
       secret-key: your-secret-key
       bucket-name: your-bucket-name
 
+# 白名单
+whitelist:
+  urls:
+    - /login
+    - /logout
+
 logging:
   file:
     path: ./logs # 日志路径
