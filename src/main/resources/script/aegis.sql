@@ -122,36 +122,52 @@ CREATE TABLE `t_menu`
 DROP TABLE IF EXISTS `t_user_role`;
 CREATE TABLE `t_user_role`
 (
-    user_id BIGINT NOT NULL COMMENT '用户ID',
-    role_id BIGINT NOT NULL COMMENT '角色ID',
-    PRIMARY KEY (user_id, role_id)
+    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `user_id` BIGINT          NOT NULL COMMENT '用户ID',
+    `role_id` BIGINT          NOT NULL COMMENT '角色ID',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY uk_user_role (`user_id`, `role_id`),
+    INDEX idx_user_id (`user_id`),
+    INDEX idx_role_id (`role_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '用户和角色关联表';
 
 DROP TABLE IF EXISTS `t_role_menu`;
 CREATE TABLE `t_role_menu`
 (
-    role_id BIGINT NOT NULL COMMENT '角色ID',
-    menu_id BIGINT NOT NULL COMMENT '菜单ID',
-    PRIMARY KEY (role_id, menu_id)
+    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `role_id` BIGINT          NOT NULL COMMENT '角色ID',
+    `menu_id` BIGINT          NOT NULL COMMENT '菜单ID',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY uk_role_menu (`role_id`, `menu_id`),
+    INDEX idx_role_id (`role_id`),
+    INDEX idx_menu_id (`menu_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '角色和菜单关联表';
 
 DROP TABLE IF EXISTS `t_role_dept`;
 CREATE TABLE `t_role_dept`
 (
-    role_id BIGINT NOT NULL COMMENT '角色ID',
-    dept_id BIGINT NOT NULL COMMENT '部门ID',
-    PRIMARY KEY (role_id, dept_id)
+    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `role_id` BIGINT          NOT NULL COMMENT '角色ID',
+    `dept_id` BIGINT          NOT NULL COMMENT '部门ID',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY uk_role_dept (`role_id`, `dept_id`),
+    INDEX idx_role_id (`role_id`),
+    INDEX idx_dept_id (`dept_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '角色和部门关联表';
 
 DROP TABLE IF EXISTS `t_user_post`;
 CREATE TABLE `t_user_post`
 (
-    user_id BIGINT NOT NULL COMMENT '用户ID',
-    post_id BIGINT NOT NULL COMMENT '岗位ID',
-    PRIMARY KEY (user_id, post_id)
+    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `user_id` BIGINT          NOT NULL COMMENT '用户ID',
+    `post_id` BIGINT          NOT NULL COMMENT '岗位ID',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY uk_user_post (`user_id`, `post_id`),
+    INDEX idx_user_id (`user_id`),
+    INDEX idx_post_id (`post_id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '用户与岗位关联表';
 

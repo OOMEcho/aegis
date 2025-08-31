@@ -5,11 +5,12 @@
 <mapper namespace="com.aegis.modules.role.mapper.RoleDeptMapper">
 
     <resultMap id="BaseResultMap" type="com.aegis.modules.role.domain.entity.RoleDept">
+        <id property="id" column="id"/>
         <id property="roleId" column="role_id"/>
         <id property="deptId" column="dept_id"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        role_id,dept_id
+        id,role_id,dept_id
     </sql>
 </mapper>

@@ -24,6 +24,12 @@ public class UserPost implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /**
+     * 主键ID
+     */
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
+
+    /**
      * 用户ID
      */
     @TableField(value = "user_id")

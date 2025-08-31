@@ -5,11 +5,12 @@
 <mapper namespace="com.aegis.modules.user.mapper.UserPostMapper">
 
     <resultMap id="BaseResultMap" type="com.aegis.modules.user.domain.entity.UserPost">
+        <id property="id" column="id"/>
         <id property="userId" column="user_id"/>
         <id property="postId" column="post_id"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        user_id,post_id
+        id,user_id,post_id
     </sql>
 </mapper>
