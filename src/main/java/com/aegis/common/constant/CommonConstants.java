@@ -5,7 +5,7 @@ package com.aegis.common.constant;
  * @Date: 2025/08/21 15:08
  * @Description: 通用常量
  */
-public class Constants {
+public class CommonConstants {
 
     /**
      * token前缀

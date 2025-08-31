@@ -1,7 +1,7 @@
 package com.aegis.common.log;
 
 import cn.hutool.json.JSONUtil;
-import com.aegis.common.constant.Constants;
+import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.FileConstants;
 import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.common.log.listener.LogEventPublish;
@@ -93,7 +93,7 @@ public class WebLogAspect {
 
         if (e != null) {
             sysOperateLog.setErrorMessage(e.getMessage());
-            sysOperateLog.setOperateStatus(Constants.DISABLE_STATUS);
+            sysOperateLog.setOperateStatus(CommonConstants.DISABLE_STATUS);
         }
         if (ObjectUtils.isNotEmpty(result)) {
             sysOperateLog.setResponseResult(JSONUtil.toJsonStr(result));

@@ -1,6 +1,6 @@
 package com.aegis.config.security.vo;
 
-import com.aegis.common.constant.Constants;
+import com.aegis.common.constant.CommonConstants;
 import com.aegis.modules.user.domain.entity.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -51,7 +51,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !Constants.DISABLE_STATUS.equals(user.getStatus());
+        return !CommonConstants.DISABLE_STATUS.equals(user.getStatus());
     }
 
     @Override
@@ -61,6 +61,6 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return Constants.NORMAL_STATUS.equals(user.getStatus());
+        return CommonConstants.NORMAL_STATUS.equals(user.getStatus());
     }
 }

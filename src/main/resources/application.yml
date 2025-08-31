@@ -85,6 +85,13 @@ file:
       secret-key: your-secret-key
       bucket-name: your-bucket-name
 
+# JWT配置
+jwt:
+  issuer: aegis
+  secret: mySecretKeyForJWTTokenGenerationThatShouldBeLongEnough
+  access-token-expiration: 900  # 15分钟
+  refresh-token-expiration: 604800  # 7天
+
 # 白名单
 whitelist:
   urls:
