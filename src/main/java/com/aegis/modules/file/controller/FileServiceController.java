@@ -83,7 +83,8 @@ public class FileServiceController {
 
             outputStream.flush();
         } catch (Exception e) {
-            throw new BusinessException("文件下载失败" + e);
+            log.error("文件下载失败->{}", e.getMessage());
+            throw new BusinessException("文件下载失败");
         }
     }
 

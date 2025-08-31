@@ -67,7 +67,7 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
 
         } catch (Exception e) {
             log.error("腾讯云COS文件上传失败", e);
-            throw new BusinessException("文件上传失败: " + e.getMessage());
+            throw new BusinessException("上传失败,请联系系统管理员");
         }
     }
 
@@ -77,7 +77,7 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
             return cosClient.getObject(new GetObjectRequest(config.getBucketName(), filePath)).getObjectContent();
         } catch (Exception e) {
             log.error("获取腾讯云COS文件流失败: {}", filePath, e);
-            throw new BusinessException("获取文件流失败: " + e.getMessage());
+            throw new BusinessException("下载失败,请联系系统管理员");
         }
     }
 
@@ -121,7 +121,7 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
             return cosClient.generatePresignedUrl(request).toString();
         } catch (Exception e) {
             log.error("生成腾讯云COS预签名上传URL失败: {}", filePath, e);
-            throw new BusinessException("生成预签名上传URL失败: " + e.getMessage());
+            throw new BusinessException("上传失败,请联系系统管理员");
         }
     }
 
@@ -139,7 +139,7 @@ public class TencentCosFileStorageServiceImpl extends AbstractFileStorageService
             return cosClient.generatePresignedUrl(request).toString();
         } catch (Exception e) {
             log.error("生成腾讯云COS临时下载URL失败: {}", filePath, e);
-            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
+            throw new BusinessException("下载失败,请联系系统管理员");
         }
     }
 }

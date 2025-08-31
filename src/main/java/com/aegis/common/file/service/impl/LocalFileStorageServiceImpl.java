@@ -57,7 +57,7 @@ public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
 
         } catch (Exception e) {
             log.error("本地文件上传失败", e);
-            throw new BusinessException("文件上传失败: " + e.getMessage());
+            throw new BusinessException("上传失败,请联系系统管理员");
         }
     }
 
@@ -66,12 +66,12 @@ public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
         try {
             File file = new File(filePath);
             if (!file.exists()) {
-                throw new BusinessException("文件不存在: " + filePath);
+                throw new BusinessException("下载失败,请联系系统管理员");
             }
             return Files.newInputStream(file.toPath());
         } catch (Exception e) {
             log.error("获取本地文件流失败: {}", filePath, e);
-            throw new BusinessException("获取文件流失败: " + e.getMessage());
+            throw new BusinessException("下载失败,请联系系统管理员");
         }
     }
 
@@ -107,7 +107,7 @@ public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
         // 本地存储生成带时间戳和签名的临时下载链接
         try {
             if (!exists(filePath)) {
-                throw new BusinessException("文件不存在: " + filePath);
+                throw new BusinessException("下载失败,请联系系统管理员");
             }
 
             // 生成带时间戳的临时下载链接
@@ -118,7 +118,7 @@ public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
             return relativePath + "?token=" + token + "&expires=" + timestamp;
         } catch (Exception e) {
             log.error("生成本地存储临时下载URL失败: {}", filePath, e);
-            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
+            throw new BusinessException("下载失败,请联系系统管理员");
         }
     }
 }

@@ -61,7 +61,7 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
 
         } catch (Exception e) {
             log.error("阿里云OSS文件上传失败", e);
-            throw new BusinessException("文件上传失败: " + e.getMessage());
+            throw new BusinessException("上传失败,请联系系统管理员");
         }
     }
 
@@ -71,7 +71,7 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
             return ossClient.getObject(config.getBucketName(), filePath).getObjectContent();
         } catch (Exception e) {
             log.error("获取阿里云OSS文件流失败: {}", filePath, e);
-            throw new BusinessException("获取文件流失败: " + e.getMessage());
+            throw new BusinessException("下载失败,请联系系统管理员");
         }
     }
 
@@ -117,7 +117,7 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
             return ossClient.generatePresignedUrl(request).toString();
         } catch (Exception e) {
             log.error("生成阿里云OSS预签名上传URL失败: {}", filePath, e);
-            throw new BusinessException("生成预签名上传URL失败: " + e.getMessage());
+            throw new BusinessException("上传失败,请联系系统管理员");
         }
     }
 
@@ -135,7 +135,7 @@ public class AliyunOssFileStorageServiceImpl extends AbstractFileStorageService 
             return ossClient.generatePresignedUrl(request).toString();
         } catch (Exception e) {
             log.error("生成阿里云OSS临时下载URL失败: {}", filePath, e);
-            throw new BusinessException("生成临时下载URL失败: " + e.getMessage());
+            throw new BusinessException("下载失败,请联系系统管理员");
         }
     }
 }
