@@ -2,6 +2,7 @@ package com.aegis.modules.user.controller;
 
 import com.aegis.common.captcha.CaptchaDTO;
 import com.aegis.common.captcha.CaptchaVO;
+import com.aegis.common.exception.BusinessException;
 import com.aegis.utils.CaptchaUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class SlideCaptchaController {
         if (isValid) {
             return "验证成功";
         } else {
-            return "验证失败";
+           throw new BusinessException("验证失败");
         }
     }
 }
