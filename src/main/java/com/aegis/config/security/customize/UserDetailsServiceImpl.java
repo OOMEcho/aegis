@@ -1,7 +1,6 @@
 package com.aegis.config.security.customize;
 
 import com.aegis.common.exception.LoginException;
-import com.aegis.config.security.vo.SecurityUser;
 import com.aegis.modules.user.domain.entity.User;
 import com.aegis.modules.user.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,7 @@ import org.springframework.util.ObjectUtils;
  */
 @Component
 @RequiredArgsConstructor
-public class CustomUserDetailsService implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final UserMapper userMapper;
 

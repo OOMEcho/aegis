@@ -1,7 +1,7 @@
 package com.aegis.modules.user.controller;
 
-import com.aegis.common.captcha.CaptchaDTO;
-import com.aegis.common.captcha.CaptchaVO;
+import com.aegis.common.domain.dto.CaptchaDTO;
+import com.aegis.common.domain.vo.CaptchaVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.utils.CaptchaUtils;
 import lombok.RequiredArgsConstructor;

@@ -1,4 +1,4 @@
-package com.aegis.config.security.vo;
+package com.aegis.config.security.customize;
 
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.modules.user.domain.entity.User;

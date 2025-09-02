@@ -1,4 +1,4 @@
-package com.aegis.common.captcha;
+package com.aegis.common.domain.vo;
 
 import lombok.Data;
 

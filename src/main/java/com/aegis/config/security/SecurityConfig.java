@@ -1,20 +1,25 @@
 package com.aegis.config.security;
 
-import com.aegis.config.security.customize.CustomUserDetailsService;
+import com.aegis.config.security.customize.JwtTokenFilter;
+import com.aegis.config.security.customize.MultiLoginAuthenticationFilter;
+import com.aegis.config.security.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.List;
 
 /**
  * @Author: xuesong.lei
@@ -25,17 +30,68 @@ import java.util.Collections;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomUserDetailsService customUserDetailsService;
+    private final JwtTokenFilter jwtTokenFilter;
+
+    private final MyAccessDeniedHandler myAccessDeniedHandler;
+
+    private final MyAuthenticationEntryPoint myAuthenticationEntryPoint;
+
+    private final MyAuthenticationFailureHandler myAuthenticationFailureHandler;
+
+    private final MyAuthenticationSuccessHandler myAuthenticationSuccessHandler;
+
+    private final MyLogoutSuccessHandler myLogoutSuccessHandler;
+
+    private final MyFilterInvocationSecurityMetadataSource myFilterInvocationSecurityMetadataSource;
+
+    private final MyAccessDecisionManager myAccessDecisionManager;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.anonymous().disable()
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+    public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
+        return http.anonymous().disable()
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
+                .headers().frameOptions().disable()// 禁用frameOptions
+                .and()
+                .exceptionHandling()// 异常处理
+                .authenticationEntryPoint(myAuthenticationEntryPoint)// 未登录处理
+                .accessDeniedHandler(myAccessDeniedHandler)// 无权限处理
+                .and()
+                .logout().logoutSuccessHandler(myLogoutSuccessHandler)// 退出登录处理
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 禁用session
+                .and()
+                .authorizeRequests()// 授权配置
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()// 允许所有OPTIONS请求
+                .anyRequest().authenticated() // 所有请求都需要认证
+                .and()
+                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterAt(multiLoginAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(filterSecurityInterceptor(authenticationManager), FilterSecurityInterceptor.class)
+                .build();
+    }
 
-        return http.build();
+    /**
+     * 多种登录方式Filter
+     */
+    @Bean
+    public MultiLoginAuthenticationFilter multiLoginAuthenticationFilter(AuthenticationManager authenticationManager) {
+        MultiLoginAuthenticationFilter multiLoginAuthenticationFilter = new MultiLoginAuthenticationFilter();
+        multiLoginAuthenticationFilter.setAuthenticationSuccessHandler(myAuthenticationSuccessHandler);
+        multiLoginAuthenticationFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
+        multiLoginAuthenticationFilter.setAuthenticationManager(authenticationManager);
+        return multiLoginAuthenticationFilter;
+    }
 
+    /**
+     * 自定义FilterSecurityInterceptor
+     */
+    @Bean
+    public FilterSecurityInterceptor filterSecurityInterceptor(AuthenticationManager authenticationManager) {
+        FilterSecurityInterceptor interceptor = new FilterSecurityInterceptor();
+        interceptor.setSecurityMetadataSource(myFilterInvocationSecurityMetadataSource);
+        interceptor.setAccessDecisionManager(myAccessDecisionManager);
+        interceptor.setAuthenticationManager(authenticationManager);
+        return interceptor;
     }
 
     /**
@@ -47,24 +103,10 @@ public class SecurityConfig {
     }
 
     /**
-     * 跨域配置
+     * 认证管理器
      */
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        // 允许的域名
-        config.setAllowedOriginPatterns(Collections.singletonList("*"));
-        // 允许的方法
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        // 允许的请求头
-        config.setAllowedHeaders(Collections.singletonList("*"));
-        // 是否允许携带凭证（cookie、Authorization 头）
-        config.setAllowCredentials(true);
-        // 预检请求缓存时间
-        config.setMaxAge(3600L);
-
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
+    public AuthenticationManager authenticationManager(List<AuthenticationProvider> providers) {
+        return new ProviderManager(providers);
     }
 }

@@ -54,5 +54,6 @@
                  left join t_role tr on tur.role_id = tr.id
         where username = #{username}
            or email = #{username}
+           or phone = #{username}
     </select>
 </mapper>

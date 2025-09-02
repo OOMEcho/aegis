@@ -2,7 +2,8 @@ package com.aegis.utils;
 
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.RandomUtil;
-import com.aegis.common.captcha.CaptchaVO;
+import com.aegis.common.constant.RedisConstants;
+import com.aegis.common.domain.vo.CaptchaVO;
 import com.aegis.common.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,9 +34,6 @@ import java.util.concurrent.TimeUnit;
 public final class CaptchaUtils {
 
     private final RedisUtils redisUtils;
-
-    // 验证码在Redis中的key前缀
-    public static final String SLIDER_CAPTCHA_KEY = "captcha:";
 
     // 画布宽高
     private static final int CANVAS_WIDTH = 320;
@@ -106,7 +104,7 @@ public final class CaptchaUtils {
             String backgroundBase64 = imageToBase64(backgroundImage);
             String sliderBase64 = imageToBase64(sliderImage);
 
-            redisUtils.set(SLIDER_CAPTCHA_KEY + captchaKey, String.valueOf(blockX), 5, TimeUnit.MINUTES);
+            redisUtils.set(RedisConstants.SLIDER_CAPTCHA_KEY + captchaKey, String.valueOf(blockX), 3, TimeUnit.MINUTES);
 
             return new CaptchaVO(captchaKey, backgroundBase64, sliderBase64, blockY);
         } catch (Exception e) {
@@ -119,7 +117,7 @@ public final class CaptchaUtils {
      * 验证验证码
      */
     public boolean verifyCaptcha(String captchaKey, Integer userX) {
-        String correctXStr = redisUtils.get(SLIDER_CAPTCHA_KEY + captchaKey);
+        String correctXStr = redisUtils.get(RedisConstants.SLIDER_CAPTCHA_KEY + captchaKey);
         if (correctXStr == null) {
             return false;
         }
@@ -127,7 +125,7 @@ public final class CaptchaUtils {
         boolean isValid = Math.abs(userX - Integer.parseInt(correctXStr)) <= TOLERANCE;
 
         // 验证后删除，防止重复使用
-        redisUtils.delete(SLIDER_CAPTCHA_KEY + captchaKey);
+        redisUtils.delete(RedisConstants.SLIDER_CAPTCHA_KEY + captchaKey);
 
         return isValid;
     }

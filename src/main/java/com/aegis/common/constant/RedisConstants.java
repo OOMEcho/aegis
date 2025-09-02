@@ -6,4 +6,9 @@ package com.aegis.common.constant;
  * @Description: Redis常量
  */
 public class RedisConstants {
+
+    /**
+     * 滑块验证码 key
+     */
+    public static final String SLIDER_CAPTCHA_KEY = "captcha:";
 }
