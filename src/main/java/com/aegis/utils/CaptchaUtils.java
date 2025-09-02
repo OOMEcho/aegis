@@ -9,13 +9,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomUtils;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +47,37 @@ public final class CaptchaUtils {
     public static final int BLOCK_RADIUS = 9;
 
     // 误差容忍度
-    private static final int TOLERANCE = 5;
+    private static final int TOLERANCE = 3;
+
+    // 背景图数量,对应 resources/static/captcha 目录下的图片数量
+    public static final Integer IMAGE_NUM = 5;
+
+    // 背景图缓存
+    private static final List<BufferedImage> BG_IMAGES = new ArrayList<>();
+
+    /**
+     * 初始化时加载背景图，避免重复 IO
+     */
+    @PostConstruct
+    private void preloadBackgrounds() {
+        for (int i = 1; i <= IMAGE_NUM; i++) {
+            String path = "/static/captcha/bg" + i + ".jpg";
+            try (InputStream in = CaptchaUtils.class.getResourceAsStream(path)) {
+                if (in != null) {
+                    BufferedImage img = ImageIO.read(in);
+                    if (img != null) {
+                        BG_IMAGES.add(imageResize(img));
+                    }
+                }
+            } catch (Exception e) {
+                log.warn("背景图加载失败: {} {}", path, e.getMessage());
+            }
+        }
+        if (BG_IMAGES.isEmpty()) {
+            throw new IllegalStateException("没有可用的验证码背景图");
+        }
+        log.info("成功预加载 {} 张背景图", BG_IMAGES.size());
+    }
 
     /**
      * 生成滑动验证码
@@ -58,8 +91,10 @@ public final class CaptchaUtils {
             int blockX = RandomUtil.randomInt(BLOCK_WIDTH, CANVAS_WIDTH - BLOCK_WIDTH - 10);
             int blockY = RandomUtil.randomInt(10, CANVAS_HEIGHT - BLOCK_HEIGHT + 1);
 
-            // 加载随机背景图片
-            BufferedImage backgroundImage = loadRandomBackgroundImage();
+            // 随机取缓存中的背景图
+            BufferedImage backgroundImage = cloneImage(
+                    BG_IMAGES.get(RandomUtil.randomInt(0, BG_IMAGES.size()))
+            );
 
             // 阻塞块
             BufferedImage sliderImage = new BufferedImage(BLOCK_WIDTH, BLOCK_HEIGHT, BufferedImage.TYPE_4BYTE_ABGR);
@@ -92,41 +127,9 @@ public final class CaptchaUtils {
         boolean isValid = Math.abs(userX - Integer.parseInt(correctXStr)) <= TOLERANCE;
 
         // 验证后删除，防止重复使用
-        redisUtils.delete("captcha:" + captchaKey);
+        redisUtils.delete(SLIDER_CAPTCHA_KEY + captchaKey);
 
         return isValid;
-    }
-
-    /**
-     * 获取验证码资源图
-     **/
-    private BufferedImage loadRandomBackgroundImage() {
-        try {
-            // 随机选择1-5中的一个图片
-            int imageIndex = RandomUtil.randomInt(1, 6);
-            String imagePath = "/static/captcha/bg" + imageIndex + ".jpg";
-
-            InputStream imageStream = CaptchaUtils.class.getResourceAsStream(imagePath);
-            if (imageStream == null) {
-                log.error("背景图片不存在: {}", imagePath);
-                throw new BusinessException("生成验证码失败");
-            }
-
-            BufferedImage originalImage = ImageIO.read(imageStream);
-            imageStream.close();
-
-            if (originalImage == null) {
-                log.error("无法读取背景图片: {}", imagePath);
-                throw new BusinessException("生成验证码失败");
-            }
-
-            // 调整图片大小到验证码尺寸
-            return imageResize(originalImage);
-
-        } catch (Exception e) {
-            log.error("加载背景图片失败: {}", e.getMessage());
-            throw new BusinessException("生成验证码失败");
-        }
     }
 
     /**
@@ -142,6 +145,17 @@ public final class CaptchaUtils {
     }
 
     /**
+     * 克隆图片
+     */
+    private static BufferedImage cloneImage(BufferedImage src) {
+        BufferedImage copy = new BufferedImage(src.getWidth(), src.getHeight(), src.getType());
+        Graphics2D g2d = copy.createGraphics();
+        g2d.drawImage(src, 0, 0, null);
+        g2d.dispose();
+        return copy;
+    }
+
+    /**
      * 抠图，并生成阻塞块
      **/
     private void cutByTemplate(BufferedImage canvasImage, BufferedImage blockImage, int blockX, int blockY) {
@@ -151,25 +165,26 @@ public final class CaptchaUtils {
         // 创建阻塞块具体形状
         for (int i = 0; i < BLOCK_WIDTH; i++) {
             for (int j = 0; j < BLOCK_HEIGHT; j++) {
-                try {
-                    // 原图中对应位置变色处理
-                    if (blockData[i][j] == 1) {
-                        // 背景设置为黑色
-                        waterImage.setRGB(i, j, Color.BLACK.getRGB());
-                        blockImage.setRGB(i, j, canvasImage.getRGB(blockX + i, blockY + j));
-                        // 轮廓设置为白色，取带像素和无像素的界点，判断该点是不是临界轮廓点
-                        if (blockData[i + 1][j] == 0 || blockData[i][j + 1] == 0 || blockData[i - 1][j] == 0 || blockData[i][j - 1] == 0) {
-                            blockImage.setRGB(i, j, Color.WHITE.getRGB());
-                            waterImage.setRGB(i, j, Color.WHITE.getRGB());
-                        }
+                // 原图中对应位置变色处理
+                if (blockData[i][j] == 1) {
+                    // 背景设置为黑色
+                    waterImage.setRGB(i, j, Color.BLACK.getRGB());
+                    blockImage.setRGB(i, j, canvasImage.getRGB(blockX + i, blockY + j));
+
+                    // 轮廓设置为白色，检查边界条件避免数组越界
+                    boolean isEdge = (i > 0 && blockData[i - 1][j] == 0) ||
+                            (i < BLOCK_WIDTH - 1 && blockData[i + 1][j] == 0) ||
+                            (j > 0 && blockData[i][j - 1] == 0) ||
+                            (j < BLOCK_HEIGHT - 1 && blockData[i][j + 1] == 0);
+
+                    if (isEdge) {
+                        blockImage.setRGB(i, j, Color.WHITE.getRGB());
+                        waterImage.setRGB(i, j, Color.WHITE.getRGB());
                     }
+                } else {
                     // 这里把背景设为透明
-                    else {
-                        blockImage.setRGB(i, j, Color.TRANSLUCENT);
-                        waterImage.setRGB(i, j, Color.TRANSLUCENT);
-                    }
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    // 防止数组下标越界异常
+                    blockImage.setRGB(i, j, Color.TRANSLUCENT);
+                    waterImage.setRGB(i, j, Color.TRANSLUCENT);
                 }
             }
         }
@@ -196,7 +211,7 @@ public final class CaptchaUtils {
         int[] circle1 = getCircleCoords(face1);
         int[] circle2 = getCircleCoords(face2);
         // 随机凸/凹类型
-        int shape = RandomUtil.randomInt(0, 1);
+        int shape = RandomUtil.randomInt(0, 2);
         // 圆的标准方程 (x-a)²+(y-b)²=r²,标识圆心（a,b）,半径为r的圆
         // 计算需要的小图轮廓，用二维数组来表示，二维数组有两张值，0和1，其中0表示没有颜色，1有颜色
         for (int i = 0; i < BLOCK_WIDTH; i++) {
