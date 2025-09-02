@@ -1,6 +1,6 @@
 package com.aegis;
 
-import com.aegis.common.page.vo.PageVO;
+import com.aegis.common.page.PageVO;
 import com.aegis.config.mp.MybatisPlusConfig;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
 import com.aegis.modules.log.mapper.SysOperateLogMapper;

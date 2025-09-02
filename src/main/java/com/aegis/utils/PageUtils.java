@@ -1,7 +1,7 @@
 package com.aegis.utils;
 
-import com.aegis.common.page.dto.PageDTO;
-import com.aegis.common.page.vo.PageVO;
+import com.aegis.common.page.PageDTO;
+import com.aegis.common.page.PageVO;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

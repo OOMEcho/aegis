@@ -1,4 +1,4 @@
-package com.aegis.common.page.vo;
+package com.aegis.common.page;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.Data;

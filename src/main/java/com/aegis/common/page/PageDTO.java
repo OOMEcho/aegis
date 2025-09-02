@@ -1,4 +1,4 @@
-package com.aegis.common.page.dto;
+package com.aegis.common.page;
 
 import lombok.Data;
 
