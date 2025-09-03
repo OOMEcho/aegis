@@ -1,15 +1,17 @@
 package com.aegis.modules.menu.domain.entity;
 
+import com.aegis.modules.role.domain.entity.Role;
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @Author: xuesong.lei
@@ -99,6 +101,12 @@ public class Menu implements Serializable {
     private Integer orderNum;
 
     /**
+     * 请求地址
+     */
+    @TableField(value = "request_url")
+    private String requestUrl;
+
+    /**
      * 路由地址
      */
     @TableField(value = "path")
@@ -109,18 +117,6 @@ public class Menu implements Serializable {
      */
     @TableField(value = "component")
     private String component;
-
-    /**
-     * 路由参数
-     */
-    @TableField(value = "query")
-    private String query;
-
-    /**
-     * 路由名称
-     */
-    @TableField(value = "route_name")
-    private String routeName;
 
     /**
      * 是否为外链(0-是,1-否)
@@ -163,5 +159,17 @@ public class Menu implements Serializable {
      */
     @TableField(value = "icon")
     private String icon;
+
+    /**
+     * 角色列表
+     */
+    @TableField(exist = false)
+    private List<Role> roleList;
+
+    /**
+     * 子菜单
+     */
+    @TableField(exist = false)
+    private List<Menu> children = new ArrayList<>();
 
 }

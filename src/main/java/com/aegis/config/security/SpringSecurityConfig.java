@@ -24,11 +24,11 @@ import java.util.List;
 /**
  * @Author: xuesong.lei
  * @Date: 2025/8/25 22:30
- * @Description: Security配置类
+ * @Description: SpringSecurity配置类
  */
 @Configuration
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class SpringSecurityConfig {
 
     private final JwtTokenFilter jwtTokenFilter;
 

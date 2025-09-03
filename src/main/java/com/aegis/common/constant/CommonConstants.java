@@ -15,7 +15,7 @@ public class CommonConstants {
     /**
      * redis中存储的菜单key
      */
-    public static final String MENUS = "menus";
+    public static final String MENUS = "menus:";
 
     /**
      * 正常/成功

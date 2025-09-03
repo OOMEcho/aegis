@@ -3,6 +3,8 @@ package com.aegis.modules.menu.mapper;
 import com.aegis.modules.menu.domain.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025-08-30 10:47:13
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
+    List<Menu> getAllMenu();
 }
 
 
