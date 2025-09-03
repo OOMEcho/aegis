@@ -182,7 +182,7 @@ public final class EmailUtils {
         model.put("email", to);
         model.put("code", code);
         model.put("expireMinutes", expireMinutes);
-        sendTemplateMail(to, "邮箱验证码", "verification-code.ftl", model);
+        sendTemplateMail(to, "验证码", "verification-code.ftl", model);
     }
 
     /**
@@ -244,7 +244,7 @@ public final class EmailUtils {
      * @param email 邮箱地址
      * @return 是否有效
      */
-    private boolean isValidEmail(String email) {
+    public boolean isValidEmail(String email) {
         if (!StringUtils.hasText(email)) {
             return false;
         }

@@ -17,6 +17,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025/9/3 11:16
@@ -75,7 +77,8 @@ public class EmailAuthenticationProvider implements AuthenticationProvider {
         // 验证码校验
         if (!code.equals(emailCode)) {
             // 错误次数+1
-            redisUtils.increment(errorKey, 30);
+            redisUtils.increment(errorKey, 1);
+            redisUtils.expire(errorKey, 30, TimeUnit.MINUTES);
             throw new LoginException("验证码不正确");
         }
 

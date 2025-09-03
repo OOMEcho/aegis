@@ -23,6 +23,16 @@ public class RedisConstants {
     public static final String SMS_LOGIN_ERROR = "smsLoginError:";
 
     /**
+     * 短信发送频率 key
+     */
+    public static final String SMS_SEND_FREQUENCY = "smsSendFrequency:";
+
+    /**
+     * 短信每日发送上限 key
+     */
+    public static final String SMS_DAILY_LIMIT = "smsDailyLimit:";
+
+    /**
      * 邮箱登录 key
      */
     public static final String EMAIL_LOGIN = "emailLogin:";
@@ -31,4 +41,14 @@ public class RedisConstants {
      * 邮箱登录错误次数 key
      */
     public static final String EMAIL_LOGIN_ERROR = "emailLoginError:";
+
+    /**
+     * 邮箱发送频率 key
+     */
+    public static final String EMAIL_SEND_FREQUENCY = "emailSendFrequency:";
+
+    /**
+     * 邮箱每日发送上限 key
+     */
+    public static final String EMAIL_DAILY_LIMIT = "emailDailyLimit:";
 }
