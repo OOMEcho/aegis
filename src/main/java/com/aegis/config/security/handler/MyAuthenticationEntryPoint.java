@@ -25,5 +25,4 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(JSONUtil.toJsonStr(Result.error(ResultCodeEnum.SIGN_EXPIRES)));
     }
-
 }

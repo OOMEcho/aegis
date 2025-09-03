@@ -25,5 +25,4 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
         response.setContentType("application/json;charset=utf-8");
         response.getWriter().write(JSONUtil.toJsonStr(Result.error(ResultCodeEnum.LACK_OF_AUTHORITY)));
     }
-
 }

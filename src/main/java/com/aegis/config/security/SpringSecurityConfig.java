@@ -48,22 +48,20 @@ public class SpringSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        return http.anonymous().disable()
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers().frameOptions().disable()// 禁用frameOptions
-                .and()
-                .exceptionHandling()// 异常处理
-                .authenticationEntryPoint(myAuthenticationEntryPoint)// 未登录处理
-                .accessDeniedHandler(myAccessDeniedHandler)// 无权限处理
-                .and()
-                .logout().logoutSuccessHandler(myLogoutSuccessHandler)// 退出登录处理
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// 禁用session
-                .and()
-                .authorizeRequests()// 授权配置
-                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()// 允许所有OPTIONS请求
-                .anyRequest().authenticated() // 所有请求都需要认证
-                .and()
+                .anonymous(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions().disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))// 禁用session
+                .exceptionHandling(ex -> ex
+                        .authenticationEntryPoint(myAuthenticationEntryPoint)// 未登录处理
+                        .accessDeniedHandler(myAccessDeniedHandler)// 无权限处理
+                )
+                .logout(logout -> logout.logoutSuccessHandler(myLogoutSuccessHandler))// 退出登录处理
+                .authorizeHttpRequests(auth -> auth
+                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()// 允许所有OPTIONS请求
+                        .anyRequest().authenticated()// 所有请求都需要认证
+                )
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(multiLoginAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(filterSecurityInterceptor(authenticationManager), FilterSecurityInterceptor.class)

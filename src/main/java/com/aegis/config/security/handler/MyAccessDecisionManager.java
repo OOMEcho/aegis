@@ -12,6 +12,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -36,10 +37,8 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
             throw new InsufficientAuthenticationException("User not authenticated");
         }
 
-        // 检查是否有NONE权限（表示只需要认证即可访问）
-        boolean hasNoneAuthority = configAttributes.stream().anyMatch(attr -> CommonConstants.NONE.equals(attr.getAttribute()));
-
-        if (hasNoneAuthority) {
+        // 检查是否有NONE权限
+        if (configAttributes.stream().anyMatch(attr -> CommonConstants.NONE.equals(attr.getAttribute()))) {
             log.debug("Access granted for authenticated user to unrestricted resource");
             return;
         }
@@ -52,15 +51,16 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
         }
 
         // 检查用户权限是否匹配所需权限
+        Set<String> userAuthorities = authorities.stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toSet());
+
         for (ConfigAttribute configAttribute : configAttributes) {
             String requiredAuthority = configAttribute.getAttribute();
-
-            for (GrantedAuthority authority : authorities) {
-                if (requiredAuthority.equals(authority.getAuthority())) {
-                    log.debug("Access granted for user: {} with authority: {}",
-                            authentication.getName(), authority.getAuthority());
-                    return;
-                }
+            if (userAuthorities.contains(requiredAuthority)) {
+                log.debug("Access granted for user: {} with authority: {}",
+                        authentication.getName(), requiredAuthority);
+                return;
             }
         }
 
