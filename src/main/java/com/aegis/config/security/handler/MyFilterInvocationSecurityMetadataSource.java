@@ -7,7 +7,7 @@ import com.aegis.modules.menu.mapper.MenuMapper;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.FilterInvocation;
@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
  * @Date: 2025/9/2 23:04
  * @Description: 该类的主要功能就是通过当前的请求地址，获取该地址需要的用户角色
  */
-@Slf4j
 @Component
 @RequiredArgsConstructor
 public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
@@ -61,26 +60,32 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        final String method = ((FilterInvocation) object).getRequest().getMethod();
+
+        // OPTIONS 请求全部放行
+        if (HttpMethod.OPTIONS.matches(method)) {
+            return null;
+        }
+
+        // 获取请求路径
+        final String requestUrl = ((FilterInvocation) object).getRequestUrl();
 
         // 检查白名单
         for (String permitUrl : whitelistProperties.getUrls()) {
             if (antPathMatcher.match(permitUrl, requestUrl)) {
-                log.debug("Request {} matches whitelist pattern {}", requestUrl, permitUrl);
                 return null;
             }
         }
 
+        // 获取所有菜单
         List<Menu> allMenu = loadDataSourceAllUrl();
         for (Menu menu : allMenu) {
             if (antPathMatcher.match(menu.getRequestUrl(), requestUrl)) {
                 String[] roles = menu.getRoleList().stream().map(Role::getRoleCode).toArray(String[]::new);
-                log.debug("Request {} requires roles: {}", requestUrl, String.join(", ", roles));
                 return SecurityConfig.createList(roles);
             }
         }
 
-        log.debug("Request {} requires authentication only", requestUrl);
         return SecurityConfig.createList(CommonConstants.NONE);
     }
 

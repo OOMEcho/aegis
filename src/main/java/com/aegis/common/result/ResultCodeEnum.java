@@ -18,7 +18,6 @@ public enum ResultCodeEnum {
     NOT_FOUND(404, "请求资源不存在"),
     USER_IS_DISABLE(405, "账户已被禁用"),
     ERROR(500, "系统异常,请稍后重试"),
-    SIGN_EXPIRES(999, "登录过期,请重新登录"),
     ;
 
     private final Integer code;

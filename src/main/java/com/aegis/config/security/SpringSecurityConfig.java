@@ -6,7 +6,6 @@ import com.aegis.config.security.handler.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.ProviderManager;
@@ -58,10 +57,6 @@ public class SpringSecurityConfig {
                         .accessDeniedHandler(myAccessDeniedHandler)// 无权限处理
                 )
                 .logout(logout -> logout.logoutSuccessHandler(myLogoutSuccessHandler))// 退出登录处理
-                .authorizeHttpRequests(auth -> auth
-                        .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()// 允许所有OPTIONS请求
-                        .anyRequest().authenticated()// 所有请求都需要认证
-                )
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(multiLoginAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(filterSecurityInterceptor(authenticationManager), FilterSecurityInterceptor.class)

@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public String sendRegisterCode(String email) {
-        if (emailUtils.isValidEmail(email)) {
+        if (!emailUtils.isValidEmail(email)) {
             throw new BusinessException("邮箱格式不正确");
         }
         String errorKey = RedisConstants.EMAIL_LOGIN_ERROR + email;

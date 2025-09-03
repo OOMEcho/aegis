@@ -97,7 +97,7 @@ whitelist:
   urls:
     - /login
     - /logout
-    - /email/sendRegisterCode
+    - /email/sendRegisterCode*
 
 logging:
   file:

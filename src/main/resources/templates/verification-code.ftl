@@ -167,7 +167,6 @@
 <body>
 <div class="email-container">
     <div class="header">
-        <h1>📧 邮箱验证</h1>
         <p>请使用下方验证码完成验证</p>
     </div>
 
@@ -201,7 +200,7 @@
     <div class="footer">
         <p>此邮件由系统自动发送，请勿回复。</p>
         <div class="contact-info">
-            <p>如有疑问，请联系客服：<a href="mailto:support@example.com">support@example.com</a></p>
+            <p>如有疑问，请联系客服：<a href="mailto:support@example.com">aegis_system@163.com</a></p>
         </div>
     </div>
 </div>
