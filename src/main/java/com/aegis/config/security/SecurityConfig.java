@@ -66,7 +66,7 @@ public class SecurityConfig {
                 .and()
                 .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(multiLoginAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
-                .addFilterBefore(filterSecurityInterceptor(authenticationManager), FilterSecurityInterceptor.class)
+                .addFilterAt(filterSecurityInterceptor(authenticationManager), FilterSecurityInterceptor.class)
                 .build();
     }
 

@@ -51,7 +51,7 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return !CommonConstants.DISABLE_STATUS.equals(user.getStatus());
+        return true;
     }
 
     @Override
