@@ -13,7 +13,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
-import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -42,7 +41,7 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException {
         if (request.getContentType() == null || !request.getContentType().startsWith(MediaType.APPLICATION_JSON_VALUE)) {
-            throw new AuthenticationServiceException("只支持 application/json 请求");
+            throw new LoginException("只支持 application/json 请求");
         }
 
         // 解析请求体
@@ -52,7 +51,7 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
         // 获取登录类型
         String loginType = (String) map.get("loginType");
         if (!StringUtils.hasText(loginType)) {
-            throw new AuthenticationServiceException("loginType不能为空");
+            throw new LoginException("loginType不能为空");
         }
 
         // 校验滑块验证码
@@ -74,7 +73,7 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
                 authToken = new SmsAuthenticationToken(smsLoginRequestDTO.getPhone(), smsLoginRequestDTO.getCode());
                 break;
             default:
-                throw new AuthenticationServiceException("不支持的 loginType: " + loginType);
+                throw new LoginException("不支持的 loginType: " + loginType);
         }
 
         setDetails(request, authToken);

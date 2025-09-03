@@ -31,7 +31,7 @@ public class MyAuthenticationFailureHandler implements AuthenticationFailureHand
             response.getWriter().write(JSONUtil.toJsonStr(Result.error(ResultCodeEnum.USER_IS_DISABLE)));
         } else {
             response.setContentType("application/json;charset=utf-8");
-            response.getWriter().write(JSONUtil.toJsonStr(Result.error(ResultCodeEnum.ACCOUNT_ERROR)));
+            response.getWriter().write(JSONUtil.toJsonStr(Result.error(e.getMessage())));
         }
     }
 }
