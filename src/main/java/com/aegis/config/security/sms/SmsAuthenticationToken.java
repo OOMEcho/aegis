@@ -55,5 +55,4 @@ public class SmsAuthenticationToken extends AbstractAuthenticationToken {
         super.eraseCredentials();
         this.credentials = null;
     }
-
 }

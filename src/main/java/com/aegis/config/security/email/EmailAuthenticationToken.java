@@ -55,5 +55,4 @@ public class EmailAuthenticationToken extends AbstractAuthenticationToken {
         super.eraseCredentials();
         this.credentials = null;
     }
-
 }
