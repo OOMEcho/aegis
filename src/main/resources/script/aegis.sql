@@ -232,6 +232,25 @@ CREATE TABLE `t_dictionary`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '字典表';
 
+DROP TABLE IF EXISTS `t_whitelist`;
+CREATE TABLE `t_whitelist`
+(
+    `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `create_by`      VARCHAR(64)              DEFAULT NULL COMMENT '创建人',
+    `update_by`      VARCHAR(64)              DEFAULT NULL COMMENT '更新人',
+    `create_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`        TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
+    `version`        INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
+    `remark`         VARCHAR(100)             DEFAULT NULL COMMENT '备注',
+    `request_method` VARCHAR(10)     NOT NULL COMMENT '请求方法,GET,POST,PUT,DELETE,ALL=不限制',
+    `url_pattern`    VARCHAR(255)    NOT NULL COMMENT 'URL匹配模式,支持Ant风格,比如/api/user/**',
+    `description`    VARCHAR(100)             DEFAULT NULL COMMENT '描述',
+    `status`         CHAR(1)         NOT NULL DEFAULT '0' COMMENT '状态(0-正常,1停用)',
+    PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT = '白名单表';
+
 DROP TABLE IF EXISTS `t_sys_operate_log`;
 CREATE TABLE `t_sys_operate_log`
 (

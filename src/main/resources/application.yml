@@ -92,15 +92,6 @@ jwt:
   access-token-expiration: 900  # 15分钟
   refresh-token-expiration: 604800  # 7天
 
-# 白名单
-whitelist:
-  urls:
-    - /login
-    - /logout
-    - /captcha/generate
-    - /captcha/verify
-    - /email/sendRegisterCode*
-
 logging:
   file:
     path: ./logs # 日志路径
