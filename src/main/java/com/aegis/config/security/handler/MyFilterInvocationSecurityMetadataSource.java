@@ -50,7 +50,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     /**
      * 加载所有的URL存入Redis中
-     * 在新增、修改、删除角色关联菜单时,删除Redis中的数据,重新加载
+     * TODO 在新增、修改、删除角色关联菜单时,删除Redis中的数据,重新加载
      */
     public List<Menu> loadDataSourceAllUrl() {
         if (redisUtils.hasKey(CommonConstants.MENUS)) {
@@ -64,7 +64,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     /**
      * 加载所有的白名单存入Redis中
-     * 在新增、修改、删除白名单时,删除Redis中的数据,重新加载
+     * TODO 在新增、修改、删除白名单时,删除Redis中的数据,重新加载
      */
     public List<Whitelist> loadWhitelistFromCache() {
         if (redisUtils.hasKey(CommonConstants.WHITELIST)) {
@@ -100,7 +100,7 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
             }
         }
 
-        // 获取所有菜单
+        // 获取所有菜单数据,匹配请求路径,获取该路径需要的角色
         List<Menu> allMenu = loadDataSourceAllUrl();
         for (Menu menu : allMenu) {
             if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(menu.getRequestMethod()) || menu.getRequestMethod().equalsIgnoreCase(method)) {
