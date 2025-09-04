@@ -5,6 +5,7 @@ import com.aegis.common.domain.dto.EmailLoginRequestDTO;
 import com.aegis.common.domain.dto.PasswordLoginRequestDTO;
 import com.aegis.common.domain.dto.SmsLoginRequestDTO;
 import com.aegis.common.exception.LoginException;
+import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.config.security.email.EmailAuthenticationToken;
 import com.aegis.config.security.sms.SmsAuthenticationToken;
 import com.aegis.utils.CaptchaUtils;
@@ -49,7 +50,7 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
         });
 
         // 获取登录类型
-        String loginType = (String) map.get("loginType");
+        final String loginType = (String) map.get(LoginRequestConstants.LOGIN_TYPE);
         if (!StringUtils.hasText(loginType)) {
             throw new LoginException("loginType不能为空");
         }
@@ -62,14 +63,17 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
         switch (loginType) {
             case LoginRequestConstants.PASSWORD:
                 PasswordLoginRequestDTO passwordRequest = objectMapper.convertValue(map, PasswordLoginRequestDTO.class);
+                checkRequestParam(passwordRequest.getUsername(), passwordRequest.getPassword());
                 authToken = new UsernamePasswordAuthenticationToken(passwordRequest.getUsername(), passwordRequest.getPassword());
                 break;
             case LoginRequestConstants.EMAIL:
                 EmailLoginRequestDTO emailLoginRequestDTO = objectMapper.convertValue(map, EmailLoginRequestDTO.class);
+                checkRequestParam(emailLoginRequestDTO.getEmail(), emailLoginRequestDTO.getCode());
                 authToken = new EmailAuthenticationToken(emailLoginRequestDTO.getEmail(), emailLoginRequestDTO.getCode());
                 break;
             case LoginRequestConstants.SMS:
                 SmsLoginRequestDTO smsLoginRequestDTO = objectMapper.convertValue(map, SmsLoginRequestDTO.class);
+                checkRequestParam(smsLoginRequestDTO.getPhone(), smsLoginRequestDTO.getCode());
                 authToken = new SmsAuthenticationToken(smsLoginRequestDTO.getPhone(), smsLoginRequestDTO.getCode());
                 break;
             default:
@@ -96,6 +100,12 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
         CaptchaUtils captchaUtils = SpringContextUtil.getBean(CaptchaUtils.class);
         if (!captchaUtils.verifyCaptcha(captchaKey, slideX)) {
             throw new LoginException("验证码校验失败");
+        }
+    }
+
+    private void checkRequestParam(Object principal, Object credentials) {
+        if (!StringUtils.hasText(principal.toString()) || !StringUtils.hasText(credentials.toString())) {
+            throw new LoginException(ResultCodeEnum.ACCOUNT_ERROR.getMessage());
         }
     }
 }

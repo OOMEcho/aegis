@@ -1,5 +1,6 @@
 package com.aegis.common.exception;
 
+import com.aegis.common.result.ResultCodeEnum;
 import org.springframework.security.core.AuthenticationException;
 
 /**
@@ -9,8 +10,21 @@ import org.springframework.security.core.AuthenticationException;
  */
 public class LoginException extends AuthenticationException {
 
-    public LoginException(String msg) {
-        super(msg);
+    private final Integer code;
+
+    public LoginException(String message) {
+        super(message);
+        this.code = ResultCodeEnum.ERROR.getCode();
+    }
+
+    public LoginException(Integer code, String message) {
+        super(message);
+        this.code = code;
+    }
+
+    public LoginException(ResultCodeEnum resultCodeEnum) {
+        super(resultCodeEnum.getMessage());
+        this.code = resultCodeEnum.getCode();
     }
 
 }

@@ -3,7 +3,6 @@ package com.aegis.modules.common.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.exception.BusinessException;
-import com.aegis.common.exception.LoginException;
 import com.aegis.modules.common.service.EmailService;
 import com.aegis.utils.EmailUtils;
 import com.aegis.utils.RedisUtils;
@@ -40,7 +39,7 @@ public class EmailServiceImpl implements EmailService {
         String errorKey = RedisConstants.EMAIL_LOGIN_ERROR + email;
         String errorCount = redisUtils.get(errorKey);
         if (StrUtil.isNotEmpty(errorCount) && Integer.parseInt(errorCount) >= 5) {
-            throw new LoginException("验证码错误次数过多，请30分钟后再试");
+            throw new BusinessException("验证码错误次数过多，请30分钟后再试");
         }
 
         String frequencyKey = RedisConstants.EMAIL_SEND_FREQUENCY + email;

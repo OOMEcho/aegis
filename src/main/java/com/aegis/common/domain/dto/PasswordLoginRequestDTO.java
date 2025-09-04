@@ -1,6 +1,7 @@
 package com.aegis.common.domain.dto;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * @Author: xuesong.lei
@@ -8,7 +9,8 @@ import lombok.Data;
  * @Description: 用户名密码DTO
  */
 @Data
-public class PasswordLoginRequestDTO {
+@EqualsAndHashCode(callSuper = true)
+public class PasswordLoginRequestDTO extends LoginRequestDTO {
 
     /**
      * 用户名

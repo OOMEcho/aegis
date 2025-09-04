@@ -27,7 +27,7 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         // 检查用户是否已认证
         if (authentication == null || !authentication.isAuthenticated()) {
-            throw new LoginException(ResultCodeEnum.NOT_LOGGED_IN.getMessage());
+            throw new LoginException(ResultCodeEnum.NOT_LOGGED_IN);
         }
 
         // 检查是否有NONE权限
