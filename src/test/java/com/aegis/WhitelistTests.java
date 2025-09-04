@@ -31,7 +31,7 @@ public class WhitelistTests {
     void testWhitelistMapper() {
         Whitelist whitelist = new Whitelist();
         whitelist.setRequestMethod("GET");
-        whitelist.setUrlPattern("/email/sendRegisterCode");
+        whitelist.setRequestUri("/email/sendRegisterCode");
         whitelist.setDescription("发送邮箱验证码");
         whitelistMapper.insert(whitelist);
     }

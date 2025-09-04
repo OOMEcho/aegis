@@ -3,6 +3,8 @@ package com.aegis.modules.whitelist.mapper;
 import com.aegis.modules.whitelist.domain.entity.Whitelist;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
+import java.util.List;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025-09-04 13:46:14
@@ -11,6 +13,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface WhitelistMapper extends BaseMapper<Whitelist> {
 
+    List<Whitelist> getAllWhitelist();
 }
 
 

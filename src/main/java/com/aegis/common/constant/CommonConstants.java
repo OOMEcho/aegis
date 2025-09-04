@@ -18,6 +18,16 @@ public class CommonConstants {
     public static final String MENUS = "menus:";
 
     /**
+     * redis中存储的白名单key
+     */
+    public static final String WHITELIST = "whitelist";
+
+    /**
+     * 所有请求方式
+     */
+    public static final String REQUEST_METHOD_ALL = "all";
+
+    /**
      * 正常/成功
      */
     public static final String NORMAL_STATUS = "0";

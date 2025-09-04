@@ -14,14 +14,20 @@
         <result property="version" column="version"/>
         <result property="remark" column="remark"/>
         <result property="requestMethod" column="request_method"/>
-        <result property="urlPattern" column="url_pattern"/>
+        <result property="requestUri" column="request_uri"/>
         <result property="description" column="description"/>
         <result property="status" column="status"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         id,create_by,update_by,create_time,update_time,deleted,
-        version,remark,request_method,url_pattern,description,
+        version,remark,request_method,request_uri,`description`,
         status
     </sql>
+
+    <select id="getAllWhitelist" resultType="com.aegis.modules.whitelist.domain.entity.Whitelist">
+        select
+        <include refid="Base_Column_List"/>
+        from t_whitelist where deleted=0 and status=0
+    </select>
 </mapper>

@@ -101,10 +101,16 @@ public class Menu implements Serializable {
     private Integer orderNum;
 
     /**
-     * 请求地址
+     * 请求方法,GET,POST,PUT,DELETE,ALL=不限制
      */
-    @TableField(value = "request_url")
-    private String requestUrl;
+    @TableField(value = "request_method")
+    private String requestMethod;
+
+    /**
+     * URL匹配模式,支持Ant风格,比如/api/user/**
+     */
+    @TableField(value = "request_uri")
+    private String requestUri;
 
     /**
      * 路由地址

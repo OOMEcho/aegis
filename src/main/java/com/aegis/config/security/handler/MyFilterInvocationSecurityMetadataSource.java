@@ -1,10 +1,11 @@
 package com.aegis.config.security.handler;
 
 import com.aegis.common.constant.CommonConstants;
-import com.aegis.config.security.customize.WhitelistProperties;
 import com.aegis.modules.menu.domain.entity.Menu;
 import com.aegis.modules.menu.mapper.MenuMapper;
 import com.aegis.modules.role.domain.entity.Role;
+import com.aegis.modules.whitelist.domain.entity.Whitelist;
+import com.aegis.modules.whitelist.mapper.WhitelistMapper;
 import com.aegis.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpMethod;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -32,16 +34,18 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     private final MenuMapper menuMapper;
 
-    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+    private final WhitelistMapper whitelistMapper;
 
     private final RedisUtils redisUtils;
 
-    private final WhitelistProperties whitelistProperties;
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     @PostConstruct
     public void init() {
         // 系统启动时预加载菜单数据
         loadDataSourceAllUrl();
+        // 系统启动时预加载白名单数据
+        loadWhitelistFromCache();
     }
 
     /**
@@ -58,9 +62,25 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         }
     }
 
+    /**
+     * 加载所有的白名单存入Redis中
+     * 在新增、修改、删除白名单时,删除Redis中的数据,重新加载
+     */
+    public List<Whitelist> loadWhitelistFromCache() {
+        if (redisUtils.hasKey(CommonConstants.WHITELIST)) {
+            return redisUtils.getList(CommonConstants.WHITELIST, Whitelist.class);
+        } else {
+            List<Whitelist> rules = whitelistMapper.getAllWhitelist();
+            redisUtils.set(CommonConstants.WHITELIST, rules, 1, TimeUnit.DAYS);
+            return rules;
+        }
+    }
+
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
-        final String method = ((FilterInvocation) object).getRequest().getMethod();
+        HttpServletRequest request = ((FilterInvocation) object).getRequest();
+
+        final String method = request.getMethod();
 
         // OPTIONS 请求全部放行
         if (HttpMethod.OPTIONS.matches(method)) {
@@ -68,21 +88,26 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         }
 
         // 获取请求路径
-        final String requestUrl = ((FilterInvocation) object).getRequestUrl();
+        final String requestURI = request.getRequestURI();
 
-        // 检查白名单
-        for (String permitUrl : whitelistProperties.getUrls()) {
-            if (antPathMatcher.match(permitUrl, requestUrl)) {
-                return null;
+        // 判断请求路径是否在白名单内,在白名单内直接放行
+        List<Whitelist> whitelists = loadWhitelistFromCache();
+        for (Whitelist whitelist : whitelists) {
+            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(whitelist.getRequestMethod()) || whitelist.getRequestMethod().equalsIgnoreCase(method)) {
+                if (antPathMatcher.match(whitelist.getRequestUri(), requestURI)) {
+                    return null;
+                }
             }
         }
 
         // 获取所有菜单
         List<Menu> allMenu = loadDataSourceAllUrl();
         for (Menu menu : allMenu) {
-            if (antPathMatcher.match(menu.getRequestUrl(), requestUrl)) {
-                String[] roles = menu.getRoleList().stream().map(Role::getRoleCode).toArray(String[]::new);
-                return SecurityConfig.createList(roles);
+            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(menu.getRequestMethod()) || menu.getRequestMethod().equalsIgnoreCase(method)) {
+                if (antPathMatcher.match(menu.getRequestUri(), requestURI)) {
+                    String[] roles = menu.getRoleList().stream().map(Role::getRoleCode).toArray(String[]::new);
+                    return SecurityConfig.createList(roles);
+                }
             }
         }
 

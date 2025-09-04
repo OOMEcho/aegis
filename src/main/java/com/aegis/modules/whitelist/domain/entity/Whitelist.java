@@ -90,8 +90,8 @@ public class Whitelist implements Serializable {
     /**
      * URL匹配模式,支持Ant风格,比如/api/user/**
      */
-    @TableField(value = "url_pattern")
-    private String urlPattern;
+    @TableField(value = "request_uri")
+    private String requestUri;
 
     /**
      * 描述

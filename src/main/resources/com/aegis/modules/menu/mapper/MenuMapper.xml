@@ -16,7 +16,8 @@
         <result property="menuName" column="menu_name"/>
         <result property="parentId" column="parent_id"/>
         <result property="orderNum" column="order_num"/>
-        <result property="requestUrl" column="request_url"/>
+        <result property="requestMethod" column="request_method"/>
+        <result property="requestUri" column="request_uri"/>
         <result property="path" column="path"/>
         <result property="component" column="component"/>
         <result property="isFrame" column="is_frame"/>
@@ -36,7 +37,7 @@
 
     <sql id="Base_Column_List">
         id,create_by,update_by,create_time,update_time,deleted,
-        version,remark,menu_name,parent_id,order_num,request_url
+        version,remark,menu_name,parent_id,order_num,request_method,request_uri
         `path`,component,is_frame,is_cache,menu_type,`visible`,`status`
         ,perms,icon
     </sql>
@@ -46,7 +47,7 @@
         from t_menu tm
                  left join t_role_menu trm on trm.menu_id = tm.id
                  left join t_role tr on tr.id = trm.role_id
-        where tm.request_url is not null
+        where tm.request_uri is not null
           and tm.deleted = '0'
           and tm.status = '0'
           and tr.deleted = '0'
