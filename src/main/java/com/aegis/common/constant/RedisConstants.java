@@ -8,6 +8,26 @@ package com.aegis.common.constant;
 public class RedisConstants {
 
     /**
+     * redis中存储的菜单key
+     */
+    public static final String MENUS = "menus:";
+
+    /**
+     * redis中存储的白名单key
+     */
+    public static final String WHITELIST = "whitelist";
+
+    /**
+     * 刷新令牌 key 前缀
+     */
+    public static final String REFRESH_TOKEN = "refresh_token:";
+
+    /**
+     * 黑名单令牌 key 前缀
+     */
+    public static final String BLACKLIST_TOKEN = "blacklist_token:";
+
+    /**
      * 滑块验证码 key
      */
     public static final String SLIDER_CAPTCHA_KEY = "captcha:";

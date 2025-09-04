@@ -16,8 +16,8 @@ import java.io.InputStream;
  * @Date: 2025/08/21 15:24
  * @Description: 根据IP地址获取归属地
  */
-@Service
 @Slf4j
+@Service
 public class Ip2regionService {
 
     private Searcher searcher;

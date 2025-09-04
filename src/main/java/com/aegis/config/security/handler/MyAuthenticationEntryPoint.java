@@ -1,16 +1,13 @@
 package com.aegis.config.security.handler;
 
-import cn.hutool.json.JSONUtil;
-import com.aegis.common.result.Result;
 import com.aegis.common.result.ResultCodeEnum;
+import com.aegis.utils.ResponseUtils;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @Author: xuesong.lei
@@ -21,8 +18,7 @@ import java.io.IOException;
 public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSONUtil.toJsonStr(Result.error(ResultCodeEnum.NOT_LOGGED_IN)));
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
+        ResponseUtils.writeError(response, ResultCodeEnum.NOT_LOGGED_IN);
     }
 }

@@ -1,6 +1,7 @@
 package com.aegis.config.security.handler;
 
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.constant.RedisConstants;
 import com.aegis.modules.menu.domain.entity.Menu;
 import com.aegis.modules.menu.mapper.MenuMapper;
 import com.aegis.modules.role.domain.entity.Role;
@@ -53,11 +54,11 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
      * TODO 在新增、修改、删除角色关联菜单时,删除Redis中的数据,重新加载
      */
     public List<Menu> loadDataSourceAllUrl() {
-        if (redisUtils.hasKey(CommonConstants.MENUS)) {
-            return redisUtils.getList(CommonConstants.MENUS, Menu.class);
+        if (redisUtils.hasKey(RedisConstants.MENUS)) {
+            return redisUtils.getList(RedisConstants.MENUS, Menu.class);
         } else {
             List<Menu> allMenu = menuMapper.getAllMenu();
-            redisUtils.set(CommonConstants.MENUS, allMenu, 1, TimeUnit.DAYS);
+            redisUtils.set(RedisConstants.MENUS, allMenu, 1, TimeUnit.DAYS);
             return allMenu;
         }
     }
@@ -67,11 +68,11 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
      * TODO 在新增、修改、删除白名单时,删除Redis中的数据,重新加载
      */
     public List<Whitelist> loadWhitelistFromCache() {
-        if (redisUtils.hasKey(CommonConstants.WHITELIST)) {
-            return redisUtils.getList(CommonConstants.WHITELIST, Whitelist.class);
+        if (redisUtils.hasKey(RedisConstants.WHITELIST)) {
+            return redisUtils.getList(RedisConstants.WHITELIST, Whitelist.class);
         } else {
             List<Whitelist> rules = whitelistMapper.getAllWhitelist();
-            redisUtils.set(CommonConstants.WHITELIST, rules, 1, TimeUnit.DAYS);
+            redisUtils.set(RedisConstants.WHITELIST, rules, 1, TimeUnit.DAYS);
             return rules;
         }
     }

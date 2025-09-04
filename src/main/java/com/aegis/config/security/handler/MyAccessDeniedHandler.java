@@ -1,8 +1,7 @@
 package com.aegis.config.security.handler;
 
-import cn.hutool.json.JSONUtil;
-import com.aegis.common.result.Result;
 import com.aegis.common.result.ResultCodeEnum;
+import com.aegis.utils.ResponseUtils;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
@@ -22,7 +21,6 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
-        response.setContentType("application/json;charset=utf-8");
-        response.getWriter().write(JSONUtil.toJsonStr(Result.error(ResultCodeEnum.LACK_OF_AUTHORITY)));
+        ResponseUtils.writeError(response, ResultCodeEnum.LACK_OF_AUTHORITY);
     }
 }

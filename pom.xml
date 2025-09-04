@@ -48,6 +48,7 @@
         <tencent-oss.version>5.6.251</tencent-oss.version>
         <hutool-all.version>5.8.39</hutool-all.version>
         <jjwt.version>0.13.0</jjwt.version>
+        <bitwalker.version>1.21</bitwalker.version>
     </properties>
 
     <dependencies>
@@ -157,6 +158,12 @@
             <artifactId>jjwt-jackson</artifactId>
             <version>${jjwt.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        <!-- 解析客户端操作系统、浏览器等 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>${bitwalker.version}</version>
         </dependency>
         <!--配置提示-->
         <dependency>

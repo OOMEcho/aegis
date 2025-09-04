@@ -1,20 +1,19 @@
 package com.aegis.utils;
 
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.time.Instant;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -52,12 +51,10 @@ public class JwtTokenUtil {
     public static class TokenResponse {
         private String accessToken;
         private String refreshToken;
-        private long expiresIn;
 
-        public TokenResponse(String accessToken, String refreshToken, long expiresIn) {
+        public TokenResponse(String accessToken, String refreshToken) {
             this.accessToken = accessToken;
             this.refreshToken = refreshToken;
-            this.expiresIn = expiresIn;
         }
     }
 
@@ -71,9 +68,32 @@ public class JwtTokenUtil {
                 .collect(Collectors.joining(","));
 
         String accessToken = generateAccessToken(username, authorities);
-        String refreshToken = generateRefreshToken(username);
+        String refreshToken = generateRefreshToken(username, authorities);
 
-        return new TokenResponse(accessToken, refreshToken, accessTokenExpiration);
+        return new TokenResponse(accessToken, refreshToken);
+    }
+
+    /**
+     * 使用Refresh Token刷新Access Token
+     */
+    public TokenResponse refreshAccessToken(String refreshToken) {
+
+        String username = getUsernameFromToken(refreshToken);
+        String authorities = getUserAuthorities(refreshToken);
+
+        String newAccessToken = generateAccessToken(username, authorities);
+        String newRefreshToken = generateRefreshToken(username, authorities);
+
+        return new TokenResponse(newAccessToken, newRefreshToken);
+    }
+
+    /**
+     * 从Token中获取Spring Security认证信息
+     */
+    public Authentication getAuthenticationToken(String token) {
+        String username = getUsernameFromToken(token);
+        List<GrantedAuthority> authorities = getAuthoritiesFromToken(token);
+        return new UsernamePasswordAuthenticationToken(username, null, authorities);
     }
 
     /**
@@ -100,11 +120,12 @@ public class JwtTokenUtil {
     /**
      * 生成Refresh Token
      */
-    public String generateRefreshToken(String username) {
+    public String generateRefreshToken(String username, String authorities) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(refreshTokenExpiration);
 
         Map<String, Object> claims = new HashMap<>();
+        claims.put(CLAIM_KEY_AUTHORITIES, authorities);
         claims.put(TOKEN_TYPE, TOKEN_TYPE_REFRESH);
 
         return Jwts.builder()
@@ -115,20 +136,6 @@ public class JwtTokenUtil {
                 .expiration(Date.from(expiration))
                 .signWith(getSigningKey())
                 .compact();
-    }
-
-    /**
-     * 从Token中提取用户名
-     */
-    public String getUsernameFromToken(String token) {
-        return getClaimsFromToken(token).getSubject();
-    }
-
-    /**
-     * 从Token中提取权限信息
-     */
-    public String getAuthoritiesFromToken(String token) {
-        return getClaimsFromToken(token).get(CLAIM_KEY_AUTHORITIES, String.class);
     }
 
     /**
@@ -162,43 +169,62 @@ public class JwtTokenUtil {
         try {
             getClaimsFromToken(token);
             return true;
-        } catch (JwtException | IllegalArgumentException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
     /**
-     * 检查Token是否即将过期（剩余时间少于5分钟）
+     * 获取Access Token过期时间（秒）
      */
-    public boolean isTokenNearExpiry(String token) {
+    public Long getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
+    }
+
+    /**
+     * 获取Refresh Token过期时间（秒）
+     */
+    public Long getAccessTokenExpiration() {
+        return accessTokenExpiration;
+    }
+
+    /**
+     * 获取Access Token剩余有效时间（秒）
+     */
+    public Long getAccessTokenExpireSeconds(String token) {
         try {
             Claims claims = getClaimsFromToken(token);
             Date expiration = claims.getExpiration();
-            Date now = new Date();
-            long timeLeft = expiration.getTime() - now.getTime();
-            return timeLeft < 300000; // 5分钟 = 300000毫秒
+            long diff = expiration.getTime() - System.currentTimeMillis();
+            return Math.max(diff / 1000, 0);
         } catch (Exception e) {
-            return true; // 解析失败视为即将过期
+            return 0L;
         }
     }
 
     /**
-     * 使用Refresh Token刷新Access Token
+     * 从Token中提取用户名
      */
-    public TokenResponse refreshAccessToken(String refreshToken) {
-        if (!validateToken(refreshToken) || !isRefreshToken(refreshToken)) {
-            throw new IllegalArgumentException("Invalid refresh token");
-        }
+    public String getUsernameFromToken(String token) {
+        return getClaimsFromToken(token).getSubject();
+    }
 
-        String username = getUsernameFromToken(refreshToken);
-        // 这里需要从数据库或缓存中获取用户权限
-        // 为了演示，暂时使用空权限
-        String authorities = getUserAuthoritiesFromDatabase(username);
+    /**
+     * 从Token中提取权限信息
+     */
+    public List<GrantedAuthority> getAuthoritiesFromToken(String token) {
+        String authorityStr = getClaimsFromToken(token).get(CLAIM_KEY_AUTHORITIES, String.class);
+        return Arrays.stream(authorityStr.split(","))
+                .filter(str -> !str.trim().isEmpty())
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+    }
 
-        String newAccessToken = generateAccessToken(username, authorities);
-        String newRefreshToken = generateRefreshToken(username);
-
-        return new TokenResponse(newAccessToken, newRefreshToken, accessTokenExpiration);
+    /**
+     * 从Token获取用户权限
+     */
+    public String getUserAuthorities(String token) {
+        return getClaimsFromToken(token).get(CLAIM_KEY_AUTHORITIES, String.class);
     }
 
     /**
@@ -217,22 +243,5 @@ public class JwtTokenUtil {
      */
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
-    }
-
-    /**
-     * 从数据库获取用户权限
-     */
-    private String getUserAuthoritiesFromDatabase(String username) {
-        // TODO: 实现从数据库或缓存中获取用户权限的逻辑
-        // 示例返回
-        return "ROLE_USER";
-    }
-
-    /**
-     * 撤销Token
-     */
-    public void revokeToken(String token) {
-        // TODO: 将token加入黑名单
-        // 可以存储到Redis中，设置过期时间为token的剩余有效时间
     }
 }

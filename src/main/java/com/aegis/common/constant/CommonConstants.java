@@ -8,19 +8,19 @@ package com.aegis.common.constant;
 public class CommonConstants {
 
     /**
+     * 访问令牌请求头
+     */
+    public static final String REFRESH_TOKEN_COOKIE = "refresh_token";
+
+    /**
      * token前缀
      */
     public static final String TOKEN_PREFIX = "Bearer ";
 
     /**
-     * redis中存储的菜单key
+     * 用户代理请求头
      */
-    public static final String MENUS = "menus:";
-
-    /**
-     * redis中存储的白名单key
-     */
-    public static final String WHITELIST = "whitelist";
+    public static final String USER_AGENT = "User-Agent";
 
     /**
      * 所有请求方式
