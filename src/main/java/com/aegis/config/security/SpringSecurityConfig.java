@@ -52,7 +52,7 @@ public class SpringSecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .anonymous(AbstractHttpConfigurer::disable)
-                .headers(headers -> headers.frameOptions().disable())
+                .headers(headers -> headers.frameOptions().sameOrigin()) // Swagger等页面可内嵌，其他页面禁止
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))// 禁用session
                 .exceptionHandling(ex -> ex
                         .authenticationEntryPoint(myAuthenticationEntryPoint)// 未登录处理
