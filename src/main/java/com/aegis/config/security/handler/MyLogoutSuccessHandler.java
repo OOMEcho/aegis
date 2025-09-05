@@ -39,13 +39,9 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 
             // 将 access_token 加入黑名单，防止后续使用
             long expireSeconds = jwtTokenUtil.getAccessTokenExpireSeconds(accessToken);
+            final String jti = jwtTokenUtil.getJti(accessToken);
             if (expireSeconds > 0) {
-                redisUtils.set(RedisConstants.BLACKLIST_TOKEN + accessToken, "logout", expireSeconds, TimeUnit.SECONDS);
-            }
-
-            if (authentication != null) {
-                // 删除 Redis 中的 refresh_token
-                redisUtils.delete(RedisConstants.REFRESH_TOKEN + authentication.getName());
+                redisUtils.set(RedisConstants.BLACKLIST_TOKEN + jti, "logout", expireSeconds, TimeUnit.SECONDS);
             }
         }
 

@@ -1,7 +1,6 @@
 package com.aegis.config.security.handler;
 
 import com.aegis.common.constant.CommonConstants;
-import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.modules.log.domain.entity.SysLoginLog;
 import com.aegis.modules.log.mapper.SysLoginLogMapper;
@@ -9,7 +8,6 @@ import com.aegis.modules.user.domain.entity.User;
 import com.aegis.modules.user.mapper.UserMapper;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.JwtTokenUtil;
-import com.aegis.utils.RedisUtils;
 import com.aegis.utils.ResponseUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -22,7 +20,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: xuesong.lei
@@ -34,8 +31,6 @@ import java.util.concurrent.TimeUnit;
 public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
 
     private final JwtTokenUtil jwtTokenUtil;
-
-    private final RedisUtils redisUtils;
 
     private final Ip2regionService ip2regionService;
 
@@ -55,9 +50,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         cookie.setSecure(false); // 如果你本地是 http，可以临时改为 false
         cookie.setMaxAge(Math.toIntExact(jwtTokenUtil.getRefreshTokenExpiration()));
         response.addCookie(cookie);
-
-        // 将refreshToken存入Redis中
-        redisUtils.set(RedisConstants.REFRESH_TOKEN + authentication.getName(), tokenResponse.getRefreshToken(), jwtTokenUtil.getRefreshTokenExpiration(), TimeUnit.SECONDS);
 
         // 记录登录日志
         loginLog(request, authentication);

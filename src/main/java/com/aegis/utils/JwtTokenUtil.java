@@ -38,6 +38,8 @@ public class JwtTokenUtil {
 
     private static final String CLAIM_KEY_AUTHORITIES = "authorities";
 
+    public static final String TOKEN_JTI = "jti";
+
     public static final String TOKEN_TYPE = "token_type";
 
     public static final String TOKEN_TYPE_ACCESS = "access";
@@ -62,12 +64,14 @@ public class JwtTokenUtil {
      * 根据Spring Security认证信息生成双Token
      */
     public TokenResponse generateTokenResponse(Authentication authentication) {
+        String jti = UUID.randomUUID().toString();
+
         String username = authentication.getName();
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        String accessToken = generateAccessToken(username, authorities);
+        String accessToken = generateAccessToken(username, authorities, jti);
         String refreshToken = generateRefreshToken(username, authorities);
 
         return new TokenResponse(accessToken, refreshToken);
@@ -77,11 +81,12 @@ public class JwtTokenUtil {
      * 使用Refresh Token刷新Access Token
      */
     public TokenResponse refreshAccessToken(String refreshToken) {
+        String jti = UUID.randomUUID().toString();
 
         String username = getUsernameFromToken(refreshToken);
         String authorities = getUserAuthorities(refreshToken);
 
-        String newAccessToken = generateAccessToken(username, authorities);
+        String newAccessToken = generateAccessToken(username, authorities, jti);
         String newRefreshToken = generateRefreshToken(username, authorities);
 
         return new TokenResponse(newAccessToken, newRefreshToken);
@@ -99,13 +104,14 @@ public class JwtTokenUtil {
     /**
      * 生成Access Token
      */
-    public String generateAccessToken(String username, String authorities) {
+    public String generateAccessToken(String username, String authorities, String jti) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(accessTokenExpiration);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_AUTHORITIES, authorities);
         claims.put(TOKEN_TYPE, TOKEN_TYPE_ACCESS);
+        claims.put(TOKEN_JTI, jti);
 
         return Jwts.builder()
                 .claims(claims)
@@ -175,17 +181,10 @@ public class JwtTokenUtil {
     }
 
     /**
-     * 获取Access Token过期时间（秒）
+     * 获取Refresh Token过期时间（秒）
      */
     public Long getRefreshTokenExpiration() {
         return refreshTokenExpiration;
-    }
-
-    /**
-     * 获取Refresh Token过期时间（秒）
-     */
-    public Long getAccessTokenExpiration() {
-        return accessTokenExpiration;
     }
 
     /**
@@ -225,6 +224,13 @@ public class JwtTokenUtil {
      */
     public String getUserAuthorities(String token) {
         return getClaimsFromToken(token).get(CLAIM_KEY_AUTHORITIES, String.class);
+    }
+
+    /**
+     * 从Token获取jti
+     */
+    public String getJti(String token) {
+        return getClaimsFromToken(token).get(TOKEN_JTI, String.class);
     }
 
     /**

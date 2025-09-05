@@ -18,11 +18,6 @@ public class RedisConstants {
     public static final String WHITELIST = "whitelist";
 
     /**
-     * 刷新令牌 key 前缀
-     */
-    public static final String REFRESH_TOKEN = "refresh_token:";
-
-    /**
      * 黑名单令牌 key 前缀
      */
     public static final String BLACKLIST_TOKEN = "blacklist_token:";
