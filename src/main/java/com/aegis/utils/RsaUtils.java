@@ -3,8 +3,6 @@ package com.aegis.utils;
 import lombok.Data;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +12,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Base64;
 
 /**
  * @Author: xuesong.lei
@@ -75,12 +74,12 @@ public final class RsaUtils {
      */
     @SneakyThrows
     public static String decryptByPrivateKey(String privateKeyString, String text) {
-        PKCS8EncodedKeySpec pkcs8EncodedKeySpec5 = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyString));
+        PKCS8EncodedKeySpec pkcs8EncodedKeySpec5 = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyString));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec5);
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
-        byte[] result = cipher.doFinal(Base64.decodeBase64(text));
+        byte[] result = cipher.doFinal(Base64.getDecoder().decode(text));
         return new String(result);
     }
 
@@ -93,12 +92,12 @@ public final class RsaUtils {
      */
     @SneakyThrows
     public static String decryptByPublicKey(String publicKeyString, String text) {
-        X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(Base64.decodeBase64(publicKeyString));
+        X509EncodedKeySpec x509EncodedKeySpec = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyString));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.DECRYPT_MODE, publicKey);
-        byte[] result = cipher.doFinal(Base64.decodeBase64(text));
+        byte[] result = cipher.doFinal(Base64.getDecoder().decode(text));
         return new String(result);
     }
 
@@ -111,13 +110,13 @@ public final class RsaUtils {
      */
     @SneakyThrows
     public static String encryptByPrivateKey(String privateKeyString, String text) {
-        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(Base64.decodeBase64(privateKeyString));
+        PKCS8EncodedKeySpec pkcs8EncodedKeySpec = new PKCS8EncodedKeySpec(Base64.getDecoder().decode(privateKeyString));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, privateKey);
         byte[] result = cipher.doFinal(text.getBytes());
-        return Base64.encodeBase64String(result);
+        return Base64.getEncoder().encodeToString(result);
     }
 
     /**
@@ -129,19 +128,18 @@ public final class RsaUtils {
      */
     @SneakyThrows
     public static String encryptByPublicKey(String publicKeyString, String text) {
-        X509EncodedKeySpec x509EncodedKeySpec2 = new X509EncodedKeySpec(Base64.decodeBase64(publicKeyString));
+        X509EncodedKeySpec x509EncodedKeySpec2 = new X509EncodedKeySpec(Base64.getDecoder().decode(publicKeyString));
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec2);
         Cipher cipher = Cipher.getInstance("RSA");
         cipher.init(Cipher.ENCRYPT_MODE, publicKey);
         byte[] result = cipher.doFinal(text.getBytes());
-        return Base64.encodeBase64String(result);
+        return Base64.getEncoder().encodeToString(result);
     }
 
     /**
      * 构建RSA密钥对
      */
-    @Bean
     @SneakyThrows
     @Scheduled(cron = "0 0 0 ? * 1")
     public void generateKeyPair() {
@@ -151,8 +149,8 @@ public final class RsaUtils {
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
         RSAPublicKey rsaPublicKey = (RSAPublicKey) keyPair.getPublic();
         RSAPrivateKey rsaPrivateKey = (RSAPrivateKey) keyPair.getPrivate();
-        String publicKeyString = Base64.encodeBase64String(rsaPublicKey.getEncoded());
-        String privateKeyString = Base64.encodeBase64String(rsaPrivateKey.getEncoded());
+        String publicKeyString = Base64.getEncoder().encodeToString(rsaPublicKey.getEncoded());
+        String privateKeyString = Base64.getEncoder().encodeToString(rsaPrivateKey.getEncoded());
         RSA_KEY_PAIR.setPrivateKey(privateKeyString);
         RSA_KEY_PAIR.setPublicKey(publicKeyString);
     }
