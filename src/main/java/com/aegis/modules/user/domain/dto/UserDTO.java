@@ -2,7 +2,6 @@ package com.aegis.modules.user.domain.dto;
 
 import com.aegis.common.domain.dto.PageDTO;
 import com.aegis.common.validator.ValidGroup;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -29,10 +28,6 @@ public class UserDTO extends PageDTO {
     @Null(groups = ValidGroup.Create.class, message = "应用ID必须为空")
     @NotNull(groups = ValidGroup.Update.class, message = "应用ID不能为空")
     private Long id;
-
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @ApiModelProperty("创建时间")
-    private Date createTime;
 
     @ApiModelProperty("部门ID")
     private Long deptId;
