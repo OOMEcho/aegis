@@ -37,7 +37,7 @@ CREATE TABLE `t_dept`
     `deleted`     TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
     `version`     INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
     `remark`      VARCHAR(100)             DEFAULT NULL COMMENT '备注',
-    `ancestors`   VARCHAR(64)              DEFAULT NULL COMMENT '祖级列表',
+    `ancestors`   VARCHAR(255)              DEFAULT NULL COMMENT '祖级列表',
     `parent_id`   BIGINT          NOT NULL DEFAULT 0 COMMENT '父部门ID',
     `dept_name`   VARCHAR(64)     NOT NULL COMMENT '部门名称',
     `order_num`   INT             NOT NULL DEFAULT 0 COMMENT '显示顺序',
