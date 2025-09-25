@@ -5,14 +5,13 @@ import com.aegis.common.result.ResultCodeEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.ValidationException;
 import java.util.stream.Collectors;
@@ -42,8 +41,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<?> handleMethodArgumentNotValidException(HttpServletRequest request, MethodArgumentNotValidException e) {
-        String message = e.getBindingResult().getAllErrors().stream()
-                .map(ObjectError::getDefaultMessage)
+        String message = e.getBindingResult().getFieldErrors().stream()
+                .map(fieldError -> String.format("参数[%s] %s", fieldError.getField(), fieldError.getDefaultMessage()))
                 .collect(Collectors.joining("; "));
         logError(request, e);
         return Result.error(ResultCodeEnum.BAD_REQUEST.getCode(), message);
@@ -56,7 +55,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<?> handleConstraintViolationException(HttpServletRequest request, ConstraintViolationException e) {
         String message = e.getConstraintViolations().stream()
-                .map(ConstraintViolation::getMessage)
+                .map(v -> String.format("参数[%s] %s", v.getPropertyPath(), v.getMessage()))
                 .collect(Collectors.joining("; "));
         logError(request, e);
         return Result.error(ResultCodeEnum.BAD_REQUEST.getCode(), message);
@@ -69,8 +68,17 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Result<?> handleBindException(HttpServletRequest request, BindException e) {
         String message = e.getAllErrors().stream()
-                .map(ObjectError::getDefaultMessage)
+                .map(error -> {
+                    if (error instanceof FieldError) {
+                        FieldError fieldError = (FieldError) error;
+                        return String.format("参数[%s]的值[%s]格式不正确",
+                                fieldError.getField(),
+                                fieldError.getRejectedValue());
+                    }
+                    return error.getDefaultMessage();
+                })
                 .collect(Collectors.joining("; "));
+
         logError(request, e);
         return Result.error(ResultCodeEnum.BAD_REQUEST.getCode(), message);
     }
