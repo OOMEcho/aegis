@@ -27,8 +27,8 @@ public class SysOperateLogController {
     private final SysOperateLogService sysOperateLogService;
 
     @ApiOperation("分页列表")
-    @PostMapping("/pageList")
-    public PageVO<SysOperateLog> pageList(@RequestBody SysOperateLogDTO dto) {
+    @GetMapping("/pageList")
+    public PageVO<SysOperateLog> pageList(SysOperateLogDTO dto) {
         return sysOperateLogService.pageList(dto);
     }
 
