@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.crypto.Cipher;
 import java.security.*;
 import java.security.interfaces.RSAPrivateKey;
@@ -140,10 +141,11 @@ public final class RsaUtils {
     /**
      * 构建RSA密钥对
      */
+    @PostConstruct
     @SneakyThrows
     @Scheduled(cron = "0 0 0 ? * 1")
     public void generateKeyPair() {
-        log.info("Example Regenerate an RSA key pair");
+        log.info("Regenerate an RSA key pair");
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
         keyPairGenerator.initialize(1024);
         KeyPair keyPair = keyPairGenerator.generateKeyPair();
