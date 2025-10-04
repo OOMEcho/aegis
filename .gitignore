@@ -33,3 +33,5 @@ build/
 .vscode/
 /logs/
 /src/main/resources/application-dev.yml
+/.claude/
+/CLAUDE.md
