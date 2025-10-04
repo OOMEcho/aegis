@@ -47,20 +47,15 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
         final String token = header.substring(CommonConstants.TOKEN_PREFIX.length()).trim();
         try {
-            // 黑名单校验
-            final String jti = jwtTokenUtil.getJti(token);
-            if (redisUtils.hasKey(RedisConstants.BLACKLIST_TOKEN + jti)) {
-                throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
-            }
-
-            // 校验是否为access_token
-            if (!jwtTokenUtil.isAccessToken(token)) {
-                throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
-            }
-
             // 校验token有效性
             if (!jwtTokenUtil.validateToken(token)) {
                 throw new LoginException(ResultCodeEnum.LOGIN_EXPIRE);
+            }
+
+            // 黑名单校验 校验是否为access_token
+            final String jti = jwtTokenUtil.getJti(token);
+            if (redisUtils.hasKey(RedisConstants.BLACKLIST_TOKEN + jti) || !jwtTokenUtil.isAccessToken(token)) {
+                throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
             }
 
             Authentication authentication = jwtTokenUtil.getAuthenticationToken(token);
