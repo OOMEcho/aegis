@@ -39,6 +39,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
+        if (request.getRequestURI().startsWith("/profile/refreshToken")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StrUtil.isEmpty(header) || !header.startsWith(CommonConstants.TOKEN_PREFIX)) {
             filterChain.doFilter(request, response);

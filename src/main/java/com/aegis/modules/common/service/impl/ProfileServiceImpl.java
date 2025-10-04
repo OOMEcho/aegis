@@ -105,7 +105,7 @@ public class ProfileServiceImpl implements ProfileService {
 
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, tokenResponse.getRefreshToken());
         cookie.setHttpOnly(true);
-        cookie.setPath("/profile/refreshToken");
+        cookie.setPath("/");
         cookie.setSecure(false);
         cookie.setMaxAge(Math.toIntExact(jwtTokenUtil.getRefreshTokenExpiration()));
         response.addCookie(cookie);

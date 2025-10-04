@@ -46,7 +46,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         // 将refreshToken放入HttpOnly的Cookie中
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, tokenResponse.getRefreshToken());
         cookie.setHttpOnly(true);
-        cookie.setPath("/profile/refreshToken");
+        cookie.setPath("/");
         cookie.setSecure(false); // 如果你本地是 http，可以临时改为 false
         cookie.setMaxAge(Math.toIntExact(jwtTokenUtil.getRefreshTokenExpiration()));
         response.addCookie(cookie);
