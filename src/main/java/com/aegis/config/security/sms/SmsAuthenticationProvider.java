@@ -46,7 +46,7 @@ public class SmsAuthenticationProvider implements AuthenticationProvider {
         }
 
         // 校验验证码
-        smsService.validateSmsCode(phone, code);
+        smsService.validateSmsCode(phone, code, true);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(phone);
 

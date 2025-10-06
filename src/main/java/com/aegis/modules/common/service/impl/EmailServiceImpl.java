@@ -70,13 +70,6 @@ public class EmailServiceImpl implements EmailService {
         return CommonConstants.SUCCESS_MESSAGE;
     }
 
-    /**
-     * 校验邮箱和验证码
-     *
-     * @param email   用户邮箱
-     * @param code    用户输入的验证码
-     * @param isLogin 是否是登录场景
-     */
     @Override
     public void validateEmailCode(String email, String code, boolean isLogin) {
         // 检查验证码错误次数（防暴力破解）

@@ -18,8 +18,9 @@ public interface SmsService {
     /**
      * 校验手机验证码
      *
-     * @param phone 手机号
-     * @param code  验证码
+     * @param phone   手机号
+     * @param code    验证码
+     * @param isLogin 是否是登录场景
      */
-    void validateSmsCode(String phone, String code);
+    void validateSmsCode(String phone, String code, boolean isLogin);
 }
