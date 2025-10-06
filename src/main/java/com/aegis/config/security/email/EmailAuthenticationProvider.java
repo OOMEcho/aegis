@@ -46,7 +46,7 @@ public class EmailAuthenticationProvider implements AuthenticationProvider {
         }
 
         // 校验验证码
-        emailService.validateEmailCode(email, code);
+        emailService.validateEmailCode(email, code, true);
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 

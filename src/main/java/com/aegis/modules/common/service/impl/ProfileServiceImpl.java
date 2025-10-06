@@ -142,7 +142,7 @@ public class ProfileServiceImpl implements ProfileService {
         }
 
         // 校验邮箱验证码
-        emailService.validateEmailCode(dto.getEmail(), dto.getCode());
+        emailService.validateEmailCode(dto.getEmail(), dto.getCode(), false);
 
         if (!RsaUtils.decryptByPrivateKey(dto.getPassword()).equals(RsaUtils.decryptByPrivateKey(dto.getConfirmPassword()))) {
             throw new BusinessException("两次密码不一致");

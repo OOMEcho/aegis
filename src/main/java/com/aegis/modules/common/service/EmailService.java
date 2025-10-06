@@ -18,8 +18,9 @@ public interface EmailService {
     /**
      * 校验邮箱验证码
      *
-     * @param email 邮箱
-     * @param code  验证码
+     * @param email   邮箱
+     * @param code    验证码
+     * @param isLogin 是否是登录场景
      */
-    void validateEmailCode(String email, String code);
+    void validateEmailCode(String email, String code, boolean isLogin);
 }

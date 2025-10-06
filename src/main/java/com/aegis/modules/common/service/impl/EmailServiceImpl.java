@@ -73,23 +73,32 @@ public class EmailServiceImpl implements EmailService {
     /**
      * 校验邮箱和验证码
      *
-     * @param email 用户邮箱
-     * @param code  用户输入的验证码
+     * @param email   用户邮箱
+     * @param code    用户输入的验证码
+     * @param isLogin 是否是登录场景
      */
     @Override
-    public void validateEmailCode(String email, String code) {
+    public void validateEmailCode(String email, String code, boolean isLogin) {
         // 检查验证码错误次数（防暴力破解）
         String errorKey = RedisConstants.EMAIL_LOGIN_ERROR + email;
         String errorCount = redisUtils.get(errorKey);
         if (StrUtil.isNotEmpty(errorCount) && Integer.parseInt(errorCount) >= 5) {
-            throw new LoginException("验证码错误次数过多，请30分钟后再试");
+            if (isLogin){
+                throw new LoginException("邮箱验证码错误次数过多，请30分钟后再试");
+            }else {
+                throw new BusinessException("邮箱验证码错误次数过多，请30分钟后再试");
+            }
         }
 
         // 获取缓存中的验证码
         String emailLogin = RedisConstants.EMAIL_LOGIN + email;
         String emailCode = redisUtils.get(emailLogin);
         if (StrUtil.isEmpty(emailCode)) {
-            throw new LoginException("验证码已过期");
+            if (isLogin){
+                throw new LoginException("邮箱验证码已过期");
+            }else {
+                throw new BusinessException("邮箱验证码已过期");
+            }
         }
 
         // 验证码校验
@@ -97,7 +106,11 @@ public class EmailServiceImpl implements EmailService {
             // 错误次数+1
             redisUtils.increment(errorKey, 1);
             redisUtils.expire(errorKey, 30, TimeUnit.MINUTES);
-            throw new LoginException("验证码不正确");
+            if (isLogin){
+                throw new LoginException("邮箱验证码不正确");
+            }else {
+                throw new BusinessException("邮箱验证码不正确");
+            }
         }
 
         // 验证成功，清除验证码和错误计数
