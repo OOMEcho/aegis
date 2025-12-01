@@ -219,6 +219,7 @@ DROP TABLE IF EXISTS `t_sys_operate_log`;
 CREATE TABLE `t_sys_operate_log`
 (
     `id`              BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `trace_id`        VARCHAR(64)              DEFAULT NULL COMMENT '链路追踪ID',
     `module_title`    VARCHAR(64)              DEFAULT NULL COMMENT '模块标题',
     `business_type`   INT                      DEFAULT NULL COMMENT '业务类型(0-其它,1-新增,2-修改,3-删除)',
     `request_url`     VARCHAR(128)             DEFAULT NULL COMMENT '请求地址',
@@ -233,7 +234,8 @@ CREATE TABLE `t_sys_operate_log`
     `operate_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '操作时间',
     `deplete_time`    BIGINT                   DEFAULT 0 COMMENT '消耗时间(单位：毫秒)',
     `operate_status`  CHAR(1)                  DEFAULT '0' COMMENT '操作状态(0-成功,1-失败)',
-    PRIMARY KEY (`id`) USING BTREE
+    PRIMARY KEY (`id`) USING BTREE,
+    INDEX `idx_trace_id` (`trace_id`) USING BTREE COMMENT '链路追踪ID索引'
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT ='操作日志表';
 

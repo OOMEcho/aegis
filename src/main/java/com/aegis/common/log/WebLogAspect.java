@@ -5,6 +5,7 @@ import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.FileConstants;
 import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.common.event.DataChangePublisher;
+import com.aegis.common.trace.TraceIdUtils;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.SecurityUtils;
@@ -79,6 +80,7 @@ public class WebLogAspect {
         HttpServletRequest request = getRequest();
         String ip = IpUtils.getIpAddr(request);
         SysOperateLog sysOperateLog = new SysOperateLog();
+        sysOperateLog.setTraceId(TraceIdUtils.getTraceId());
         sysOperateLog.setModuleTitle(operationLog.moduleTitle());
         sysOperateLog.setBusinessType(operationLog.businessType().ordinal());
         sysOperateLog.setRequestUrl(request.getRequestURI());

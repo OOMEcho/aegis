@@ -50,6 +50,14 @@ public class SysOperateLog implements Serializable {
     private Long id;
 
     /**
+     * 链路追踪ID
+     */
+    @ApiModelProperty("链路追踪ID")
+    @TableField(value = "trace_id")
+    @ExcelProperty("链路追踪ID")
+    private String traceId;
+
+    /**
      * 模块标题
      */
     @ApiModelProperty("模块标题")
