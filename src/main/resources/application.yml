@@ -93,6 +93,12 @@ jwt:
   access-token-expiration: 900  # 15分钟
   refresh-token-expiration: 604800  # 7天
 
+# 安全登录配置
+security:
+  login:
+    enable-captcha: true # 是否启用滑块验证码校验
+    enable-password-encryption: true # 是否启用密码加密
+
 knife4j:
   enable: true # 是否启用Knife4j
   production: false # 是否生产环境

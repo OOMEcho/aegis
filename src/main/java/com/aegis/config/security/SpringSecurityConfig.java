@@ -47,6 +47,8 @@ public class SpringSecurityConfig {
 
     private final MyAccessDecisionManager myAccessDecisionManager;
 
+    private final LoginSecurityProperties loginSecurityProperties;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         return http
@@ -70,7 +72,7 @@ public class SpringSecurityConfig {
      */
     @Bean
     public MultiLoginAuthenticationFilter multiLoginAuthenticationFilter(AuthenticationManager authenticationManager) {
-        MultiLoginAuthenticationFilter multiLoginAuthenticationFilter = new MultiLoginAuthenticationFilter();
+        MultiLoginAuthenticationFilter multiLoginAuthenticationFilter = new MultiLoginAuthenticationFilter(loginSecurityProperties);
         multiLoginAuthenticationFilter.setAuthenticationSuccessHandler(myAuthenticationSuccessHandler);
         multiLoginAuthenticationFilter.setAuthenticationFailureHandler(myAuthenticationFailureHandler);
         multiLoginAuthenticationFilter.setAuthenticationManager(authenticationManager);

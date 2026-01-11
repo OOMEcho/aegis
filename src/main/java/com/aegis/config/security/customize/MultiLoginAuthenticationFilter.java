@@ -6,6 +6,7 @@ import com.aegis.common.domain.dto.PasswordLoginRequestDTO;
 import com.aegis.common.domain.dto.SmsLoginRequestDTO;
 import com.aegis.common.exception.LoginException;
 import com.aegis.common.result.ResultCodeEnum;
+import com.aegis.config.security.LoginSecurityProperties;
 import com.aegis.config.security.email.EmailAuthenticationToken;
 import com.aegis.config.security.sms.SmsAuthenticationToken;
 import com.aegis.utils.CaptchaUtils;
@@ -37,8 +38,11 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public MultiLoginAuthenticationFilter() {
+    private final LoginSecurityProperties loginSecurityProperties;
+
+    public MultiLoginAuthenticationFilter(LoginSecurityProperties loginSecurityProperties) {
         super(new AntPathRequestMatcher("/login", "POST"));
+        this.loginSecurityProperties = loginSecurityProperties;
     }
 
     @Override
@@ -57,8 +61,10 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
             throw new LoginException("loginType不能为空");
         }
 
-        // 校验滑块验证码
-        checkSlideCaptcha(map);
+        // 校验滑块验证码（根据配置决定是否启用）
+        if (loginSecurityProperties.isEnableCaptcha()) {
+            checkSlideCaptcha(map);
+        }
 
         // 根据不同类型构建 Authentication
         Authentication authToken = buildAuthenticationToken(loginType, map);
@@ -73,7 +79,10 @@ public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProces
             case LoginRequestConstants.PASSWORD:
                 PasswordLoginRequestDTO passwordDTO = objectMapper.convertValue(map, PasswordLoginRequestDTO.class);
                 checkRequestParam(passwordDTO.getUsername(), passwordDTO.getPassword());
-                return new UsernamePasswordAuthenticationToken(passwordDTO.getUsername(), RsaUtils.decryptByPrivateKey(passwordDTO.getPassword()));
+                String password = loginSecurityProperties.isEnablePasswordEncryption()
+                        ? RsaUtils.decryptByPrivateKey(passwordDTO.getPassword())
+                        : passwordDTO.getPassword();
+                return new UsernamePasswordAuthenticationToken(passwordDTO.getUsername(), password);
             case LoginRequestConstants.EMAIL:
                 EmailLoginRequestDTO emailDTO = objectMapper.convertValue(map, EmailLoginRequestDTO.class);
                 checkRequestParam(emailDTO.getEmail(), emailDTO.getCode());
