@@ -13,6 +13,11 @@ import java.util.List;
  */
 public interface NoticeMapper extends BaseMapper<Notice> {
 
+    /**
+     * 查询所有待发布的通知公告
+     *
+     * @return 待发布的通知公告列表
+     */
     List<Notice> selectPendingNotices();
 }
 

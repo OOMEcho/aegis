@@ -29,14 +29,14 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
             return;
         }
 
-        // 检查是否具备所需角色
-        Set<String> userRoles = authentication.getAuthorities()
+        // 检查用户是否具备所需权限编码
+        Set<String> permCode = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
         for (ConfigAttribute configAttribute : configAttributes) {
-            if (userRoles.contains(configAttribute.getAttribute())) {
+            if (permCode.contains(configAttribute.getAttribute())) {
                 return;
             }
         }

@@ -1,14 +1,12 @@
 package com.aegis.modules.user.domain.entity;
 
-import com.aegis.modules.role.domain.entity.Role;
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -173,9 +171,9 @@ public class User implements Serializable {
     private Date lastLoginTime;
 
     /**
-     * 角色列表
+     * 权限编码列表（用于鉴权）
      */
-    @ApiModelProperty("角色列表")
+    @ApiModelProperty("权限编码列表")
     @TableField(exist = false)
-    private List<Role> roleList;
+    private List<String> permCodeList;
 }

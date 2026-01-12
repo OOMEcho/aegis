@@ -3,6 +3,7 @@ package com.aegis.modules.user.domain.vo;
 import com.aegis.common.mask.DataMask;
 import com.aegis.common.mask.MaskTypeEnum;
 import com.aegis.modules.dept.domain.entity.Dept;
+import com.aegis.modules.menu.domain.vo.RouterVo;
 import com.aegis.modules.role.domain.entity.Role;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -72,4 +73,7 @@ public class UserVO {
 
     @ApiModelProperty("权限列表")
     private List<String> permissions;
+
+    @ApiModelProperty("路由列表")
+    private List<RouterVo> routerVoList;
 }

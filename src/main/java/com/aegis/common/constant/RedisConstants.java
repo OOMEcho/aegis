@@ -18,9 +18,9 @@ public class RedisConstants {
     public static final String RATE_LIMIT = "rate_limit:";
 
     /**
-     * redis中存储的菜单key
+     * redis中存储的资源key（用于鉴权）
      */
-    public static final String MENUS = "menus";
+    public static final String RESOURCES = "resources";
 
     /**
      * redis中存储的白名单key

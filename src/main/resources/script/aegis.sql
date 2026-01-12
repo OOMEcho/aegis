@@ -37,7 +37,7 @@ CREATE TABLE `t_dept`
     `deleted`     TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
     `version`     INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
     `remark`      VARCHAR(100)             DEFAULT NULL COMMENT '备注',
-    `ancestors`   VARCHAR(255)              DEFAULT NULL COMMENT '祖级列表',
+    `ancestors`   VARCHAR(255)             DEFAULT NULL COMMENT '祖级列表',
     `parent_id`   BIGINT          NOT NULL DEFAULT 0 COMMENT '父部门ID',
     `dept_name`   VARCHAR(64)     NOT NULL COMMENT '部门名称',
     `order_num`   INT             NOT NULL DEFAULT 0 COMMENT '显示顺序',
@@ -71,36 +71,6 @@ CREATE TABLE `t_role`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '角色信息表';
 
-DROP TABLE IF EXISTS `t_menu`;
-CREATE TABLE `t_menu`
-(
-    `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `create_by`      BIGINT                   DEFAULT NULL COMMENT '创建人',
-    `update_by`      BIGINT                   DEFAULT NULL COMMENT '更新人',
-    `create_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `update_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `deleted`        TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
-    `version`        INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
-    `remark`         VARCHAR(100)             DEFAULT NULL COMMENT '备注',
-    `menu_name`      VARCHAR(50)     NOT NULL COMMENT '菜单名称',
-    `parent_id`      BIGINT          NOT NULL DEFAULT 0 COMMENT '父菜单ID',
-    `order_num`      INT             NOT NULL DEFAULT 0 COMMENT '显示顺序',
-    `request_method` VARCHAR(16)              DEFAULT NULL COMMENT '请求方法,GET,POST,PUT,DELETE,ALL=不限制',
-    `request_uri`    VARCHAR(64)              DEFAULT NULL COMMENT 'URI匹配模式,支持Ant风格,比如/api/user/**',
-    `name`           VARCHAR(50)              DEFAULT NULL COMMENT '路由名称',
-    `path`           VARCHAR(64)              DEFAULT NULL COMMENT '路由地址',
-    `component`      VARCHAR(64)              DEFAULT NULL COMMENT '组件路径',
-    `is_frame`       TINYINT                  DEFAULT 0 COMMENT '是否为外链(0-否,1-是)',
-    `keep_alive`     TINYINT                  DEFAULT 0 COMMENT '是否缓存(0-缓存,1-不缓存)',
-    `menu_type`      CHAR(1)                  DEFAULT NULL COMMENT '菜单类型(D-目录,M-菜单,B-按钮)',
-    `hidden`         TINYINT                  DEFAULT 0 COMMENT '菜单状态(0-显示,1-隐藏)',
-    `status`         CHAR(1)         NOT NULL DEFAULT '0' COMMENT '菜单状态(0-正常,1-停用)',
-    `perms`          VARCHAR(64)              DEFAULT NULL COMMENT '权限标识',
-    `icon`           VARCHAR(64)              DEFAULT '#' COMMENT '菜单图标',
-    PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT = '菜单权限表';
-
 DROP TABLE IF EXISTS `t_user_role`;
 CREATE TABLE `t_user_role`
 (
@@ -114,18 +84,95 @@ CREATE TABLE `t_user_role`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4 COMMENT = '用户和角色关联表';
 
-DROP TABLE IF EXISTS `t_role_menu`;
-CREATE TABLE `t_role_menu`
+DROP TABLE IF EXISTS `t_permission`;
+CREATE TABLE `t_permission`
 (
-    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
-    `role_id` BIGINT          NOT NULL COMMENT '角色ID',
-    `menu_id` BIGINT          NOT NULL COMMENT '菜单ID',
+    `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `create_by`   BIGINT                   DEFAULT NULL COMMENT '创建人',
+    `update_by`   BIGINT                   DEFAULT NULL COMMENT '更新人',
+    `create_time` DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
+    `version`     INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
+    `perm_code`   VARCHAR(64)     NOT NULL COMMENT '权限编码(全局唯一，如 system:user:add)',
+    `perm_name`   VARCHAR(64)     NOT NULL COMMENT '权限名称',
+    `perm_type`   CHAR(1)         NOT NULL COMMENT '权限类型(M=页面,B=按钮,A=API)',
+    `status`      CHAR(1)         NOT NULL DEFAULT '0' COMMENT '状态(0-正常,1-停用)',
+    `remark`      VARCHAR(128)             DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`id`),
-    UNIQUE KEY uk_role_menu (`role_id`, `menu_id`),
-    INDEX idx_role_id (`role_id`),
-    INDEX idx_menu_id (`menu_id`)
+    UNIQUE KEY `uk_perm_code` (`perm_code`)
 ) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4 COMMENT = '角色和菜单关联表';
+  DEFAULT CHARSET = utf8mb4 COMMENT ='功能权限表';
+
+DROP TABLE IF EXISTS `t_role_permission`;
+CREATE TABLE `t_role_permission`
+(
+    `id`        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `role_id`   BIGINT          NOT NULL COMMENT '角色ID',
+    `perm_code` VARCHAR(64)     NOT NULL COMMENT '权限编码',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_role_perm` (`role_id`, `perm_code`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='角色与权限关联表';
+
+DROP TABLE IF EXISTS `t_resource`;
+CREATE TABLE `t_resource`
+(
+    `id`             BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `create_by`      BIGINT                   DEFAULT NULL COMMENT '创建人',
+    `update_by`      BIGINT                   DEFAULT NULL COMMENT '更新人',
+    `create_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time`    DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`        TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
+    `version`        INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
+    `request_method` VARCHAR(16)     NOT NULL COMMENT '请求方法(GET/POST/PUT/DELETE/ALL)',
+    `request_uri`    VARCHAR(255)    NOT NULL COMMENT 'URI匹配模式(Ant风格)',
+    `perm_code`      VARCHAR(64)     NOT NULL COMMENT '关联权限编码',
+    `status`         CHAR(1)         NOT NULL DEFAULT '0' COMMENT '状态(0-正常,1-停用)',
+    `remark`         VARCHAR(128)             DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`id`),
+    INDEX `idx_method_uri` (`request_method`, `request_uri`),
+    INDEX `idx_perm_code` (`perm_code`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='资源(URL)与权限映射表';
+
+DROP TABLE IF EXISTS `t_menu`;
+CREATE TABLE `t_menu`
+(
+    `id`          BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `create_by`   BIGINT                   DEFAULT NULL COMMENT '创建人',
+    `update_by`   BIGINT                   DEFAULT NULL COMMENT '更新人',
+    `create_time` DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `update_time` DATETIME        NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `deleted`     TINYINT         NOT NULL DEFAULT 0 COMMENT '逻辑删除标记(0=正常,1=删除)',
+    `version`     INT             NOT NULL DEFAULT 1 COMMENT '版本号,用于乐观锁',
+    `remark`      VARCHAR(100)             DEFAULT NULL COMMENT '备注',
+    `menu_code`   VARCHAR(64)     NOT NULL COMMENT '菜单编码(唯一,前端组件映射用)',
+    `menu_name`   VARCHAR(50)     NOT NULL COMMENT '菜单名称',
+    `parent_id`   BIGINT          NOT NULL DEFAULT 0 COMMENT '父菜单ID',
+    `order_num`   INT             NOT NULL DEFAULT 0 COMMENT '显示顺序',
+    `name`        VARCHAR(50)              DEFAULT NULL COMMENT '前端路由名称',
+    `path`        VARCHAR(128)             DEFAULT NULL COMMENT '前端路由路径',
+    `menu_type`   CHAR(1)         NOT NULL COMMENT '菜单类型(D-目录,M-菜单)',
+    `icon`        VARCHAR(64)              DEFAULT '#' COMMENT '菜单图标',
+    `hidden`      TINYINT                  DEFAULT 0 COMMENT '菜单状态(0-显示,1-隐藏)',
+    `status`      CHAR(1)         NOT NULL DEFAULT '0' COMMENT '菜单状态(0-正常,1-停用)',
+    PRIMARY KEY (`id`) USING BTREE,
+    UNIQUE KEY `uk_menu_code` (`menu_code`),
+    UNIQUE KEY `uk_menu_route_name` (`name`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT = '菜单表';
+
+DROP TABLE IF EXISTS `t_menu_permission`;
+CREATE TABLE `t_menu_permission`
+(
+    `id`        BIGINT UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键ID',
+    `menu_id`   BIGINT          NOT NULL COMMENT '菜单ID',
+    `perm_code` VARCHAR(64)     NOT NULL COMMENT '权限编码',
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `uk_menu_perm` (`menu_id`, `perm_code`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4 COMMENT ='菜单与权限关联表';
 
 DROP TABLE IF EXISTS `t_role_dept`;
 CREATE TABLE `t_role_dept`

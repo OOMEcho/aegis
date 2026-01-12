@@ -1,15 +1,13 @@
 package com.aegis.modules.common.service;
 
 import com.aegis.common.domain.vo.CaptchaVO;
-import com.aegis.modules.common.domain.dto.UserUpdateDTO;
-import com.aegis.modules.menu.domain.vo.RouterVo;
 import com.aegis.modules.common.domain.dto.UserRegisterDTO;
+import com.aegis.modules.common.domain.dto.UserUpdateDTO;
 import com.aegis.modules.user.domain.vo.UserVO;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @Author: xuesong.lei
@@ -48,13 +46,6 @@ public interface ProfileService {
      * @return 用户信息
      */
     UserVO info();
-
-    /**
-     * 获取路由
-     *
-     * @return 路由列表
-     */
-    List<RouterVo> routers();
 
     /**
      * 注册用户

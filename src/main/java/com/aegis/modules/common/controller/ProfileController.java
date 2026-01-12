@@ -9,7 +9,6 @@ import com.aegis.common.log.OperationLog;
 import com.aegis.modules.common.domain.dto.UserRegisterDTO;
 import com.aegis.modules.common.domain.dto.UserUpdateDTO;
 import com.aegis.modules.common.service.ProfileService;
-import com.aegis.modules.menu.domain.vo.RouterVo;
 import com.aegis.modules.user.domain.vo.UserVO;
 import com.aegis.utils.RsaUtils;
 import io.swagger.annotations.Api;
@@ -21,7 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @Author: xuesong.lei
@@ -59,12 +57,6 @@ public class ProfileController {
     @GetMapping("/info")
     public UserVO info() {
         return profileService.info();
-    }
-
-    @ApiOperation("获取路由")
-    @GetMapping("/routers")
-    public List<RouterVo> routers() {
-        return profileService.routers();
     }
 
     @ApiOperation("注册用户")

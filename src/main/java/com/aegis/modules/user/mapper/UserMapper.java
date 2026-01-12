@@ -11,6 +11,12 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface UserMapper extends BaseMapper<User> {
 
+    /**
+     * 根据用户名加载用户信息
+     *
+     * @param username 用户名
+     * @return 用户信息
+     */
     User loadUserByUsername(String username);
 }
 

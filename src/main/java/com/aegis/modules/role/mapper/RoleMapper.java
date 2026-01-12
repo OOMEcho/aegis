@@ -17,12 +17,36 @@ import java.util.Set;
  */
 public interface RoleMapper extends BaseMapper<Role> {
 
+    /**
+     * 获取自定义部门ID集合
+     *
+     * @param id 角色ID
+     * @return 部门ID集合
+     */
     Set<Long> getCustomDeptIds(Long id);
 
+    /**
+     * 获取最高数据权限范围
+     *
+     * @param id 角色ID
+     * @return 数据权限范围
+     */
     String getHighestDataScope(Long id);
 
+    /**
+     * 分页查询已分配用户列表
+     *
+     * @param dto 查询参数
+     * @return 用户列表
+     */
     List<UserVO> allocatedList(@Param("dto") UserAndRoleQueryDTO dto);
 
+    /**
+     * 分页查询未分配用户列表
+     *
+     * @param dto 查询参数
+     * @return 用户列表
+     */
     List<UserVO> unallocatedList(@Param("dto") UserAndRoleQueryDTO dto);
 }
 

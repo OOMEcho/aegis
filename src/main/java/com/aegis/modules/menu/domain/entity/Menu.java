@@ -1,6 +1,5 @@
 package com.aegis.modules.menu.domain.entity;
 
-import com.aegis.modules.role.domain.entity.Role;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
@@ -17,13 +16,13 @@ import java.util.List;
 /**
  * @Author: xuesong.lei
  * @Date: 2025-08-30 10:47:13
- * @Description: 菜单权限表
+ * @Description: 菜单表
  * @TableName t_menu
  */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)
-@ApiModel("菜单权限表")
+@ApiModel("菜单表")
 @TableName(value = "t_menu")
 public class Menu implements Serializable {
 
@@ -93,6 +92,13 @@ public class Menu implements Serializable {
     private String remark;
 
     /**
+     * 菜单编码
+     */
+    @ApiModelProperty("菜单编码")
+    @TableField(value = "menu_code")
+    private String menuCode;
+
+    /**
      * 菜单名称
      */
     @ApiModelProperty("菜单名称")
@@ -114,20 +120,6 @@ public class Menu implements Serializable {
     private Integer orderNum;
 
     /**
-     * 请求方法,GET,POST,PUT,DELETE,ALL=不限制
-     */
-    @ApiModelProperty("请求方法,GET,POST,PUT,DELETE,ALL=不限制")
-    @TableField(value = "request_method")
-    private String requestMethod;
-
-    /**
-     * URL匹配模式,支持Ant风格,比如/api/user/**
-     */
-    @ApiModelProperty("URL匹配模式,支持Ant风格,比如/api/user/**")
-    @TableField(value = "request_uri")
-    private String requestUri;
-
-    /**
      * 路由名称
      */
     @ApiModelProperty("路由名称")
@@ -142,32 +134,18 @@ public class Menu implements Serializable {
     private String path;
 
     /**
-     * 组件路径
+     * 菜单类型(D-目录,M-菜单)
      */
-    @ApiModelProperty("组件路径")
-    @TableField(value = "component")
-    private String component;
-
-    /**
-     * 是否为外链(0-否,1-是)
-     */
-    @ApiModelProperty("是否为外链(0-否,1-是)")
-    @TableField(value = "is_frame")
-    private Boolean isFrame;
-
-    /**
-     * 是否缓存(0-缓存,1-不缓存)
-     */
-    @ApiModelProperty("是否缓存(0-缓存,1-不缓存)")
-    @TableField(value = "keep_alive")
-    private Boolean keepAlive;
-
-    /**
-     * 菜单类型(D-目录,M-菜单,B-按钮)
-     */
-    @ApiModelProperty("菜单类型(D-目录,M-菜单,B-按钮)")
+    @ApiModelProperty("菜单类型(D-目录,M-菜单)")
     @TableField(value = "menu_type")
     private String menuType;
+
+    /**
+     * 菜单图标
+     */
+    @ApiModelProperty("菜单图标")
+    @TableField(value = "icon")
+    private String icon;
 
     /**
      * 菜单状态(0-显示,1-隐藏)
@@ -182,27 +160,6 @@ public class Menu implements Serializable {
     @ApiModelProperty("菜单状态(0-正常,1-停用)")
     @TableField(value = "status")
     private String status;
-
-    /**
-     * 权限标识
-     */
-    @ApiModelProperty("权限标识")
-    @TableField(value = "perms")
-    private String perms;
-
-    /**
-     * 菜单图标
-     */
-    @ApiModelProperty("菜单图标")
-    @TableField(value = "icon")
-    private String icon;
-
-    /**
-     * 角色列表
-     */
-    @ApiModelProperty("角色列表")
-    @TableField(exist = false)
-    private List<Role> roleList;
 
     /**
      * 子菜单

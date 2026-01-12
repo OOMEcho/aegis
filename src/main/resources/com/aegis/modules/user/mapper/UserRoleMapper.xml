@@ -14,14 +14,6 @@
         id,user_id,role_id
     </sql>
 
-    <insert id="batchUserRole">
-        INSERT INTO t_user_role ( user_id, role_id )
-        VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.userId},#{item.roleId})
-        </foreach>
-    </insert>
-
     <select id="selectRoleByUserId" resultType="com.aegis.modules.role.domain.entity.Role">
         SELECT r.*
         FROM t_role r

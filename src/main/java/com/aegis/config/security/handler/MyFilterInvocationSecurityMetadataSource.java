@@ -3,9 +3,8 @@ package com.aegis.config.security.handler;
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.event.DataChangeListener;
-import com.aegis.modules.menu.domain.entity.Menu;
-import com.aegis.modules.menu.mapper.MenuMapper;
-import com.aegis.modules.role.domain.entity.Role;
+import com.aegis.modules.resource.domain.entity.Resource;
+import com.aegis.modules.resource.mapper.ResourceMapper;
 import com.aegis.modules.whitelist.domain.entity.Whitelist;
 import com.aegis.modules.whitelist.mapper.WhitelistMapper;
 import com.aegis.utils.RedisUtils;
@@ -29,13 +28,13 @@ import java.util.stream.Collectors;
 /**
  * @Author: xuesong.lei
  * @Date: 2025/9/2 23:04
- * @Description: 该类的主要功能就是通过当前的请求地址，获取该地址需要的用户角色
+ * @Description: 该类的主要功能就是通过当前的请求地址，获取该地址需要的权限编码(perm_code)
  */
 @Component
 @RequiredArgsConstructor
 public class MyFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-    private final MenuMapper menuMapper;
+    private final ResourceMapper resourceMapper;
 
     private final WhitelistMapper whitelistMapper;
 
@@ -45,23 +44,23 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
 
     @PostConstruct
     public void init() {
-        // 系统启动时预加载菜单数据
-        loadDataSourceAllUrl();
+        // 系统启动时预加载资源数据
+        loadDataSourceAllResource();
         // 系统启动时预加载白名单数据
         loadDataSourceAllWhitelist();
     }
 
     /**
-     * 加载所有的URL存入Redis中
-     * 在新增、修改、删除 【菜单、角色、角色关联菜单】时,发布事件监听器{@link DataChangeListener},重新加载
+     * 加载所有的资源存入Redis中
+     * 在新增、修改、删除资源时,发布事件监听器{@link DataChangeListener},重新加载
      */
-    public List<Menu> loadDataSourceAllUrl() {
-        if (redisUtils.hasKey(RedisConstants.MENUS)) {
-            return redisUtils.getList(RedisConstants.MENUS, Menu.class);
+    public List<Resource> loadDataSourceAllResource() {
+        if (redisUtils.hasKey(RedisConstants.RESOURCES)) {
+            return redisUtils.getList(RedisConstants.RESOURCES, Resource.class);
         } else {
-            List<Menu> allMenu = menuMapper.getAllMenu();
-            redisUtils.set(RedisConstants.MENUS, allMenu, 1, TimeUnit.DAYS);
-            return allMenu;
+            List<Resource> allResource = resourceMapper.getAllResource();
+            redisUtils.set(RedisConstants.RESOURCES, allResource, 1, TimeUnit.DAYS);
+            return allResource;
         }
     }
 
@@ -98,33 +97,35 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         // 判断请求路径是否在白名单内,在白名单内直接放行
         List<Whitelist> whitelists = loadDataSourceAllWhitelist();
         for (Whitelist whitelist : whitelists) {
-            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(whitelist.getRequestMethod()) || whitelist.getRequestMethod().equalsIgnoreCase(method)) {
+            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(whitelist.getRequestMethod())
+                    || whitelist.getRequestMethod().equalsIgnoreCase(method)) {
                 if (antPathMatcher.match(whitelist.getRequestUri(), requestURI)) {
                     return null;
                 }
             }
         }
 
-        // 获取所有菜单数据,匹配请求路径,获取该路径需要的角色
-        List<Menu> allMenu = loadDataSourceAllUrl();
-        for (Menu menu : allMenu) {
-            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(menu.getRequestMethod()) || menu.getRequestMethod().equalsIgnoreCase(method)) {
-                if (antPathMatcher.match(menu.getRequestUri(), requestURI)) {
-                    String[] roles = menu.getRoleList().stream().map(Role::getRoleCode).toArray(String[]::new);
-                    return SecurityConfig.createList(roles);
+        // 从 t_resource 中匹配 (request_method + request_uri)，获取 perm_code
+        List<Resource> allResource = loadDataSourceAllResource();
+        for (Resource resource : allResource) {
+            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(resource.getRequestMethod())
+                    || resource.getRequestMethod().equalsIgnoreCase(method)) {
+                if (antPathMatcher.match(resource.getRequestUri(), requestURI)) {
+                    // 命中 → 返回 perm_code
+                    return SecurityConfig.createList(resource.getPermCode());
                 }
             }
         }
 
+        // 未命中 → 返回 NONE（允许通过，由后续逻辑决定是否需要登录）
         return SecurityConfig.createList(CommonConstants.NONE);
     }
 
     @Override
     public Collection<ConfigAttribute> getAllConfigAttributes() {
-        List<Menu> allMenu = loadDataSourceAllUrl();
-        return allMenu.stream()
-                .flatMap(menu -> menu.getRoleList().stream())
-                .map(Role::getRoleCode)
+        List<Resource> allResource = loadDataSourceAllResource();
+        return allResource.stream()
+                .map(Resource::getPermCode)
                 .distinct()
                 .map(SecurityConfig::new)
                 .collect(Collectors.toList());

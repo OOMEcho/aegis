@@ -16,14 +16,6 @@
         id,notice_id,user_id,read_flag,read_time
     </sql>
 
-    <insert id="batchInsert">
-        INSERT INTO t_notice_user (notice_id, user_id)
-        VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.noticeId}, #{item.userId})
-        </foreach>
-    </insert>
-
     <select id="selectAllUserIds" resultType="java.lang.Long">
         SELECT id
         FROM t_user

@@ -5,6 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,28 +16,45 @@ import java.util.List;
 @Data
 @ApiModel("前端路由VO")
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class RouterVo {
+public class RouterVo implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
+    /**
+     * 页面/路由唯一标识
+     * 对应 t_menu.name
+     * 用于前端路由 name、页面唯一 key
+     */
     @ApiModelProperty("路由名称")
     private String name;
 
+    /**
+     * 路由路径（相对父级）
+     * 对应 t_menu.path
+     */
     @ApiModelProperty("路由地址")
     private String path;
 
-    @ApiModelProperty("是否隐藏路由,当设置 true 的时候该路由不会再侧边栏出现")
+    /**
+     * 页面显示标题
+     * 对应 t_menu.menu_name
+     */
+    @ApiModelProperty("路由标题")
+    private String title;
+
+    /**
+     * 菜单图标
+     * 对应 t_menu.icon
+     */
+    @ApiModelProperty("路由图标")
+    private String icon;
+
+    /**
+     * 是否在菜单中隐藏
+     * 对应 t_menu.hidden
+     */
+    @ApiModelProperty("是否隐藏路由")
     private Boolean hidden;
-
-    @ApiModelProperty("重定向地址,当设置 noRedirect 的时候该路由在面包屑导航中不可被点击")
-    private String redirect;
-
-    @ApiModelProperty("组件地址")
-    private String component;
-
-    @ApiModelProperty("当你一个路由下面的 children 声明的路由大于1个时,自动会变成嵌套的模式")
-    private Boolean alwaysShow;
-
-    @ApiModelProperty("其他元素")
-    private MetaVo meta;
 
     @ApiModelProperty("子路由")
     private List<RouterVo> children;

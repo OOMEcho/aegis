@@ -15,9 +15,20 @@ import java.util.Set;
  */
 public interface DeptMapper extends BaseMapper<Dept> {
 
+    /**
+     * 获取指定部门及其所有子部门的ID集合
+     *
+     * @param deptId 部门ID
+     * @return 部门ID集合
+     */
     Set<Long> getDeptAndChildrenIds(Long deptId);
 
-    void updateBatchAncestors(@Param("children")List<Dept> children);
+    /**
+     * 批量更新子部门的祖先节点信息
+     *
+     * @param children 子部门列表
+     */
+    void updateBatchAncestors(@Param("children") List<Dept> children);
 }
 
 

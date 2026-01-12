@@ -14,14 +14,6 @@
         id,role_id,dept_id
     </sql>
 
-    <insert id="batchRoleDept">
-        INSERT INTO t_role_dept ( role_id, dept_id )
-        VALUES
-        <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.roleId},#{item.deptId})
-        </foreach>
-    </insert>
-
     <select id="selectDeptListByRoleId" resultType="java.lang.Long">
         SELECT d.id
         FROM t_dept d

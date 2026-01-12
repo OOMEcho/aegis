@@ -272,7 +272,7 @@ public class NoticeServiceImpl implements NoticeService {
         }).collect(Collectors.toList());
 
         if (!relations.isEmpty()) {
-            noticeUserMapper.batchInsert(relations);
+            noticeUserMapper.insert(relations);
         }
     }
 }

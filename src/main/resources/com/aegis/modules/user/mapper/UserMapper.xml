@@ -31,8 +31,8 @@
         <result property="username" column="username"/>
         <result property="password" column="password"/>
         <result property="status" column="status"/>
-        <collection property="roleList" ofType="com.aegis.modules.role.domain.entity.Role">
-            <result column="role_code" property="roleCode"/>
+        <collection property="permCodeList" ofType="java.lang.String">
+            <result column="perm_code"/>
         </collection>
     </resultMap>
 
@@ -48,13 +48,15 @@
                u.username,
                u.PASSWORD,
                u.STATUS,
-               r.role_code AS role_code
+               p.perm_code AS perm_code
         FROM t_user u
                  LEFT JOIN t_user_role ur ON ur.user_id = u.id
                  LEFT JOIN t_role r ON ur.role_id = r.id AND r.deleted = 0 AND r.status = '0'
+                 LEFT JOIN t_role_permission rp ON rp.role_id = r.id
+                 LEFT JOIN t_permission p ON p.perm_code = rp.perm_code AND p.deleted = 0 AND p.status = '0'
         WHERE u.deleted = 0
-          AND (username = #{username}
-            OR email = #{username}
-            OR phone = #{username})
+          AND (u.username = #{username}
+            OR u.email = #{username}
+            OR u.phone = #{username})
     </select>
 </mapper>

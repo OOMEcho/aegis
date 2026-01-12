@@ -1,7 +1,6 @@
 package com.aegis.modules.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpUtil;
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.domain.vo.CaptchaVO;
 import com.aegis.common.event.DataChangePublisher;
@@ -15,9 +14,9 @@ import com.aegis.modules.dept.mapper.DeptMapper;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import com.aegis.modules.file.service.FileService;
 import com.aegis.modules.menu.domain.entity.Menu;
-import com.aegis.modules.menu.domain.vo.MetaVo;
 import com.aegis.modules.menu.domain.vo.RouterVo;
 import com.aegis.modules.menu.mapper.MenuMapper;
+import com.aegis.modules.permission.mapper.PermissionMapper;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.user.domain.entity.User;
 import com.aegis.modules.user.domain.vo.UserVO;
@@ -37,7 +36,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,6 +58,8 @@ public class ProfileServiceImpl implements ProfileService {
     private final UserRoleMapper userRoleMapper;
 
     private final MenuMapper menuMapper;
+
+    private final PermissionMapper permissionMapper;
 
     private final UserMapper userMapper;
 
@@ -127,8 +127,19 @@ public class ProfileServiceImpl implements ProfileService {
         List<Role> roles = userRoleMapper.selectRoleByUserId(userVo.getId());
         userVo.setRoleList(roles);
 
-        List<String> permissions = menuMapper.selectPermsByUserId(userVo.getId());
+        List<String> permissions = permissionMapper.selectPermCodesByUserId(userVo.getId());
         userVo.setPermissions(permissions);
+
+        List<Menu> menuList = menuMapper.selectMenuByUserId(userVo.getId());
+
+        List<Menu> menuTree = TreeUtil.makeTree(
+                menuList,
+                Menu::getParentId,
+                Menu::getId,
+                menu -> menu.getParentId() == null || menu.getParentId() == 0L,
+                Menu::setChildren);
+
+        userVo.setRouterVoList(buildRouters(menuTree));
 
         return userVo;
     }
@@ -235,205 +246,26 @@ public class ProfileServiceImpl implements ProfileService {
         return CommonConstants.SUCCESS_MESSAGE;
     }
 
-    @Override
-    public List<RouterVo> routers() {
-        Long userId = SecurityUtils.getUserId();
-
-        List<Menu> menuList = menuMapper.selectMenuByUserId(userId);
-
-        List<Menu> menuTree = TreeUtil.makeTree(
-                menuList,
-                Menu::getParentId,
-                Menu::getId,
-                menu -> menu.getParentId() == null || menu.getParentId() == 0L,
-                Menu::setChildren);
-
-        return buildRouters(menuTree);
-    }
-
     /**
-     * 构建路由
+     * 构建前端路由
      */
     private List<RouterVo> buildRouters(List<Menu> menuTree) {
         List<RouterVo> routers = new ArrayList<>();
 
         for (Menu menu : menuTree) {
             RouterVo router = new RouterVo();
-            router.setName(getRouteName(menu));
-            router.setPath(getRouterPath(menu));
+            router.setName(StrUtil.upperFirst(StringUtils.isNotEmpty(menu.getName()) ? menu.getName() : menu.getPath()));
+            router.setPath(menu.getPath());
+            router.setTitle(menu.getMenuName());
+            router.setIcon(menu.getIcon());
             router.setHidden(menu.getHidden());
-            router.setComponent(getComponent(menu));
-            router.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getHidden(), menu.getPath()));
 
-            // 处理子路由的三种情况
-            List<Menu> children = menu.getChildren();
-            if (hasChildren(children) && isCatalog(menu)) {
-                // 情况1：有子菜单的目录
-                router.setAlwaysShow(true);
-                router.setRedirect("noRedirect");
-                router.setChildren(buildRouters(children));
-
-            } else if (isMenuFrame(menu)) {
-                // 情况2：一级菜单框架
-                router.setMeta(null);
-                RouterVo child = createFrameChild(menu);
-                router.setChildren(Collections.singletonList(child));
-
-            } else if (isRootInnerLink(menu)) {
-                // 情况3：根级内链
-                router.setMeta(new MetaVo(menu.getName(), menu.getIcon()));
-                router.setPath("/");
-                RouterVo child = createInnerLinkChild(menu);
-                router.setChildren(Collections.singletonList(child));
+            if (menu.getChildren() != null && !menu.getChildren().isEmpty()) {
+                router.setChildren(buildRouters(menu.getChildren()));
             }
 
             routers.add(router);
         }
         return routers;
-    }
-
-    /**
-     * 创建一级菜单为框架时的子节点
-     */
-    private RouterVo createFrameChild(Menu menu) {
-        RouterVo child = new RouterVo();
-        child.setPath(menu.getPath());
-        child.setComponent(menu.getComponent());
-        child.setName(getRouteName(menu.getName(), menu.getPath()));
-        child.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getHidden(), menu.getPath()));
-        return child;
-    }
-
-    /**
-     * 创建一级菜单为内链时的子节点
-     */
-    private RouterVo createInnerLinkChild(Menu menu) {
-        RouterVo child = new RouterVo();
-        String routerPath = innerLinkReplaceEach(menu.getPath());
-        child.setPath(routerPath);
-        child.setComponent(CommonConstants.INNER_LINK);
-        child.setName(getRouteName(menu.getName(), routerPath));
-        child.setMeta(new MetaVo(menu.getMenuName(), menu.getIcon(), menu.getPath()));
-        return child;
-    }
-
-    /**
-     * 是否有子节点
-     */
-    private boolean hasChildren(List<Menu> children) {
-        return children != null && !children.isEmpty();
-    }
-
-    /**
-     * 是否为目录
-     */
-    private boolean isCatalog(Menu menu) {
-        return CommonConstants.MENUS_CATALOG.equals(menu.getMenuType());
-    }
-
-    /**
-     * 是否为一级内链菜单
-     */
-    private boolean isRootInnerLink(Menu menu) {
-        return menu.getParentId() != null && menu.getParentId() == 0L && isInnerLink(menu);
-    }
-
-    /**
-     * 获取组件信息
-     */
-    private String getComponent(Menu menu) {
-        // 优先使用自定义组件
-        if (StringUtils.isNotEmpty(menu.getComponent()) && !isMenuFrame(menu)) {
-            return menu.getComponent();
-        }
-
-        // 根据菜单类型返回对应组件
-        if (StringUtils.isEmpty(menu.getComponent())) {
-            if (menu.getParentId() != 0L && isInnerLink(menu)) {
-                return CommonConstants.INNER_LINK;
-            }
-            if (isParentView(menu)) {
-                return CommonConstants.PARENT_VIEW;
-            }
-        }
-
-        return CommonConstants.LAYOUT;
-    }
-
-    /**
-     * 获取路由地址
-     */
-    private String getRouterPath(Menu menu) {
-        String routerPath = menu.getPath();
-
-        // 内链处理
-        if (menu.getParentId() != 0L && isInnerLink(menu)) {
-            routerPath = innerLinkReplaceEach(routerPath);
-        }
-
-        // 一级目录添加斜杠前缀
-        else if (menu.getParentId() == 0L && isCatalog(menu) && !menu.getIsFrame()) {
-            routerPath = "/" + menu.getPath();
-        }
-
-        // 菜单框架根路径
-        else if (isMenuFrame(menu)) {
-            routerPath = "/";
-        }
-
-        return routerPath;
-    }
-
-    /**
-     * 内链域名特殊字符替换
-     */
-    private String innerLinkReplaceEach(String path) {
-        return path.replace(CommonConstants.HTTP, "")
-                .replace(CommonConstants.HTTPS, "")
-                .replace(CommonConstants.WWW, "")
-                .replace(".", "/")
-                .replace(":", "/");
-    }
-
-    /**
-     * 是否为内链组件
-     */
-    private boolean isInnerLink(Menu menu) {
-        return !menu.getIsFrame() && (HttpUtil.isHttp(menu.getPath()) || HttpUtil.isHttps(menu.getPath()));
-    }
-
-    /**
-     * 获取路由名称
-     */
-    private String getRouteName(Menu menu) {
-        return isMenuFrame(menu) ? StrUtil.EMPTY : getRouteName(menu.getName(), menu.getPath());
-    }
-
-    /**
-     * 获取路由名称，如没有配置路由名称则取路由地址
-     *
-     * @param name 路由名称
-     * @param path 路由地址
-     * @return 路由名称（驼峰格式）
-     */
-    private String getRouteName(String name, String path) {
-        String routerName = StringUtils.isNotEmpty(name) ? name : path;
-        return StrUtil.upperFirst(routerName);
-    }
-
-    /**
-     * 是否为parent_view组件
-     */
-    public boolean isParentView(Menu menu) {
-        return menu.getParentId() != 0L && isCatalog(menu);
-    }
-
-    /**
-     * 一级菜单(类型为菜单)且不是外链
-     */
-    private boolean isMenuFrame(Menu menu) {
-        return (menu.getParentId() == null || menu.getParentId() == 0L)
-                && CommonConstants.MENUS_MENU.equals(menu.getMenuType())
-                && !menu.getIsFrame();
     }
 }

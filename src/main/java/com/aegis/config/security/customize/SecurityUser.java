@@ -27,10 +27,13 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return user.getRoleList() == null ?
+        // 返回用户的权限编码列表（perm_code）
+        return user.getPermCodeList() == null ?
                 Collections.emptyList() :
-                user.getRoleList().stream()
-                        .map(role -> new SimpleGrantedAuthority(role.getRoleCode()))
+                user.getPermCodeList().stream()
+                        .filter(permCode -> permCode != null && !permCode.isEmpty())
+                        .distinct()
+                        .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
     }
 

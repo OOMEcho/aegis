@@ -8,15 +8,17 @@ import java.util.List;
 /**
  * @Author: xuesong.lei
  * @Date: 2025-08-30 10:47:13
- * @Description: 针对表【t_menu(菜单权限表)】的数据库操作Mapper
+ * @Description: 针对表【t_menu(菜单表)】的数据库操作Mapper
  * @Entity: com.aegis.modules.menu.domain.entity.Menu
  */
 public interface MenuMapper extends BaseMapper<Menu> {
 
-    List<Menu> getAllMenu();
-
-    List<String> selectPermsByUserId(Long userId);
-
+    /**
+     * 根据用户ID获取菜单列表
+     *
+     * @param userId 用户ID
+     * @return 菜单列表
+     */
     List<Menu> selectMenuByUserId(Long userId);
 }
 

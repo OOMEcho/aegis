@@ -35,11 +35,11 @@ public class DataChangeListener {
     @EventListener(DataChangeEvent.class)
     public void onDataChange(DataChangeEvent event) {
         switch (event.getType()) {
-            case MENU:
-                handleMenuChange(event);
-                break;
             case WHITELIST:
                 handleWhitelistChange(event);
+                break;
+            case RESOURCE:
+                handleResourceChange(event);
                 break;
             case LOG:
                 handleLog(event);
@@ -62,21 +62,21 @@ public class DataChangeListener {
     }
 
     /**
-     * 处理菜单变更
-     */
-    private void handleMenuChange(DataChangeEvent event) {
-        redisUtils.delete(RedisConstants.MENUS);
-        securityMetadataSource.loadDataSourceAllUrl();
-        log.info("菜单数据刷新完成，描述: {}", event.getDescription());
-    }
-
-    /**
      * 处理白名单变更
      */
     private void handleWhitelistChange(DataChangeEvent event) {
         redisUtils.delete(RedisConstants.WHITELIST);
         securityMetadataSource.loadDataSourceAllWhitelist();
         log.info("白名单数据刷新完成，描述: {}", event.getDescription());
+    }
+
+    /**
+     * 处理资源变更
+     */
+    private void handleResourceChange(DataChangeEvent event) {
+        redisUtils.delete(RedisConstants.RESOURCES);
+        securityMetadataSource.loadDataSourceAllResource();
+        log.info("资源数据刷新完成，描述: {}", event.getDescription());
     }
 
     /**

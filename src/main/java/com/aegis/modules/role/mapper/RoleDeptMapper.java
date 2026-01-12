@@ -14,8 +14,6 @@ import java.util.List;
  */
 public interface RoleDeptMapper extends BaseMapper<RoleDept> {
 
-    void batchRoleDept(List<RoleDept> roleDeptList);
-
     List<Long> selectDeptListByRoleId(@Param("roleId") Long roleId, @Param("deptCheckStrictly") Integer deptCheckStrictly);
 }
 

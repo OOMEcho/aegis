@@ -14,8 +14,12 @@ import java.util.List;
  */
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 
-    void batchUserRole(List<UserRole> userRoleList);
-
+    /**
+     * 根据用户ID获取角色列表
+     *
+     * @param userId 用户ID
+     * @return 角色列表
+     */
     List<Role> selectRoleByUserId(Long userId);
 }
 

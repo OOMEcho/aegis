@@ -16,14 +16,36 @@ import java.util.List;
  */
 public interface NoticeUserMapper extends BaseMapper<NoticeUser> {
 
-    void batchInsert(List<NoticeUser> relations);
-
+    /**
+     * 查询所有用户ID
+     *
+     * @return 用户ID列表
+     */
     List<Long> selectAllUserIds();
 
+    /**
+     * 根据角色ID列表查询用户ID列表
+     *
+     * @param ids 角色ID列表
+     * @return 用户ID列表
+     */
     List<Long> selectUserIdsByRoleIds(List<Long> ids);
 
+    /**
+     * 根据部门ID列表查询用户ID列表
+     *
+     * @param ids 部门ID列表
+     * @return 用户ID列表
+     */
     List<Long> selectUserIdsByDeptIds(List<Long> ids);
 
+    /**
+     * 分页查询通知公告列表
+     *
+     * @param dto    查询参数
+     * @param userId 用户ID
+     * @return 通知公告列表
+     */
     List<NoticeVO> pageList(@Param("dto") NoticeUserDTO dto, @Param("userId") Long userId);
 }
 
