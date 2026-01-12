@@ -35,15 +35,14 @@
         SELECT DISTINCT m.*
         FROM t_menu m
                  INNER JOIN t_menu_permission mp ON mp.menu_id = m.id
+                 INNER JOIN t_permission p ON p.perm_code = mp.perm_code AND p.deleted = 0 AND p.status = '0'
                  INNER JOIN t_role_permission rp ON rp.perm_code = mp.perm_code
                  INNER JOIN t_user_role ur ON ur.role_id = rp.role_id
-                 INNER JOIN t_role r ON r.id = ur.role_id
+                 INNER JOIN t_role r ON r.id = ur.role_id AND r.deleted = 0 AND r.status = '0'
         WHERE ur.user_id = #{userId}
           AND m.menu_type IN ('D', 'M')
           AND m.deleted = 0
           AND m.status = '0'
-          AND r.deleted = 0
-          AND r.status = '0'
         ORDER BY m.parent_id, m.order_num
     </select>
 </mapper>

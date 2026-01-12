@@ -9,6 +9,8 @@ import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.role.domain.vo.RoleWithMenuOrDeptVO;
 import com.aegis.modules.user.domain.vo.UserVO;
 
+import java.util.List;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025/9/10 14:07
@@ -113,18 +115,27 @@ public interface RoleService {
     String selectAll(CancelAllDTO dto);
 
     /**
-     * 获取角色对应的菜单树
-     *
-     * @param roleId 角色ID
-     * @return 角色对应的菜单树
-     */
-    RoleWithMenuOrDeptVO roleWithMenuTree(Long roleId);
-
-    /**
      * 获取角色对应的部门树
      *
      * @param roleId 角色ID
-     * @return 角色对应的菜单树
+     * @return 角色对应的部门树
      */
     RoleWithMenuOrDeptVO roleWithDeptTree(Long roleId);
+
+    /**
+     * 获取角色的权限编码列表
+     *
+     * @param roleId 角色ID
+     * @return 权限编码列表
+     */
+    List<String> getRolePermissions(Long roleId);
+
+    /**
+     * 给角色分配权限
+     *
+     * @param roleId    角色ID
+     * @param permCodes 权限编码列表
+     * @return 结果
+     */
+    String assignPermissions(Long roleId, List<String> permCodes);
 }

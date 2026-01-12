@@ -60,4 +60,21 @@ public interface MenuService {
      * @return 树形菜单列表
      */
     List<TreeVO> tree(MenuDTO dto);
+
+    /**
+     * 获取菜单的权限编码列表
+     *
+     * @param menuId 菜单ID
+     * @return 权限编码列表
+     */
+    List<String> getMenuPermissions(Long menuId);
+
+    /**
+     * 给菜单配置权限
+     *
+     * @param menuId    菜单ID
+     * @param permCodes 权限编码列表
+     * @return 结果
+     */
+    String assignPermissions(Long menuId, List<String> permCodes);
 }

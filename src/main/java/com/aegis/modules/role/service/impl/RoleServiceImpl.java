@@ -6,19 +6,17 @@ import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.dept.domain.dto.DeptDTO;
 import com.aegis.modules.dept.service.DeptService;
-import com.aegis.modules.menu.domain.dto.MenuDTO;
-import com.aegis.modules.menu.service.MenuService;
 import com.aegis.modules.role.domain.dto.CancelAllDTO;
 import com.aegis.modules.role.domain.dto.CancelDTO;
 import com.aegis.modules.role.domain.dto.RoleDTO;
 import com.aegis.modules.role.domain.dto.UserAndRoleQueryDTO;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.role.domain.entity.RoleDept;
-import com.aegis.modules.role.domain.entity.RoleMenu;
+import com.aegis.modules.role.domain.entity.RolePermission;
 import com.aegis.modules.role.domain.vo.RoleWithMenuOrDeptVO;
 import com.aegis.modules.role.mapper.RoleDeptMapper;
 import com.aegis.modules.role.mapper.RoleMapper;
-import com.aegis.modules.role.mapper.RoleMenuMapper;
+import com.aegis.modules.role.mapper.RolePermissionMapper;
 import com.aegis.modules.role.service.RoleConvert;
 import com.aegis.modules.role.service.RoleService;
 import com.aegis.modules.user.domain.entity.UserRole;
@@ -49,7 +47,7 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleDeptMapper roleDeptMapper;
 
-    private final RoleMenuMapper roleMenuMapper;
+    private final RolePermissionMapper rolePermissionMapper;
 
     private final UserRoleMapper userRoleMapper;
 
@@ -58,8 +56,6 @@ public class RoleServiceImpl implements RoleService {
     private final RoleConvert roleConvert;
 
     private final DeptService deptService;
-
-    private final MenuService menuService;
 
     @Override
     public PageVO<Role> pageList(RoleDTO dto) {
@@ -94,7 +90,6 @@ public class RoleServiceImpl implements RoleService {
 
             roleMapper.updateById(role);
 
-            dataChangePublisher.publishMenuChange("修改角色状态,ID: " + id);
         }
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -113,15 +108,14 @@ public class RoleServiceImpl implements RoleService {
                 throw new BusinessException(String.format("%1$s已分配，不能删除", role.getRoleName()));
             }
 
-            // 删除角色与菜单关联
-            roleMenuMapper.delete(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, id));
+            // 删除角色与权限关联
+            rolePermissionMapper.delete(new LambdaQueryWrapper<RolePermission>().eq(RolePermission::getRoleId, id));
 
             // 删除角色与部门关联
             roleDeptMapper.delete(new LambdaQueryWrapper<RoleDept>().eq(RoleDept::getRoleId, id));
 
             roleMapper.deleteById(id);
 
-            dataChangePublisher.publishMenuChange("删除角色,ID: " + id);
         }
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -140,11 +134,6 @@ public class RoleServiceImpl implements RoleService {
         role.setCreateBy(SecurityUtils.getUserId());
 
         roleMapper.insert(role);
-
-        // 新增角色菜单关联
-        batchInsertRoleMenu(role.getId(), dto.getMenuIds());
-
-        dataChangePublisher.publishMenuChange("新增角色");
 
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -166,14 +155,6 @@ public class RoleServiceImpl implements RoleService {
         role.setUpdateBy(SecurityUtils.getUserId());
 
         roleMapper.updateById(role);
-
-        // 删除角色原有菜单
-        roleMenuMapper.delete(new LambdaQueryWrapper<RoleMenu>().eq(RoleMenu::getRoleId, role.getId()));
-
-        // 新增角色菜单关联
-        batchInsertRoleMenu(role.getId(), dto.getMenuIds());
-
-        dataChangePublisher.publishMenuChange("修改角色,ID: " + role.getId());
 
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -202,7 +183,7 @@ public class RoleServiceImpl implements RoleService {
             roleDeptList.add(roleDept);
         }
         if (!roleDeptList.isEmpty()) {
-            roleDeptMapper.batchRoleDept(roleDeptList);
+            roleDeptMapper.insert(roleDeptList);
         }
 
         return CommonConstants.SUCCESS_MESSAGE;
@@ -249,21 +230,10 @@ public class RoleServiceImpl implements RoleService {
             userRoleList.add(userRole);
         }
         if (!userRoleList.isEmpty()) {
-            userRoleMapper.batchUserRole(userRoleList);
+            userRoleMapper.insert(userRoleList);
         }
 
         return CommonConstants.SUCCESS_MESSAGE;
-    }
-
-    @Override
-    public RoleWithMenuOrDeptVO roleWithMenuTree(Long roleId) {
-        final Role role = roleMapper.selectById(roleId);
-
-        RoleWithMenuOrDeptVO roleWithMenuOrDeptVO = new RoleWithMenuOrDeptVO();
-        roleWithMenuOrDeptVO.setCheckedKeys(roleMenuMapper.selectMenuListByRoleId(roleId, role.getMenuCheckStrictly()));
-        roleWithMenuOrDeptVO.setTrees(menuService.tree(new MenuDTO()));
-
-        return roleWithMenuOrDeptVO;
     }
 
     @Override
@@ -301,16 +271,44 @@ public class RoleServiceImpl implements RoleService {
         }
     }
 
-    private void batchInsertRoleMenu(Long id, List<Long> menuIds) {
-        List<RoleMenu> roleMenuList = new ArrayList<>();
-        for (Long menuId : menuIds) {
-            RoleMenu roleMenu = new RoleMenu();
-            roleMenu.setRoleId(id);
-            roleMenu.setMenuId(menuId);
-            roleMenuList.add(roleMenu);
+    @Override
+    public List<String> getRolePermissions(Long roleId) {
+        LambdaQueryWrapper<RolePermission> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(RolePermission::getRoleId, roleId);
+        List<RolePermission> rolePermissions = rolePermissionMapper.selectList(queryWrapper);
+        List<String> permCodes = new ArrayList<>();
+        for (RolePermission rp : rolePermissions) {
+            permCodes.add(rp.getPermCode());
         }
-        if (!roleMenuList.isEmpty()) {
-            roleMenuMapper.batchRoleMenu(roleMenuList);
+        return permCodes;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String assignPermissions(Long roleId, List<String> permCodes) {
+        // 不能操作超级管理员角色
+        Role role = roleMapper.selectById(roleId);
+        if (role != null) {
+            checkIsAdminRole(role.getRoleCode());
         }
+
+        // 先删除角色原有权限
+        rolePermissionMapper.delete(new LambdaQueryWrapper<RolePermission>().eq(RolePermission::getRoleId, roleId));
+
+        // 再新增角色权限关联
+        if (permCodes != null && !permCodes.isEmpty()) {
+            List<RolePermission> rolePermissionList = new ArrayList<>();
+            for (String permCode : permCodes) {
+                RolePermission rp = new RolePermission();
+                rp.setRoleId(roleId);
+                rp.setPermCode(permCode);
+                rolePermissionList.add(rp);
+            }
+            for (RolePermission rp : rolePermissionList) {
+                rolePermissionMapper.insert(rp);
+            }
+        }
+
+        return CommonConstants.SUCCESS_MESSAGE;
     }
 }

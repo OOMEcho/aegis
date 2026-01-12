@@ -2,15 +2,14 @@ package com.aegis.modules.menu.service.impl;
 
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.domain.vo.TreeVO;
-import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.menu.domain.dto.MenuDTO;
 import com.aegis.modules.menu.domain.entity.Menu;
+import com.aegis.modules.menu.domain.entity.MenuPermission;
 import com.aegis.modules.menu.mapper.MenuMapper;
+import com.aegis.modules.menu.mapper.MenuPermissionMapper;
 import com.aegis.modules.menu.service.MenuConvert;
 import com.aegis.modules.menu.service.MenuService;
-import com.aegis.modules.role.domain.entity.RoleMenu;
-import com.aegis.modules.role.mapper.RoleMenuMapper;
 import com.aegis.utils.SecurityUtils;
 import com.aegis.utils.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -34,16 +33,18 @@ public class MenuServiceImpl implements MenuService {
 
     private final MenuMapper menuMapper;
 
-    private final RoleMenuMapper roleMenuMapper;
-
-    private final DataChangePublisher dataChangePublisher;
+    private final MenuPermissionMapper menuPermissionMapper;
 
     private final MenuConvert menuConvert;
 
     @Override
     public List<Menu> list(MenuDTO dto) {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(dto.getMenuName()), Menu::getMenuName, dto.getMenuName())
+        queryWrapper.like(ObjectUtils.isNotEmpty(dto.getMenuCode()), Menu::getMenuCode, dto.getMenuCode())
+                .like(StringUtils.isNotBlank(dto.getMenuName()), Menu::getMenuName, dto.getMenuName())
+                .like(StringUtils.isNotBlank(dto.getName()), Menu::getName, dto.getName())
+                .like(StringUtils.isNotBlank(dto.getPath()), Menu::getPath, dto.getPath())
+                .eq(StringUtils.isNotBlank(dto.getMenuType()), Menu::getMenuType, dto.getMenuType())
                 .eq(StringUtils.isNotBlank(dto.getStatus()), Menu::getStatus, dto.getStatus())
                 .orderBy(true, true, Menu::getParentId, Menu::getOrderNum);
         return menuMapper.selectList(queryWrapper);
@@ -63,16 +64,10 @@ public class MenuServiceImpl implements MenuService {
             throw new BusinessException("存在子菜单，不允许删除");
         }
 
-        LambdaQueryWrapper<RoleMenu> roleMenu = new LambdaQueryWrapper<RoleMenu>()
-                .eq(RoleMenu::getMenuId, id);
-
-        if (roleMenuMapper.selectCount(roleMenu) > 0) {
-            throw new BusinessException("菜单已分配，不允许删除");
-        }
+        // 删除菜单与权限的关联
+        menuPermissionMapper.delete(new LambdaQueryWrapper<MenuPermission>().eq(MenuPermission::getMenuId, id));
 
         menuMapper.deleteById(id);
-
-        dataChangePublisher.publishMenuChange("删除菜单,ID: " + id);
 
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -86,8 +81,6 @@ public class MenuServiceImpl implements MenuService {
 
         menu.setCreateBy(SecurityUtils.getUserId());
         menuMapper.insert(menu);
-
-        dataChangePublisher.publishMenuChange("新增菜单");
 
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -107,8 +100,6 @@ public class MenuServiceImpl implements MenuService {
 
         menuMapper.updateById(menu);
 
-        dataChangePublisher.publishMenuChange("修改菜单,ID: " + dto.getId());
-
         return CommonConstants.SUCCESS_MESSAGE;
     }
 
@@ -124,6 +115,35 @@ public class MenuServiceImpl implements MenuService {
                 Menu::setChildren);
 
         return menuTree.stream().map(TreeVO::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> getMenuPermissions(Long menuId) {
+        LambdaQueryWrapper<MenuPermission> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(MenuPermission::getMenuId, menuId);
+        List<MenuPermission> menuPermissions = menuPermissionMapper.selectList(queryWrapper);
+        return menuPermissions.stream()
+                .map(MenuPermission::getPermCode)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public String assignPermissions(Long menuId, List<String> permCodes) {
+        // 先删除菜单原有权限
+        menuPermissionMapper.delete(new LambdaQueryWrapper<MenuPermission>().eq(MenuPermission::getMenuId, menuId));
+
+        // 再新增菜单权限关联
+        if (permCodes != null && !permCodes.isEmpty()) {
+            for (String permCode : permCodes) {
+                MenuPermission mp = new MenuPermission();
+                mp.setMenuId(menuId);
+                mp.setPermCode(permCode);
+                menuPermissionMapper.insert(mp);
+            }
+        }
+
+        return CommonConstants.SUCCESS_MESSAGE;
     }
 
     private void checkSameMune(Menu menu) {

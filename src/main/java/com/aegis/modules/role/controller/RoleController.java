@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025/9/10 14:08
@@ -120,15 +122,23 @@ public class RoleController {
         return roleService.selectAll(dto);
     }
 
-    @ApiOperation("获取对应角色菜单树")
-    @GetMapping("/roleWithMenuTree/{roleId}")
-    public RoleWithMenuOrDeptVO roleWithMenuTree(@PathVariable("roleId") Long roleId) {
-        return roleService.roleWithMenuTree(roleId);
-    }
-
     @ApiOperation("获取对应角色部门树")
     @GetMapping("/roleWithDeptTree/{roleId}")
     public RoleWithMenuOrDeptVO roleWithDeptTree(@PathVariable("roleId") Long roleId) {
         return roleService.roleWithDeptTree(roleId);
+    }
+
+    @ApiOperation("获取角色的权限列表")
+    @GetMapping("/{id}/permissions")
+    public List<String> getRolePermissions(@PathVariable("id") Long id) {
+        return roleService.getRolePermissions(id);
+    }
+
+    @ApiOperation("给角色分配权限")
+    @PostMapping("/{id}/permissions")
+    @PreventDuplicateSubmit
+    @OperationLog(moduleTitle = "给角色分配权限", businessType = BusinessType.UPDATE)
+    public String assignPermissions(@PathVariable("id") Long id, @RequestBody List<String> permCodes) {
+        return roleService.assignPermissions(id, permCodes);
     }
 }
