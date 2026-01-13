@@ -5,9 +5,9 @@
 <mapper namespace="com.aegis.modules.role.mapper.RolePermissionMapper">
 
     <resultMap id="BaseResultMap" type="com.aegis.modules.role.domain.entity.RolePermission">
-            <id property="id" column="id" />
-            <result property="roleId" column="role_id" />
-            <result property="permCode" column="perm_code" />
+        <id property="id" column="id"/>
+        <id property="roleId" column="role_id"/>
+        <id property="permCode" column="perm_code"/>
     </resultMap>
 
     <sql id="Base_Column_List">

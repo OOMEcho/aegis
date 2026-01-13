@@ -2,7 +2,6 @@ package com.aegis.modules.role.service.impl;
 
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.domain.vo.PageVO;
-import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.dept.domain.dto.DeptDTO;
 import com.aegis.modules.dept.service.DeptService;
@@ -50,8 +49,6 @@ public class RoleServiceImpl implements RoleService {
     private final RolePermissionMapper rolePermissionMapper;
 
     private final UserRoleMapper userRoleMapper;
-
-    private final DataChangePublisher dataChangePublisher;
 
     private final RoleConvert roleConvert;
 
