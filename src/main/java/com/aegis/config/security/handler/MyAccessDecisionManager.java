@@ -1,6 +1,7 @@
 package com.aegis.config.security.handler;
 
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.exception.LoginException;
 import com.aegis.common.result.ResultCodeEnum;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -26,6 +27,9 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
         // 检查是否有NONE权限
         if (configAttributes.stream().anyMatch(attr -> CommonConstants.NONE.equals(attr.getAttribute()))) {
+            if (authentication == null || !authentication.isAuthenticated()) {
+                throw new LoginException(ResultCodeEnum.NOT_LOGGED_IN);
+            }
             return;
         }
 
