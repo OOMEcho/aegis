@@ -95,25 +95,17 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
         final String requestURI = request.getRequestURI();
 
         // 判断请求路径是否在白名单内,在白名单内直接放行
-        List<Whitelist> whitelists = loadDataSourceAllWhitelist();
-        for (Whitelist whitelist : whitelists) {
-            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(whitelist.getRequestMethod())
-                    || whitelist.getRequestMethod().equalsIgnoreCase(method)) {
-                if (antPathMatcher.match(whitelist.getRequestUri(), requestURI)) {
-                    return null;
-                }
-            }
+        if (isWhitelisted(requestURI, method)) {
+            return null;// 白名单直接放行
         }
 
         // 从 t_resource 中匹配 (request_method + request_uri)，获取 perm_code
         List<Resource> allResource = loadDataSourceAllResource();
         for (Resource resource : allResource) {
-            if (CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(resource.getRequestMethod())
-                    || resource.getRequestMethod().equalsIgnoreCase(method)) {
-                if (antPathMatcher.match(resource.getRequestUri(), requestURI)) {
-                    // 命中 → 返回 perm_code
-                    return SecurityConfig.createList(resource.getPermCode());
-                }
+            if (matchesRequestMethod(resource.getRequestMethod(), method) &&
+                    antPathMatcher.match(resource.getRequestUri(), requestURI)) {
+                // 命中 → 返回 perm_code
+                return SecurityConfig.createList(resource.getPermCode());
             }
         }
 
@@ -134,5 +126,24 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     @Override
     public boolean supports(Class<?> clazz) {
         return FilterInvocation.class.isAssignableFrom(clazz);
+    }
+
+    /**
+     * 检查URL是否在白名单中
+     */
+    private boolean isWhitelisted(String requestURI, String method) {
+        List<Whitelist> whitelists = loadDataSourceAllWhitelist();
+        return whitelists.stream()
+                .anyMatch(whitelist ->
+                        matchesRequestMethod(whitelist.getRequestMethod(), method) &&
+                                antPathMatcher.match(whitelist.getRequestUri(), requestURI));
+    }
+
+    /**
+     * 匹配HTTP方法
+     */
+    private boolean matchesRequestMethod(String configuredMethod, String requestMethod) {
+        return CommonConstants.REQUEST_METHOD_ALL.equalsIgnoreCase(configuredMethod) ||
+                configuredMethod.equalsIgnoreCase(requestMethod);
     }
 }
