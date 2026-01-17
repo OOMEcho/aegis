@@ -76,4 +76,14 @@ public class RedisConstants {
      * 邮箱每日发送上限 key
      */
     public static final String EMAIL_DAILY_LIMIT = "emailDailyLimit:";
+
+    /**
+     * 资源分布式锁 key
+     */
+    public static final String RESOURCE_LOCK_KEY = "lock:security:resources";
+
+    /**
+     * 白名单分布式锁 key
+     */
+    public static final String WHITELIST_LOCK_KEY = "lock:security:whitelist";
 }

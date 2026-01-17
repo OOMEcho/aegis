@@ -4,6 +4,7 @@ import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
@@ -276,13 +277,17 @@ public final class RedisUtils {
     }
 
     /**
-     * 释放分布式锁
+     * 释放分布式锁（使用 Lua 脚本保证原子性）
      */
     public void unlock(String key, String value) {
-        String currentValue = redisTemplate.opsForValue().get(key);
-        if (value.equals(currentValue)) {
-            redisTemplate.delete(key);
-        }
+        // 使用 Lua 脚本保证原子性：只有持有锁的请求才能释放
+        String script = "if redis.call('get', KEYS[1]) == ARGV[1] then " +
+                       "return redis.call('del', KEYS[1]) else return 0 end";
+        redisTemplate.execute(
+                new DefaultRedisScript<>(script, Long.class),
+                Collections.singletonList(key),
+                value
+        );
     }
 
     /**

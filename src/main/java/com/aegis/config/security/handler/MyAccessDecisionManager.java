@@ -1,6 +1,7 @@
 package com.aegis.config.security.handler;
 
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.exception.PermissionDeniedException;
 import com.aegis.common.result.ResultCodeEnum;
 import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.access.AccessDeniedException;
@@ -30,18 +31,27 @@ public class MyAccessDecisionManager implements AccessDecisionManager {
         }
 
         // 检查用户是否具备所需权限编码
-        Set<String> permCode = authentication.getAuthorities()
+        Set<String> userPermissions  = authentication.getAuthorities()
                 .stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toSet());
 
+        // 检查权限匹配
         for (ConfigAttribute configAttribute : configAttributes) {
-            if (permCode.contains(configAttribute.getAttribute())) {
+            if (userPermissions.contains(configAttribute.getAttribute())) {
                 return;
             }
         }
 
-        throw new AccessDeniedException(ResultCodeEnum.LACK_OF_AUTHORITY.getMessage());
+        Set<String> requiredPermissions = configAttributes.stream()
+                .map(ConfigAttribute::getAttribute)
+                .collect(Collectors.toSet());
+
+        throw new PermissionDeniedException(
+                ResultCodeEnum.LACK_OF_AUTHORITY.getMessage(),
+                requiredPermissions,
+                userPermissions
+        );
     }
 
     @Override

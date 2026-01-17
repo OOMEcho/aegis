@@ -22,6 +22,7 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Collection;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -51,32 +52,96 @@ public class MyFilterInvocationSecurityMetadataSource implements FilterInvocatio
     }
 
     /**
-     * 加载所有的资源存入Redis中
+     * 加载所有的资源存入Redis中（使用分布式锁避免并发重复查询）
      * 在新增、修改、删除资源时,发布事件监听器{@link DataChangeListener},重新加载
      */
     public List<Resource> loadDataSourceAllResource() {
+        // 第一次检查（无锁）
         if (redisUtils.hasKey(RedisConstants.RESOURCES)) {
             return redisUtils.getList(RedisConstants.RESOURCES, Resource.class);
-        } else {
-            List<Resource> allResource = resourceMapper.getAllResource();
-            redisUtils.set(RedisConstants.RESOURCES, allResource, 1, TimeUnit.DAYS);
-            return allResource;
+        }
+
+        // 尝试获取锁
+        String requestId = UUID.randomUUID().toString();
+        try {
+            if (redisUtils.tryLock(RedisConstants.RESOURCE_LOCK_KEY, requestId, 10, TimeUnit.SECONDS)) {
+                try {
+                    // 第二次检查（持有锁）
+                    if (redisUtils.hasKey(RedisConstants.RESOURCES)) {
+                        return redisUtils.getList(RedisConstants.RESOURCES, Resource.class);
+                    }
+
+                    // 确实没有缓存，从数据库加载
+                    List<Resource> allResource = resourceMapper.getAllResource();
+                    redisUtils.set(RedisConstants.RESOURCES, allResource, 1, TimeUnit.DAYS);
+                    return allResource;
+                } finally {
+                    // 释放锁
+                    redisUtils.unlock(RedisConstants.RESOURCE_LOCK_KEY, requestId);
+                }
+            } else {
+                // 获取锁失败，等待一小段时间后重试读取缓存
+                // 此时其他线程可能正在加载数据
+                Thread.sleep(100);
+                if (redisUtils.hasKey(RedisConstants.RESOURCES)) {
+                    return redisUtils.getList(RedisConstants.RESOURCES, Resource.class);
+                }
+                // 如果还是没有，直接查数据库（降级方案）
+                return resourceMapper.getAllResource();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            // 异常情况直接查数据库
+            return resourceMapper.getAllResource();
         }
     }
 
     /**
-     * 加载所有的白名单存入Redis中
+     * 加载所有的白名单存入Redis中（使用分布式锁避免并发重复查询）
      * 在新增、修改、删除白名单时,发布事件监听器{@link DataChangeListener},重新加载
      */
     public List<Whitelist> loadDataSourceAllWhitelist() {
+        // 第一次检查（无锁）
         if (redisUtils.hasKey(RedisConstants.WHITELIST)) {
             return redisUtils.getList(RedisConstants.WHITELIST, Whitelist.class);
-        } else {
+        }
+
+        // 尝试获取锁
+        String requestId = UUID.randomUUID().toString();
+        try {
+            if (redisUtils.tryLock(RedisConstants.WHITELIST_LOCK_KEY, requestId, 10, TimeUnit.SECONDS)) {
+                try {
+                    // 第二次检查（持有锁）
+                    if (redisUtils.hasKey(RedisConstants.WHITELIST)) {
+                        return redisUtils.getList(RedisConstants.WHITELIST, Whitelist.class);
+                    }
+
+                    // 从数据库加载
+                    LambdaQueryWrapper<Whitelist> queryWrapper = new LambdaQueryWrapper<>();
+                    queryWrapper.eq(Whitelist::getStatus, CommonConstants.NORMAL_STATUS);
+                    List<Whitelist> rules = whitelistMapper.selectList(queryWrapper);
+                    redisUtils.set(RedisConstants.WHITELIST, rules, 1, TimeUnit.DAYS);
+                    return rules;
+                } finally {
+                    // 释放锁
+                    redisUtils.unlock(RedisConstants.WHITELIST_LOCK_KEY, requestId);
+                }
+            } else {
+                // 获取锁失败，等待后重试
+                Thread.sleep(100);
+                if (redisUtils.hasKey(RedisConstants.WHITELIST)) {
+                    return redisUtils.getList(RedisConstants.WHITELIST, Whitelist.class);
+                }
+                // 降级：直接查数据库
+                LambdaQueryWrapper<Whitelist> queryWrapper = new LambdaQueryWrapper<>();
+                queryWrapper.eq(Whitelist::getStatus, CommonConstants.NORMAL_STATUS);
+                return whitelistMapper.selectList(queryWrapper);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
             LambdaQueryWrapper<Whitelist> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(Whitelist::getStatus, CommonConstants.NORMAL_STATUS);
-            List<Whitelist> rules = whitelistMapper.selectList(queryWrapper);
-            redisUtils.set(RedisConstants.WHITELIST, rules, 1, TimeUnit.DAYS);
-            return rules;
+            return whitelistMapper.selectList(queryWrapper);
         }
     }
 
