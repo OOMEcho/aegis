@@ -2,6 +2,7 @@ package com.aegis.modules.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.domain.vo.CaptchaVO;
 import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
@@ -37,6 +38,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: xuesong.lei
@@ -68,6 +70,8 @@ public class ProfileServiceImpl implements ProfileService {
     private final FileService fileService;
 
     private final DataChangePublisher dataChangePublisher;
+
+    private final RedisUtils redisUtils;
 
     @Override
     public CaptchaVO generateCaptcha() {
@@ -101,7 +105,21 @@ public class ProfileServiceImpl implements ProfileService {
             throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
         }
 
+        String username = jwtTokenUtil.getUsernameFromToken(refreshToken);
+        String refreshJti = jwtTokenUtil.getJti(refreshToken);
+        String refreshKey = RedisConstants.USER_REFRESH_JTI + username;
+        String currentRefreshJti = redisUtils.get(refreshKey);
+        if (StrUtil.isBlank(currentRefreshJti) || !currentRefreshJti.equals(refreshJti)) {
+            throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
+        }
+
         JwtTokenUtil.TokenResponse tokenResponse = jwtTokenUtil.refreshAccessToken(refreshToken);
+        String accessJti = jwtTokenUtil.getJti(tokenResponse.getAccessToken());
+        Long accessExpireSeconds = jwtTokenUtil.getAccessTokenExpireSeconds(tokenResponse.getAccessToken());
+        redisUtils.set(RedisConstants.USER_TOKEN_JTI + username, accessJti, accessExpireSeconds, TimeUnit.SECONDS);
+
+        String newRefreshJti = jwtTokenUtil.getJti(tokenResponse.getRefreshToken());
+        redisUtils.set(refreshKey, newRefreshJti, jwtTokenUtil.getRefreshTokenExpiration(), TimeUnit.SECONDS);
 
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, tokenResponse.getRefreshToken());
         cookie.setHttpOnly(true);

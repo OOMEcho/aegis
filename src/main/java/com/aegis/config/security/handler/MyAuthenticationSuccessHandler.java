@@ -1,6 +1,8 @@
 package com.aegis.config.security.handler;
 
+import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.modules.log.domain.entity.SysLoginLog;
 import com.aegis.modules.log.mapper.SysLoginLogMapper;
@@ -8,6 +10,7 @@ import com.aegis.modules.user.domain.entity.User;
 import com.aegis.modules.user.mapper.UserMapper;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.JwtTokenUtil;
+import com.aegis.utils.RedisUtils;
 import com.aegis.utils.ResponseUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -20,6 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: xuesong.lei
@@ -38,10 +42,30 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     private final UserMapper userMapper;
 
+    private final RedisUtils redisUtils;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         // 生成token
         JwtTokenUtil.TokenResponse tokenResponse = jwtTokenUtil.generateTokenResponse(authentication);
+
+        String username = authentication.getName();
+        String accessKey = RedisConstants.USER_TOKEN_JTI + username;
+        String oldJti = redisUtils.get(accessKey);
+        if (StrUtil.isNotBlank(oldJti)) {
+            long oldExpireSeconds = redisUtils.getExpire(accessKey, TimeUnit.SECONDS);
+            if (oldExpireSeconds > 0) {
+                redisUtils.set(RedisConstants.BLACKLIST_TOKEN + oldJti, "logout", oldExpireSeconds, TimeUnit.SECONDS);
+            }
+        }
+
+        String accessJti = jwtTokenUtil.getJti(tokenResponse.getAccessToken());
+        Long accessExpireSeconds = jwtTokenUtil.getAccessTokenExpireSeconds(tokenResponse.getAccessToken());
+        redisUtils.set(accessKey, accessJti, accessExpireSeconds, TimeUnit.SECONDS);
+
+        String refreshKey = RedisConstants.USER_REFRESH_JTI + username;
+        String refreshJti = jwtTokenUtil.getJti(tokenResponse.getRefreshToken());
+        redisUtils.set(refreshKey, refreshJti, jwtTokenUtil.getRefreshTokenExpiration(), TimeUnit.SECONDS);
 
         // 将refreshToken放入HttpOnly的Cookie中
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, tokenResponse.getRefreshToken());

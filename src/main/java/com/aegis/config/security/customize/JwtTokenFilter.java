@@ -63,6 +63,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
                 throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
             }
 
+            String username = jwtTokenUtil.getUsernameFromToken(token);
+            String currentJti = redisUtils.get(RedisConstants.USER_TOKEN_JTI + username);
+            if (StrUtil.isBlank(currentJti) || !currentJti.equals(jti)) {
+                throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
+            }
+
             Authentication authentication = jwtTokenUtil.getAuthenticationToken(token);
             SecurityContext context = SecurityContextHolder.createEmptyContext();
             context.setAuthentication(authentication);

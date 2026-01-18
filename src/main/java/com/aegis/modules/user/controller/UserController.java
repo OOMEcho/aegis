@@ -80,4 +80,12 @@ public class UserController {
     public String resetPassword(@PathVariable("id") Long id) {
         return userService.resetPassword(id);
     }
+
+    @ApiOperation("踢用户下线")
+    @PutMapping("/kick/{id}")
+    @PreventDuplicateSubmit
+    @OperationLog(moduleTitle = "踢用户下线", businessType = BusinessType.UPDATE)
+    public String kick(@PathVariable("id") Long id) {
+        return userService.kick(id);
+    }
 }

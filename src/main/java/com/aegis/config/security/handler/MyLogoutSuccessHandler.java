@@ -43,6 +43,12 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
             if (expireSeconds > 0) {
                 redisUtils.set(RedisConstants.BLACKLIST_TOKEN + jti, "logout", expireSeconds, TimeUnit.SECONDS);
             }
+
+            String username = jwtTokenUtil.getUsernameFromToken(accessToken);
+            if (StrUtil.isNotBlank(username)) {
+                redisUtils.delete(RedisConstants.USER_TOKEN_JTI + username);
+                redisUtils.delete(RedisConstants.USER_REFRESH_JTI + username);
+            }
         }
 
         // 删除 Cookie 中的 refreshToken

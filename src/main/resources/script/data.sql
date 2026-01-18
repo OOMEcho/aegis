@@ -1,10 +1,15 @@
+INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (1, NULL, NULL, '2025-09-05 11:33:09', '2025-10-04 22:00:42', 0, 62, NULL, 1966151295895171074, 'admin', '$2a$10$GHoUDIvjIXO9ey5sd5D1YOL/YpIWca4PxzrnSepjEG3v8MQcoaFXS', '管理员', '228389787@qq.com', '0', '18888888888', '2025/09/25/e5ced7eae4ac4a82abbaf6fd2155c509.jpg', '0', '127.0.0.1', '2025-10-06 16:17:35');
+
+INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `dept_check_strictly`, `status`) VALUES (1974474475076329473, 1, NULL, '2025-10-04 21:59:33', '2025-10-04 22:02:11', 0, 1, NULL, '系统管理员', 'admin', 1, '1', 1, '0');
+
+INSERT INTO `t_user_role` (`id`, `user_id`, `role_id`) VALUES (1, 1, 1974474475076329473);
+
 INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1966151295895171074, 1, NULL, '2025-09-11 22:46:13', '2025-10-04 22:00:57', 0, 1, NULL, '0', 0, '总部', 1, '管理员', '18888888888', 'aegis_system@163.com', '0');
 INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211467696979969, 1, NULL, '2025-09-25 21:53:32', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '开发部', 1, '阿雷', '15111111111', NULL, '0');
 INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211910191857665, 1, NULL, '2025-09-25 21:55:17', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '测试部', 2, NULL, NULL, NULL, '0');
 INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211978257022978, 1, NULL, '2025-09-25 21:55:34', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '产品部', 2, NULL, NULL, NULL, '0');
 INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971212084414857218, 1, NULL, '2025-09-25 21:55:59', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074,1971211467696979969', 1971211467696979969, '后端开发', 1, NULL, NULL, NULL, '0');
 INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971212149770502145, 1, NULL, '2025-09-25 21:56:15', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074,1971211467696979969', 1971211467696979969, '前端开发', 1, NULL, NULL, NULL, '0');
-
 
 INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212744644444162, 1, NULL, '2025-09-25 21:58:36', '2025-10-04 22:01:03', 0, 1, '请求成功状态', '操作状态', 'OPERATION_STATUS', 1, '成功', '0', '0');
 INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212812822855682, 1, NULL, '2025-09-25 21:58:53', '2025-10-04 22:01:03', 0, 1, '请求失败状态', '操作状态', 'OPERATION_STATUS', 2, '失败', '1', '0');
@@ -18,150 +23,6 @@ INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `upda
 INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213804326961153, 1, NULL, '2025-09-25 22:02:49', '2025-10-04 22:01:03', 0, 1, '删除操作', '操作类型', 'BUSINESS_TYPE', 4, '删除', '3', '0');
 INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213845649244161, 1, NULL, '2025-09-25 22:02:59', '2025-10-04 22:01:03', 0, 1, '导出操作', '操作类型', 'BUSINESS_TYPE', 5, '导出', '4', '0');
 INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213882416513026, 1, NULL, '2025-09-25 22:03:08', '2025-10-04 22:01:03', 0, 1, '导入操作', '操作类型', 'BUSINESS_TYPE', 6, '导入', '5', '0');
-
-
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971221395258040322, 1, NULL, '2025-09-25 22:32:59', '2025-10-04 22:01:57', 0, 1, NULL, '系统管理', 0, 1, NULL, NULL, 'system', 'system', NULL, 0, 0, 'D', 0, '0', NULL, 'iconfont ali-icon-xitongshezhi');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971222225864450050, 1, NULL, '2025-09-25 22:36:17', '2025-10-04 22:01:57', 0, 1, NULL, '通知管理', 0, 2, NULL, NULL, 'notice', 'notice', NULL, 0, 0, 'D', 0, '0', NULL, 'iconfont ali-icon-notice');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971222289307492354, 1, NULL, '2025-09-25 22:36:32', '2025-10-04 22:01:57', 0, 1, NULL, '日志管理', 0, 3, NULL, NULL, 'log', 'log', NULL, 0, 0, 'D', 0, '0', NULL, 'iconfont ali-icon-log');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971223354396467201, 1, NULL, '2025-09-25 22:40:46', '2025-10-04 22:01:57', 0, 1, NULL, '用户管理', 1971221395258040322, 1, 'GET', '/user/pageList', 'user', 'user', 'system/user/index', 0, 0, 'M', 0, '0', 'system:user:list', 'iconfont ali-icon-yonghuguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971223585963991042, 1, NULL, '2025-09-25 22:41:41', '2025-10-04 22:01:57', 0, 1, NULL, '角色管理', 1971221395258040322, 2, 'GET', '/role/pageList', 'role', 'role', 'system/role/index', 0, 0, 'M', 0, '0', 'system:role:list', 'iconfont ali-icon-jiaoseguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971223830886178818, 1, NULL, '2025-09-25 22:42:40', '2025-10-04 22:01:57', 0, 1, NULL, '菜单管理', 1971221395258040322, 3, 'GET', '/menu/list', 'menu', 'menu', 'system/menu/index', 0, 0, 'M', 0, '0', 'system:menu:list', 'iconfont ali-icon-caidanguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971224071236575233, 1, NULL, '2025-09-25 22:43:37', '2025-10-04 22:01:57', 0, 1, NULL, '部门管理', 1971221395258040322, 4, 'GET', '/dept/list', 'dept', 'dept', 'system/dept/index', 0, 0, 'M', 0, '0', 'system:dept:list', 'iconfont ali-icon-zuzhiguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971224338606678018, 1, NULL, '2025-09-25 22:44:41', '2025-10-04 22:01:57', 0, 1, NULL, '字典管理', 1971221395258040322, 5, 'GET', '/dictionary/pageList', 'dict', 'dict', 'system/dict/index', 0, 0, 'M', 0, '0', 'system:dict:list', 'iconfont ali-icon-zidianguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971225264780304386, 1, NULL, '2025-09-25 22:48:21', '2025-10-04 22:01:57', 0, 1, NULL, '白名单管理', 1971221395258040322, 6, 'GET', '/whitelist/pageList', 'whitlist', 'whitlist', 'system/whitlist/index', 0, 0, 'M', 0, '0', 'system:whitlist:list', 'iconfont ali-icon-zidianguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971226319123472386, 1, NULL, '2025-09-25 22:52:33', '2025-10-04 22:01:57', 0, 1, NULL, '系统通知', 1971222225864450050, 1, 'GET', '/notice/pageList', 'systemNotice', 'systemNotice', 'system/systemNotice/index', 0, 0, 'M', 0, '0', 'system:systemNotice:list', 'iconfont ali-icon-zidianguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971226644907646977, 1, NULL, '2025-09-25 22:53:50', '2025-10-04 22:01:57', 0, 1, NULL, '登录日志', 1971222289307492354, 1, 'GET', '/loginLog/pageList', 'loginLog', 'loginLog', 'system/loginLog/index', 0, 0, 'M', 0, '0', 'system:loginLog:list', 'iconfont ali-icon-zidianguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971226725715107842, 1, NULL, '2025-09-25 22:54:10', '2025-10-04 22:01:57', 0, 1, NULL, '操作日志', 1971222289307492354, 2, 'GET', '/operateLog/pageList', 'operateLog', 'operateLog', 'system/operateLog/index', 0, 0, 'M', 0, '0', 'system:operateLog:list', 'iconfont ali-icon-zidianguanli');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971228112851132417, 1, NULL, '2025-09-25 22:59:40', '2025-10-04 22:01:57', 0, 1, NULL, '用户新增', 1971223354396467201, 1, 'POST', '/user/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:user:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971228354145247233, 1, NULL, '2025-09-25 23:00:38', '2025-10-04 22:01:57', 0, 1, NULL, '删除用户', 1971223354396467201, 2, 'DELETE', '/user/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:user:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971228466074443778, 1, NULL, '2025-09-25 23:01:05', '2025-10-04 22:01:57', 0, 1, NULL, '用户详情', 1971223354396467201, 3, 'GET', '/user/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:user:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971228604171902978, 1, NULL, '2025-09-25 23:01:38', '2025-10-04 22:01:57', 0, 1, NULL, '重置用户密码', 1971223354396467201, 4, 'PUT', '/user/resetPassword', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:user:resetPassword', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971228664133672962, 1, NULL, '2025-09-25 23:01:52', '2025-10-04 22:01:57', 0, 1, NULL, '修改用户', 1971223354396467201, 5, 'PUT', '/user/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:user:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971228728725954561, 1, NULL, '2025-09-25 23:02:07', '2025-10-04 22:01:57', 0, 1, NULL, '修改用户状态', 1971223354396467201, 6, 'PUT', '/user/updateStatus/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:user:updateStatus', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971574987974303746, 1, NULL, '2025-09-26 21:58:02', '2025-10-04 22:01:57', 0, 1, NULL, '新增角色', 1971223585963991042, 1, 'POST', '/role/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575160020459521, 1, NULL, '2025-09-26 21:58:43', '2025-10-04 22:01:58', 0, 1, NULL, '查询已分配用户角色列表', 1971223585963991042, 2, 'GET', '/role/allocatedList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:allocatedList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575232649027586, 1, NULL, '2025-09-26 21:59:00', '2025-10-04 22:01:58', 0, 1, NULL, '取消授权用户', 1971223585963991042, 3, 'PUT', '/role/cancel', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:cancel', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575291381866498, 1, NULL, '2025-09-26 21:59:14', '2025-10-04 22:01:58', 0, 1, NULL, '批量取消授权用户', 1971223585963991042, 4, 'PUT', '/role/cancelAll', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:cancelAll', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575387821498370, 1, NULL, '2025-09-26 21:59:37', '2025-10-04 22:01:58', 0, 1, NULL, '删除角色', 1971223585963991042, 5, 'DELETE', '/role/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575521452023809, 1, NULL, '2025-09-26 22:00:09', '2025-10-04 22:01:58', 0, 1, NULL, '角色详情', 1971223585963991042, 6, 'GET', '/role/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575575986364418, 1, NULL, '2025-09-26 22:00:22', '2025-10-04 22:01:58', 0, 1, NULL, '分页列表', 1971223585963991042, 7, 'GET', '/role/pageList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:pageList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575650561089538, 1, NULL, '2025-09-26 22:00:40', '2025-10-04 22:01:58', 0, 1, NULL, '获取对应角色部门树', 1971223585963991042, 8, 'GET', '/role/roleWithDeptTree/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:roleWithDeptTree', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575701224087553, 1, NULL, '2025-09-26 22:00:52', '2025-10-04 22:01:58', 0, 1, NULL, '获取对应角色菜单树', 1971223585963991042, 9, 'GET', '/role/roleWithMenuTree/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:roleWithMenuTree', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575809672011777, 1, NULL, '2025-09-26 22:01:18', '2025-10-04 22:01:58', 0, 1, NULL, '批量选择用户授权', 1971223585963991042, 10, 'POST', '/role/selectAll', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:selectAll', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575882535460865, 1, NULL, '2025-09-26 22:01:35', '2025-10-04 22:01:58', 0, 1, NULL, '查询未分配用户角色列表', 1971223585963991042, 11, 'GET', '/role/unallocatedList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:unallocatedList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971575953461141506, 1, NULL, '2025-09-26 22:01:52', '2025-10-04 22:01:58', 0, 1, NULL, '修改角色', 1971223585963991042, 12, 'PUT', '/role/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576005952856065, 1, NULL, '2025-09-26 22:02:05', '2025-10-04 22:01:58', 0, 1, NULL, '修改角色数据权限', 1971223585963991042, 13, 'PUT', '/role/updateRoleDataScope', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:updateRoleDataScope', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576074340982786, 1, NULL, '2025-09-26 22:02:21', '2025-10-04 22:01:58', 0, 1, NULL, '修改角色状态', 1971223585963991042, 14, 'PUT', '/role/updateStatus/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:role:updateStatus', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576458572783617, 1, NULL, '2025-09-26 22:03:53', '2025-10-04 22:01:58', 0, 1, NULL, '新增', 1971223830886178818, 1, 'POST', '/menu/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:menu:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576542152679426, 1, NULL, '2025-09-26 22:04:12', '2025-10-04 22:01:58', 0, 1, NULL, '删除', 1971223830886178818, 2, 'DELETE', '/menu/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:menu:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576621307584513, 1, NULL, '2025-09-26 22:04:31', '2025-10-04 22:01:58', 0, 1, NULL, '详情', 1971223830886178818, 3, 'GET', '/menu/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:menu:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576677108604929, 1, NULL, '2025-09-26 22:04:45', '2025-10-04 22:01:58', 0, 1, NULL, '列表', 1971223830886178818, 4, 'GET', '/menu/list', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:menu:list', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576743089201154, 1, NULL, '2025-09-26 22:05:00', '2025-10-04 22:01:58', 0, 1, NULL, '获取树形结构菜单', 1971223830886178818, 5, 'GET', '/menu/tree', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:menu:tree', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971576810906902529, 1, NULL, '2025-09-26 22:05:17', '2025-10-04 22:01:58', 0, 1, NULL, '修改', 1971223830886178818, 6, 'PUT', '/menu/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:menu:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577037919412226, 1, NULL, '2025-09-26 22:06:11', '2025-10-04 22:01:58', 0, 1, NULL, '新增部门', 1971224071236575233, 1, 'POST', '/dept/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dept:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577121545445378, 1, NULL, '2025-09-26 22:06:31', '2025-10-04 22:01:58', 0, 1, NULL, '删除', 1971224071236575233, 2, 'DELETE', '/dept/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dept:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577198187962370, 1, NULL, '2025-09-26 22:06:49', '2025-10-04 22:01:58', 0, 1, NULL, '详情', 1971224071236575233, 3, 'GET', '/dept/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dept:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577253435334657, 1, NULL, '2025-09-26 22:07:02', '2025-10-04 22:01:58', 0, 1, NULL, '列表', 1971224071236575233, 4, 'GET', '/dept/list', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dept:list', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577307755765762, 1, NULL, '2025-09-26 22:07:15', '2025-10-04 22:01:58', 0, 1, NULL, '获取树形结构部门', 1971224071236575233, 5, 'GET', '/dept/tree', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dept:tree', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577373031718913, 1, NULL, '2025-09-26 22:07:31', '2025-10-04 22:01:58', 0, 1, NULL, '修改部门', 1971224071236575233, 6, 'PUT', '/dept/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dept:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577562127720450, 1, NULL, '2025-09-26 22:08:16', '2025-10-04 22:01:58', 0, 1, NULL, '新增字典', 1971224338606678018, 1, 'POST', '/dictionary/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dictionary:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577625461710849, 1, NULL, '2025-09-26 22:08:31', '2025-10-04 22:01:58', 0, 1, NULL, '删除字典', 1971224338606678018, 2, 'DELETE', '/dictionary/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dictionary:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577693409435649, 1, NULL, '2025-09-26 22:08:47', '2025-10-04 22:01:58', 0, 1, NULL, '详情', 1971224338606678018, 3, 'GET', '/dictionary/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dictionary:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577750519078913, 1, NULL, '2025-09-26 22:09:01', '2025-10-04 22:01:58', 0, 1, NULL, '分页列表', 1971224338606678018, 4, 'GET', '/dictionary/pageList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dictionary:pageList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971577814897451009, 1, NULL, '2025-09-26 22:09:16', '2025-10-04 22:01:58', 0, 1, NULL, '修改字典', 1971224338606678018, 5, 'PUT', '/dictionary/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:dictionary:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578127008194561, 1, NULL, '2025-09-26 22:10:30', '2025-10-04 22:01:58', 0, 1, NULL, '新增白名单', 1971225264780304386, 1, 'POST', '/whitelist/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:whitelist:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578199422853121, 1, NULL, '2025-09-26 22:10:48', '2025-10-04 22:01:58', 0, 1, NULL, '删除白名单', 1971225264780304386, 2, 'DELETE', '/whitelist/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:whitelist:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578261913788418, 1, NULL, '2025-09-26 22:11:02', '2025-10-04 22:01:58', 0, 1, NULL, '详情', 1971225264780304386, 3, 'GET', '/whitelist/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:whitelist:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578313700859905, 1, NULL, '2025-09-26 22:11:15', '2025-10-04 22:01:58', 0, 1, NULL, '分页列表', 1971225264780304386, 4, 'GET', '/whitelist/pageList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:whitelist:pageList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578374568599554, 1, NULL, '2025-09-26 22:11:29', '2025-10-04 22:01:58', 0, 1, NULL, '修改白名单', 1971225264780304386, 5, 'PUT', '/whitelist/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:whitelist:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578605519560705, 1, NULL, '2025-09-26 22:12:24', '2025-10-04 22:01:58', 0, 1, NULL, '新增通知', 1971226319123472386, 1, 'POST', '/notice/add', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:add', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578675476357121, 1, NULL, '2025-09-26 22:12:41', '2025-10-04 22:01:58', 0, 1, NULL, '删除通知', 1971226319123472386, 2, 'DELETE', '/notice/delete/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:delete', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578788210860034, 1, NULL, '2025-09-26 22:13:08', '2025-10-04 22:01:58', 0, 1, NULL, '详情', 1971226319123472386, 3, 'GET', '/notice/detail/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:detail', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578833853276162, 1, NULL, '2025-09-26 22:13:19', '2025-10-04 22:01:58', 0, 1, NULL, '分页列表', 1971226319123472386, 4, 'GET', '/notice/pageList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:pageList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578893743742977, 1, NULL, '2025-09-26 22:13:33', '2025-10-04 22:01:58', 0, 1, NULL, '发布通知', 1971226319123472386, 5, 'GET', '/notice/publish/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:publish', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971578961318174722, 1, NULL, '2025-09-26 22:13:49', '2025-10-04 22:01:58', 0, 1, NULL, '撤销通知', 1971226319123472386, 6, 'GET', '/notice/revoke/', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:revoke', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971579095942750210, 1, NULL, '2025-09-26 22:14:21', '2025-10-04 22:01:58', 0, 1, NULL, '修改通知', 1971226319123472386, 7, 'PUT', '/notice/update', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:notice:update', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971579322581966850, 1, NULL, '2025-09-26 22:15:15', '2025-10-04 22:01:58', 0, 1, NULL, '导出登录日志', 1971226644907646977, 1, 'GET', '/loginLog/export', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:loginLog:export', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971579363681951745, 1, NULL, '2025-09-26 22:15:25', '2025-10-04 22:01:58', 0, 1, NULL, '分页列表', 1971226644907646977, 2, 'GET', '/loginLog/pageList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:loginLog:pageList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971579500986687489, 1, NULL, '2025-09-26 22:15:58', '2025-10-04 22:01:58', 0, 1, NULL, '分页列表', 1971226725715107842, 1, 'GET', '/operateLog/pageList', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:operateLog:pageList', '#');
-INSERT INTO `t_menu` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `menu_name`, `parent_id`, `order_num`, `request_method`, `request_uri`, `name`, `path`, `component`, `is_frame`, `keep_alive`, `menu_type`, `hidden`, `status`, `perms`, `icon`) VALUES (1971579567655149569, 1, NULL, '2025-09-26 22:16:14', '2025-10-04 22:01:58', 0, 1, NULL, '导出操作日志', 1971226725715107842, 2, 'GET', '/operateLog/export', NULL, NULL, NULL, 0, 0, 'B', 0, '0', 'system:operateLog:export', '#');
-
-
-INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `menu_check_strictly`, `dept_check_strictly`, `status`) VALUES (1974474475076329473, 1, NULL, '2025-10-04 21:59:33', '2025-10-04 22:02:11', 0, 1, NULL, '系统管理员', 'admin', 1, '1', 1, 1, '0');
-
-
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558402, 1974474475076329473, 1971221395258040322);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558403, 1974474475076329473, 1971222225864450050);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558404, 1974474475076329473, 1971222289307492354);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558405, 1974474475076329473, 1971223354396467201);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558406, 1974474475076329473, 1971223585963991042);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558407, 1974474475076329473, 1971223830886178818);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558408, 1974474475076329473, 1971224071236575233);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558409, 1974474475076329473, 1971224338606678018);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558410, 1974474475076329473, 1971225264780304386);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558411, 1974474475076329473, 1971226319123472386);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558412, 1974474475076329473, 1971226644907646977);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558413, 1974474475076329473, 1971226725715107842);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558414, 1974474475076329473, 1971228112851132417);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558415, 1974474475076329473, 1971228354145247233);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558416, 1974474475076329473, 1971228466074443778);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558417, 1974474475076329473, 1971228604171902978);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558418, 1974474475076329473, 1971228664133672962);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558419, 1974474475076329473, 1971228728725954561);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558420, 1974474475076329473, 1971574987974303746);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558421, 1974474475076329473, 1971575160020459521);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558422, 1974474475076329473, 1971575232649027586);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558423, 1974474475076329473, 1971575291381866498);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558424, 1974474475076329473, 1971575387821498370);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558425, 1974474475076329473, 1971575521452023809);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558426, 1974474475076329473, 1971575575986364418);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558427, 1974474475076329473, 1971575650561089538);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558428, 1974474475076329473, 1971575701224087553);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558429, 1974474475076329473, 1971575809672011777);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558430, 1974474475076329473, 1971575882535460865);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558431, 1974474475076329473, 1971575953461141506);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558432, 1974474475076329473, 1971576005952856065);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558433, 1974474475076329473, 1971576074340982786);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558434, 1974474475076329473, 1971576458572783617);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558435, 1974474475076329473, 1971576542152679426);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558436, 1974474475076329473, 1971576621307584513);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558437, 1974474475076329473, 1971576677108604929);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558438, 1974474475076329473, 1971576743089201154);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558439, 1974474475076329473, 1971576810906902529);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558440, 1974474475076329473, 1971577037919412226);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558441, 1974474475076329473, 1971577121545445378);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558442, 1974474475076329473, 1971577198187962370);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558443, 1974474475076329473, 1971577253435334657);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558444, 1974474475076329473, 1971577307755765762);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558445, 1974474475076329473, 1971577373031718913);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558446, 1974474475076329473, 1971577562127720450);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558447, 1974474475076329473, 1971577625461710849);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558448, 1974474475076329473, 1971577693409435649);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558449, 1974474475076329473, 1971577750519078913);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558450, 1974474475076329473, 1971577814897451009);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558451, 1974474475076329473, 1971578127008194561);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558452, 1974474475076329473, 1971578199422853121);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558453, 1974474475076329473, 1971578261913788418);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558454, 1974474475076329473, 1971578313700859905);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558455, 1974474475076329473, 1971578374568599554);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558456, 1974474475076329473, 1971578605519560705);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558457, 1974474475076329473, 1971578675476357121);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558458, 1974474475076329473, 1971578788210860034);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558459, 1974474475076329473, 1971578833853276162);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558460, 1974474475076329473, 1971578893743742977);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558461, 1974474475076329473, 1971578961318174722);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558462, 1974474475076329473, 1971579095942750210);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558463, 1974474475076329473, 1971579322581966850);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558464, 1974474475076329473, 1971579363681951745);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558465, 1974474475076329473, 1971579500986687489);
-INSERT INTO `t_role_menu` (`id`, `role_id`, `menu_id`) VALUES (1974476560467558466, 1974474475076329473, 1971579567655149569);
-
-
-INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (1, NULL, NULL, '2025-09-05 11:33:09', '2025-10-04 22:00:42', 0, 62, NULL, 1966151295895171074, 'admin', '$2a$10$GHoUDIvjIXO9ey5sd5D1YOL/YpIWca4PxzrnSepjEG3v8MQcoaFXS', '管理员', '228389787@qq.com', '0', '18888888888', '2025/09/25/e5ced7eae4ac4a82abbaf6fd2155c509.jpg', '0', '127.0.0.1', '2025-10-06 16:17:35');
-
-
-INSERT INTO `t_user_role` (`id`, `user_id`, `role_id`) VALUES (1, 1, 1974474475076329473);
-
 
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963484537937846274, NULL, NULL, '2025-09-04 14:09:28', '2025-10-04 12:01:03', 0, 1, NULL, 'GET', '/profile/generate/captcha', '获取滑块验证码', '0');
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963484964007829505, NULL, NULL, '2025-09-04 14:11:10', '2025-10-04 12:01:12', 0, 1, NULL, 'GET', '/profile/sendEmailCode', '发送邮箱验证码', '0');
@@ -177,3 +38,316 @@ INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `updat
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974337249415794689, NULL, NULL, '2025-10-04 12:54:16', '2025-10-04 12:54:16', 0, 1, NULL, 'GET', '/profile/publicKey', '获取RSA公钥', '0');
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974459418292531201, NULL, NULL, '2025-10-04 20:59:44', '2025-10-04 20:59:44', 0, 1, NULL, 'GET', '/profile/refreshToken', '刷新token', '0');
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1975094173811982337, NULL, NULL, '2025-10-06 15:02:01', '2025-10-06 15:02:01', 0, 1, NULL, 'POST', '/profile/register', '注册用户', '0');
+
+INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
+('system:manage', '系统管理', 'M', '0', '系统管理', 1),
+('system:user:page', '用户管理', 'M', '0', '用户管理', 1),
+('system:role:page', '角色管理', 'M', '0', '角色管理', 1),
+('system:menu:page', '菜单管理', 'M', '0', '菜单管理', 1),
+('system:permission:page', '权限管理', 'M', '0', '权限管理', 1),
+('system:resource:page', '资源管理', 'M', '0', '资源管理', 1),
+('system:dept:page', '部门管理', 'M', '0', '部门管理', 1),
+('system:dict:page', '字典管理', 'M', '0', '字典管理', 1),
+('system:whitelist:page', '白名单管理', 'M', '0', '白名单管理', 1),
+('system:log:manage', '日志管理', 'M', '0', '日志管理', 1),
+('system:loginLog:page', '登录日志', 'M', '0', '登录日志', 1),
+('system:operateLog:page', '操作日志', 'M', '0', '操作日志', 1),
+('system:notice:manage', '通知管理', 'M', '0', '通知管理', 1),
+('system:notice:page', '通知公告', 'M', '0', '通知公告', 1),
+('system:noticeUser:page', '我的通知', 'M', '0', '我的通知', 1),
+('system:file:page', '文件管理', 'M', '0', '文件管理', 1);
+
+INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
+('system:user:list', '用户管理-分页列表', 'A', '0', '用户管理-分页列表', 1),
+('system:user:detail', '用户管理-详情', 'A', '0', '用户管理-详情', 1),
+('system:user:status', '用户管理-状态修改', 'A', '0', '用户管理-状态修改', 1),
+('system:user:delete', '用户管理-删除', 'A', '0', '用户管理-删除', 1),
+('system:user:add', '用户管理-新增', 'A', '0', '用户管理-新增', 1),
+('system:user:update', '用户管理-修改', 'A', '0', '用户管理-修改', 1),
+('system:user:resetPwd', '用户管理-重置密码', 'A', '0', '用户管理-重置密码', 1),
+('system:user:kick', '用户管理-踢下线', 'A', '0', '用户管理-踢下线', 1),
+('system:role:list', '角色管理-分页列表', 'A', '0', '角色管理-分页列表', 1),
+('system:role:detail', '角色管理-详情', 'A', '0', '角色管理-详情', 1),
+('system:role:status', '角色管理-状态修改', 'A', '0', '角色管理-状态修改', 1),
+('system:role:delete', '角色管理-删除', 'A', '0', '角色管理-删除', 1),
+('system:role:add', '角色管理-新增', 'A', '0', '角色管理-新增', 1),
+('system:role:update', '角色管理-修改', 'A', '0', '角色管理-修改', 1),
+('system:role:dataScope', '角色管理-数据权限', 'A', '0', '角色管理-数据权限', 1),
+('system:role:allocatedList', '角色管理-已分配用户', 'A', '0', '角色管理-已分配用户', 1),
+('system:role:unallocatedList', '角色管理-未分配用户', 'A', '0', '角色管理-未分配用户', 1),
+('system:role:cancel', '角色管理-取消授权', 'A', '0', '角色管理-取消授权', 1),
+('system:role:cancelAll', '角色管理-批量取消授权', 'A', '0', '角色管理-批量取消授权', 1),
+('system:role:selectAll', '角色管理-批量授权', 'A', '0', '角色管理-批量授权', 1),
+('system:role:deptTree', '角色管理-部门树', 'A', '0', '角色管理-部门树', 1),
+('system:role:perm:list', '角色管理-权限列表', 'A', '0', '角色管理-权限列表', 1),
+('system:role:perm:assign', '角色管理-分配权限', 'A', '0', '角色管理-分配权限', 1),
+('system:dept:list', '部门管理-列表', 'A', '0', '部门管理-列表', 1),
+('system:dept:detail', '部门管理-详情', 'A', '0', '部门管理-详情', 1),
+('system:dept:exclude', '部门管理-排除节点', 'A', '0', '部门管理-排除节点', 1),
+('system:dept:delete', '部门管理-删除', 'A', '0', '部门管理-删除', 1),
+('system:dept:add', '部门管理-新增', 'A', '0', '部门管理-新增', 1),
+('system:dept:update', '部门管理-修改', 'A', '0', '部门管理-修改', 1),
+('system:dept:tree', '部门管理-树形结构', 'A', '0', '部门管理-树形结构', 1),
+('system:menu:list', '菜单管理-列表', 'A', '0', '菜单管理-列表', 1),
+('system:menu:detail', '菜单管理-详情', 'A', '0', '菜单管理-详情', 1),
+('system:menu:delete', '菜单管理-删除', 'A', '0', '菜单管理-删除', 1),
+('system:menu:add', '菜单管理-新增', 'A', '0', '菜单管理-新增', 1),
+('system:menu:update', '菜单管理-修改', 'A', '0', '菜单管理-修改', 1),
+('system:menu:tree', '菜单管理-树形结构', 'A', '0', '菜单管理-树形结构', 1),
+('system:menu:perm:list', '菜单管理-权限列表', 'A', '0', '菜单管理-权限列表', 1),
+('system:menu:perm:assign', '菜单管理-配置权限', 'A', '0', '菜单管理-配置权限', 1),
+('system:permission:list', '权限管理-分页列表', 'A', '0', '权限管理-分页列表', 1),
+('system:permission:all', '权限管理-全部列表', 'A', '0', '权限管理-全部列表', 1),
+('system:permission:detail', '权限管理-详情', 'A', '0', '权限管理-详情', 1),
+('system:permission:effective', '权限管理-状态修改', 'A', '0', '权限管理-状态修改', 1),
+('system:permission:add', '权限管理-新增', 'A', '0', '权限管理-新增', 1),
+('system:permission:update', '权限管理-修改', 'A', '0', '权限管理-修改', 1),
+('system:resource:list', '资源管理-分页列表', 'A', '0', '资源管理-分页列表', 1),
+('system:resource:detail', '资源管理-详情', 'A', '0', '资源管理-详情', 1),
+('system:resource:delete', '资源管理-删除', 'A', '0', '资源管理-删除', 1),
+('system:resource:add', '资源管理-新增', 'A', '0', '资源管理-新增', 1),
+('system:resource:update', '资源管理-修改', 'A', '0', '资源管理-修改', 1),
+('system:dict:list', '字典管理-分页列表', 'A', '0', '字典管理-分页列表', 1),
+('system:dict:detail', '字典管理-详情', 'A', '0', '字典管理-详情', 1),
+('system:dict:delete', '字典管理-删除', 'A', '0', '字典管理-删除', 1),
+('system:dict:add', '字典管理-新增', 'A', '0', '字典管理-新增', 1),
+('system:dict:update', '字典管理-修改', 'A', '0', '字典管理-修改', 1),
+('system:dict:items', '字典管理-按类型查询', 'A', '0', '字典管理-按类型查询', 1),
+('system:whitelist:list', '白名单管理-分页列表', 'A', '0', '白名单管理-分页列表', 1),
+('system:whitelist:detail', '白名单管理-详情', 'A', '0', '白名单管理-详情', 1),
+('system:whitelist:delete', '白名单管理-删除', 'A', '0', '白名单管理-删除', 1),
+('system:whitelist:add', '白名单管理-新增', 'A', '0', '白名单管理-新增', 1),
+('system:whitelist:update', '白名单管理-修改', 'A', '0', '白名单管理-修改', 1),
+('system:notice:list', '通知管理-分页列表', 'A', '0', '通知管理-分页列表', 1),
+('system:notice:detail', '通知管理-详情', 'A', '0', '通知管理-详情', 1),
+('system:notice:delete', '通知管理-删除', 'A', '0', '通知管理-删除', 1),
+('system:notice:add', '通知管理-新增', 'A', '0', '通知管理-新增', 1),
+('system:notice:update', '通知管理-修改', 'A', '0', '通知管理-修改', 1),
+('system:notice:publish', '通知管理-发布', 'A', '0', '通知管理-发布', 1),
+('system:notice:revoke', '通知管理-撤销', 'A', '0', '通知管理-撤销', 1),
+('system:loginLog:list', '登录日志-分页列表', 'A', '0', '登录日志-分页列表', 1),
+('system:loginLog:export', '登录日志-导出', 'A', '0', '登录日志-导出', 1),
+('system:operateLog:list', '操作日志-分页列表', 'A', '0', '操作日志-分页列表', 1),
+('system:operateLog:export', '操作日志-导出', 'A', '0', '操作日志-导出', 1),
+('system:file:upload', '文件管理-上传', 'A', '0', '文件管理-上传', 1),
+('system:file:uploadBatch', '文件管理-批量上传', 'A', '0', '文件管理-批量上传', 1),
+('system:file:tempDownload', '文件管理-临时下载URL', 'A', '0', '文件管理-临时下载URL', 1),
+('system:file:download', '文件管理-下载', 'A', '0', '文件管理-下载', 1),
+('system:file:localDownload', '文件管理-本地临时下载', 'A', '0', '文件管理-本地临时下载', 1),
+('system:file:uploadPlatform', '文件管理-指定平台上传', 'A', '0', '文件管理-指定平台上传', 1),
+('system:file:delete', '文件管理-删除', 'A', '0', '文件管理-删除', 1),
+('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '文件管理-预签名上传URL', 1);
+
+INSERT INTO `t_menu` (`id`, `menu_code`, `menu_name`, `parent_id`, `order_num`, `name`, `path`, `menu_type`, `icon`, `hidden`, `status`, `create_by`) VALUES
+(1, 'system', '系统管理', 0, 1, 'System', '/system', 'D', '#', 0, '0', 1),
+(2, 'system:user', '用户管理', 1, 1, 'User', '/system/user', 'M', '#', 0, '0', 1),
+(3, 'system:role', '角色管理', 1, 2, 'Role', '/system/role', 'M', '#', 0, '0', 1),
+(4, 'system:menu', '菜单管理', 1, 3, 'Menu', '/system/menu', 'M', '#', 0, '0', 1),
+(5, 'system:permission', '权限管理', 1, 4, 'Permission', '/system/permission', 'M', '#', 0, '0', 1),
+(6, 'system:resource', '资源管理', 1, 5, 'Resource', '/system/resource', 'M', '#', 0, '0', 1),
+(7, 'system:dept', '部门管理', 1, 6, 'Dept', '/system/dept', 'M', '#', 0, '0', 1),
+(8, 'system:dict', '字典管理', 1, 7, 'Dictionary', '/system/dictionary', 'M', '#', 0, '0', 1),
+(9, 'system:whitelist', '白名单管理', 1, 8, 'Whitelist', '/system/whitelist', 'M', '#', 0, '0', 1),
+(10, 'log', '日志管理', 0, 2, 'Log', '/log', 'D', '#', 0, '0', 1),
+(11, 'log:login', '登录日志', 10, 1, 'LoginLog', '/log/login', 'M', '#', 0, '0', 1),
+(12, 'log:operate', '操作日志', 10, 2, 'OperateLog', '/log/operate', 'M', '#', 0, '0', 1),
+(13, 'notice', '通知管理', 0, 3, 'Notice', '/notice', 'D', '#', 0, '0', 1),
+(14, 'notice:list', '通知公告', 13, 1, 'NoticeList', '/notice/list', 'M', '#', 0, '0', 1),
+(15, 'notice:user', '我的通知', 13, 2, 'NoticeUser', '/notice/user', 'M', '#', 0, '0', 1),
+(16, 'file', '文件管理', 0, 4, 'File', '/file', 'M', '#', 0, '0', 1);
+
+INSERT INTO `t_menu_permission` (`menu_id`, `perm_code`) VALUES
+(1, 'system:manage'),
+(2, 'system:user:page'),
+(3, 'system:role:page'),
+(4, 'system:menu:page'),
+(5, 'system:permission:page'),
+(6, 'system:resource:page'),
+(7, 'system:dept:page'),
+(8, 'system:dict:page'),
+(9, 'system:whitelist:page'),
+(10, 'system:log:manage'),
+(11, 'system:loginLog:page'),
+(12, 'system:operateLog:page'),
+(13, 'system:notice:manage'),
+(14, 'system:notice:page'),
+(15, 'system:noticeUser:page'),
+(16, 'system:file:page');
+
+INSERT INTO `t_resource` (`request_method`, `request_uri`, `perm_code`, `status`, `remark`, `create_by`) VALUES
+('GET', '/user/pageList', 'system:user:list', '0', '用户管理-分页列表', 1),
+('GET', '/user/detail/*', 'system:user:detail', '0', '用户管理-详情', 1),
+('PUT', '/user/updateStatus/*', 'system:user:status', '0', '用户管理-状态修改', 1),
+('DELETE', '/user/delete/*', 'system:user:delete', '0', '用户管理-删除', 1),
+('POST', '/user/add', 'system:user:add', '0', '用户管理-新增', 1),
+('PUT', '/user/update', 'system:user:update', '0', '用户管理-修改', 1),
+('PUT', '/user/resetPassword/*', 'system:user:resetPwd', '0', '用户管理-重置密码', 1),
+('PUT', '/user/kick/*', 'system:user:kick', '0', '用户管理-踢下线', 1),
+('GET', '/role/pageList', 'system:role:list', '0', '角色管理-分页列表', 1),
+('GET', '/role/detail/*', 'system:role:detail', '0', '角色管理-详情', 1),
+('PUT', '/role/updateStatus/*', 'system:role:status', '0', '角色管理-状态修改', 1),
+('DELETE', '/role/delete/*', 'system:role:delete', '0', '角色管理-删除', 1),
+('POST', '/role/add', 'system:role:add', '0', '角色管理-新增', 1),
+('PUT', '/role/update', 'system:role:update', '0', '角色管理-修改', 1),
+('PUT', '/role/updateRoleDataScope', 'system:role:dataScope', '0', '角色管理-数据权限', 1),
+('GET', '/role/allocatedList', 'system:role:allocatedList', '0', '角色管理-已分配用户', 1),
+('GET', '/role/unallocatedList', 'system:role:unallocatedList', '0', '角色管理-未分配用户', 1),
+('PUT', '/role/cancel', 'system:role:cancel', '0', '角色管理-取消授权', 1),
+('PUT', '/role/cancelAll', 'system:role:cancelAll', '0', '角色管理-批量取消授权', 1),
+('POST', '/role/selectAll', 'system:role:selectAll', '0', '角色管理-批量授权', 1),
+('GET', '/role/roleWithDeptTree/*', 'system:role:deptTree', '0', '角色管理-部门树', 1),
+('GET', '/role/*/permissions', 'system:role:perm:list', '0', '角色管理-权限列表', 1),
+('POST', '/role/*/permissions', 'system:role:perm:assign', '0', '角色管理-分配权限', 1),
+('GET', '/dept/list', 'system:dept:list', '0', '部门管理-列表', 1),
+('GET', '/dept/detail/*', 'system:dept:detail', '0', '部门管理-详情', 1),
+('GET', '/dept/exclude/*', 'system:dept:exclude', '0', '部门管理-排除节点', 1),
+('DELETE', '/dept/delete/*', 'system:dept:delete', '0', '部门管理-删除', 1),
+('POST', '/dept/add', 'system:dept:add', '0', '部门管理-新增', 1),
+('PUT', '/dept/update', 'system:dept:update', '0', '部门管理-修改', 1),
+('GET', '/dept/tree', 'system:dept:tree', '0', '部门管理-树形结构', 1),
+('GET', '/menu/list', 'system:menu:list', '0', '菜单管理-列表', 1),
+('GET', '/menu/detail/*', 'system:menu:detail', '0', '菜单管理-详情', 1),
+('DELETE', '/menu/delete/*', 'system:menu:delete', '0', '菜单管理-删除', 1),
+('POST', '/menu/add', 'system:menu:add', '0', '菜单管理-新增', 1),
+('PUT', '/menu/update', 'system:menu:update', '0', '菜单管理-修改', 1),
+('GET', '/menu/tree', 'system:menu:tree', '0', '菜单管理-树形结构', 1),
+('GET', '/menu/*/permissions', 'system:menu:perm:list', '0', '菜单管理-权限列表', 1),
+('POST', '/menu/*/permissions', 'system:menu:perm:assign', '0', '菜单管理-配置权限', 1),
+('GET', '/permissions/pageList', 'system:permission:list', '0', '权限管理-分页列表', 1),
+('GET', '/permissions/list', 'system:permission:all', '0', '权限管理-全部列表', 1),
+('GET', '/permissions/detail/*', 'system:permission:detail', '0', '权限管理-详情', 1),
+('DELETE', '/permissions/effective/*', 'system:permission:effective', '0', '权限管理-状态修改', 1),
+('POST', '/permissions/add', 'system:permission:add', '0', '权限管理-新增', 1),
+('PUT', '/permissions/update', 'system:permission:update', '0', '权限管理-修改', 1),
+('GET', '/resources/pageList', 'system:resource:list', '0', '资源管理-分页列表', 1),
+('GET', '/resources/detail/*', 'system:resource:detail', '0', '资源管理-详情', 1),
+('DELETE', '/resources/delete/*', 'system:resource:delete', '0', '资源管理-删除', 1),
+('POST', '/resources/add', 'system:resource:add', '0', '资源管理-新增', 1),
+('PUT', '/resources/update', 'system:resource:update', '0', '资源管理-修改', 1),
+('GET', '/dictionary/pageList', 'system:dict:list', '0', '字典管理-分页列表', 1),
+('GET', '/dictionary/detail/*', 'system:dict:detail', '0', '字典管理-详情', 1),
+('DELETE', '/dictionary/delete/*', 'system:dict:delete', '0', '字典管理-删除', 1),
+('POST', '/dictionary/add', 'system:dict:add', '0', '字典管理-新增', 1),
+('PUT', '/dictionary/update', 'system:dict:update', '0', '字典管理-修改', 1),
+('GET', '/dictionary/list', 'system:dict:items', '0', '字典管理-按类型查询', 1),
+('GET', '/whitelist/pageList', 'system:whitelist:list', '0', '白名单管理-分页列表', 1),
+('GET', '/whitelist/detail/*', 'system:whitelist:detail', '0', '白名单管理-详情', 1),
+('DELETE', '/whitelist/delete/*', 'system:whitelist:delete', '0', '白名单管理-删除', 1),
+('POST', '/whitelist/add', 'system:whitelist:add', '0', '白名单管理-新增', 1),
+('PUT', '/whitelist/update', 'system:whitelist:update', '0', '白名单管理-修改', 1),
+('GET', '/notice/pageList', 'system:notice:list', '0', '通知管理-分页列表', 1),
+('GET', '/notice/detail/*', 'system:notice:detail', '0', '通知管理-详情', 1),
+('DELETE', '/notice/delete/*', 'system:notice:delete', '0', '通知管理-删除', 1),
+('POST', '/notice/add', 'system:notice:add', '0', '通知管理-新增', 1),
+('PUT', '/notice/update', 'system:notice:update', '0', '通知管理-修改', 1),
+('GET', '/notice/publish/*', 'system:notice:publish', '0', '通知管理-发布', 1),
+('GET', '/notice/revoke/*', 'system:notice:revoke', '0', '通知管理-撤销', 1),
+('GET', '/loginLog/pageList', 'system:loginLog:list', '0', '登录日志-分页列表', 1),
+('GET', '/loginLog/export', 'system:loginLog:export', '0', '登录日志-导出', 1),
+('GET', '/operateLog/pageList', 'system:operateLog:list', '0', '操作日志-分页列表', 1),
+('GET', '/operateLog/export', 'system:operateLog:export', '0', '操作日志-导出', 1),
+('POST', '/file/upload', 'system:file:upload', '0', '文件管理-上传', 1),
+('POST', '/file/upload/batch', 'system:file:uploadBatch', '0', '文件管理-批量上传', 1),
+('GET', '/file/temporary-download-url', 'system:file:tempDownload', '0', '文件管理-临时下载URL', 1),
+('GET', '/file/download', 'system:file:download', '0', '文件管理-下载', 1),
+('GET', '/file/localDownload/**', 'system:file:localDownload', '0', '文件管理-本地临时下载', 1),
+('POST', '/file/upload/*', 'system:file:uploadPlatform', '0', '文件管理-指定平台上传', 1),
+('DELETE', '/file/delete', 'system:file:delete', '0', '文件管理-删除', 1),
+('GET', '/file/presigned-upload-url', 'system:file:presignedUpload', '0', '文件管理-预签名上传URL', 1);
+
+INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
+(1974474475076329473, 'system:manage'),
+(1974474475076329473, 'system:user:page'),
+(1974474475076329473, 'system:role:page'),
+(1974474475076329473, 'system:menu:page'),
+(1974474475076329473, 'system:permission:page'),
+(1974474475076329473, 'system:resource:page'),
+(1974474475076329473, 'system:dept:page'),
+(1974474475076329473, 'system:dict:page'),
+(1974474475076329473, 'system:whitelist:page'),
+(1974474475076329473, 'system:log:manage'),
+(1974474475076329473, 'system:loginLog:page'),
+(1974474475076329473, 'system:operateLog:page'),
+(1974474475076329473, 'system:notice:manage'),
+(1974474475076329473, 'system:notice:page'),
+(1974474475076329473, 'system:noticeUser:page'),
+(1974474475076329473, 'system:file:page'),
+(1974474475076329473, 'system:user:list'),
+(1974474475076329473, 'system:user:detail'),
+(1974474475076329473, 'system:user:status'),
+(1974474475076329473, 'system:user:delete'),
+(1974474475076329473, 'system:user:add'),
+(1974474475076329473, 'system:user:update'),
+(1974474475076329473, 'system:user:resetPwd'),
+(1974474475076329473, 'system:user:kick'),
+(1974474475076329473, 'system:role:list'),
+(1974474475076329473, 'system:role:detail'),
+(1974474475076329473, 'system:role:status'),
+(1974474475076329473, 'system:role:delete'),
+(1974474475076329473, 'system:role:add'),
+(1974474475076329473, 'system:role:update'),
+(1974474475076329473, 'system:role:dataScope'),
+(1974474475076329473, 'system:role:allocatedList'),
+(1974474475076329473, 'system:role:unallocatedList'),
+(1974474475076329473, 'system:role:cancel'),
+(1974474475076329473, 'system:role:cancelAll'),
+(1974474475076329473, 'system:role:selectAll'),
+(1974474475076329473, 'system:role:deptTree'),
+(1974474475076329473, 'system:role:perm:list'),
+(1974474475076329473, 'system:role:perm:assign'),
+(1974474475076329473, 'system:dept:list'),
+(1974474475076329473, 'system:dept:detail'),
+(1974474475076329473, 'system:dept:exclude'),
+(1974474475076329473, 'system:dept:delete'),
+(1974474475076329473, 'system:dept:add'),
+(1974474475076329473, 'system:dept:update'),
+(1974474475076329473, 'system:dept:tree'),
+(1974474475076329473, 'system:menu:list'),
+(1974474475076329473, 'system:menu:detail'),
+(1974474475076329473, 'system:menu:delete'),
+(1974474475076329473, 'system:menu:add'),
+(1974474475076329473, 'system:menu:update'),
+(1974474475076329473, 'system:menu:tree'),
+(1974474475076329473, 'system:menu:perm:list'),
+(1974474475076329473, 'system:menu:perm:assign'),
+(1974474475076329473, 'system:permission:list'),
+(1974474475076329473, 'system:permission:all'),
+(1974474475076329473, 'system:permission:detail'),
+(1974474475076329473, 'system:permission:effective'),
+(1974474475076329473, 'system:permission:add'),
+(1974474475076329473, 'system:permission:update'),
+(1974474475076329473, 'system:resource:list'),
+(1974474475076329473, 'system:resource:detail'),
+(1974474475076329473, 'system:resource:delete'),
+(1974474475076329473, 'system:resource:add'),
+(1974474475076329473, 'system:resource:update'),
+(1974474475076329473, 'system:dict:list'),
+(1974474475076329473, 'system:dict:detail'),
+(1974474475076329473, 'system:dict:delete'),
+(1974474475076329473, 'system:dict:add'),
+(1974474475076329473, 'system:dict:update'),
+(1974474475076329473, 'system:dict:items'),
+(1974474475076329473, 'system:whitelist:list'),
+(1974474475076329473, 'system:whitelist:detail'),
+(1974474475076329473, 'system:whitelist:delete'),
+(1974474475076329473, 'system:whitelist:add'),
+(1974474475076329473, 'system:whitelist:update'),
+(1974474475076329473, 'system:notice:list'),
+(1974474475076329473, 'system:notice:detail'),
+(1974474475076329473, 'system:notice:delete'),
+(1974474475076329473, 'system:notice:add'),
+(1974474475076329473, 'system:notice:update'),
+(1974474475076329473, 'system:notice:publish'),
+(1974474475076329473, 'system:notice:revoke'),
+(1974474475076329473, 'system:loginLog:list'),
+(1974474475076329473, 'system:loginLog:export'),
+(1974474475076329473, 'system:operateLog:list'),
+(1974474475076329473, 'system:operateLog:export'),
+(1974474475076329473, 'system:file:upload'),
+(1974474475076329473, 'system:file:uploadBatch'),
+(1974474475076329473, 'system:file:tempDownload'),
+(1974474475076329473, 'system:file:download'),
+(1974474475076329473, 'system:file:localDownload'),
+(1974474475076329473, 'system:file:uploadPlatform'),
+(1974474475076329473, 'system:file:delete'),
+(1974474475076329473, 'system:file:presignedUpload');

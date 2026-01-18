@@ -76,4 +76,7 @@ public class UserVO {
 
     @ApiModelProperty("路由列表")
     private List<RouterVo> routerVoList;
+
+    @ApiModelProperty("是否在线")
+    private Boolean online;
 }

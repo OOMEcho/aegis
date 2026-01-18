@@ -33,6 +33,16 @@ public class RedisConstants {
     public static final String BLACKLIST_TOKEN = "blacklist_token:";
 
     /**
+     * 用户当前 access_token 的 jti
+     */
+    public static final String USER_TOKEN_JTI = "user_token_jti:";
+
+    /**
+     * 用户当前 refresh_token 的 jti
+     */
+    public static final String USER_REFRESH_JTI = "user_refresh_jti:";
+
+    /**
      * 滑块验证码 key
      */
     public static final String SLIDER_CAPTCHA_KEY = "captcha:";

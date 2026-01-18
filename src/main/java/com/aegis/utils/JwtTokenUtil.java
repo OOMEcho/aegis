@@ -64,15 +64,16 @@ public final class JwtTokenUtil {
      * 根据Spring Security认证信息生成双Token
      */
     public TokenResponse generateTokenResponse(Authentication authentication) {
-        String jti = UUID.randomUUID().toString();
+        String accessJti = UUID.randomUUID().toString();
+        String refreshJti = UUID.randomUUID().toString();
 
         String username = authentication.getName();
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        String accessToken = generateAccessToken(username, authorities, jti);
-        String refreshToken = generateRefreshToken(username, authorities);
+        String accessToken = generateAccessToken(username, authorities, accessJti);
+        String refreshToken = generateRefreshToken(username, authorities, refreshJti);
 
         return new TokenResponse(accessToken, refreshToken);
     }
@@ -81,13 +82,14 @@ public final class JwtTokenUtil {
      * 使用Refresh Token刷新Access Token
      */
     public TokenResponse refreshAccessToken(String refreshToken) {
-        String jti = UUID.randomUUID().toString();
+        String accessJti = UUID.randomUUID().toString();
+        String refreshJti = UUID.randomUUID().toString();
 
         String username = getUsernameFromToken(refreshToken);
         String authorities = getUserAuthorities(refreshToken);
 
-        String newAccessToken = generateAccessToken(username, authorities, jti);
-        String newRefreshToken = generateRefreshToken(username, authorities);
+        String newAccessToken = generateAccessToken(username, authorities, accessJti);
+        String newRefreshToken = generateRefreshToken(username, authorities, refreshJti);
 
         return new TokenResponse(newAccessToken, newRefreshToken);
     }
@@ -126,13 +128,14 @@ public final class JwtTokenUtil {
     /**
      * 生成Refresh Token
      */
-    public String generateRefreshToken(String username, String authorities) {
+    public String generateRefreshToken(String username, String authorities, String jti) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(refreshTokenExpiration);
 
         Map<String, Object> claims = new HashMap<>();
         claims.put(CLAIM_KEY_AUTHORITIES, authorities);
         claims.put(TOKEN_TYPE, TOKEN_TYPE_REFRESH);
+        claims.put(TOKEN_JTI, jti);
 
         return Jwts.builder()
                 .claims(claims)

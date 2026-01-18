@@ -66,4 +66,12 @@ public interface UserService {
      * @return 响应消息
      */
     String resetPassword(Long id);
+
+    /**
+     * 踢用户下线
+     *
+     * @param id 用户ID
+     * @return 响应消息
+     */
+    String kick(Long id);
 }
