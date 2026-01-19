@@ -138,7 +138,7 @@ file:
 docker build -t aegis .
 
 # 运行容器
-docker run -p 8080:8080 -d aegis
+docker run -p 8088:8088 -d aegis
 ```
 
 ## 📦 功能模块
@@ -387,7 +387,7 @@ services:
   aegis:
     build: .
     ports:
-      - "8080:8080"
+      - "8088:8088"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/aegis
