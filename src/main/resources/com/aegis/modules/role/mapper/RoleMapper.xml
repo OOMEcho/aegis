@@ -17,7 +17,6 @@
         <result property="roleCode" column="role_code"/>
         <result property="orderNum" column="order_num"/>
         <result property="dataScope" column="data_scope"/>
-        <result property="menuCheckStrictly" column="menu_check_strictly"/>
         <result property="deptCheckStrictly" column="dept_check_strictly"/>
         <result property="status" column="status"/>
     </resultMap>
@@ -25,7 +24,7 @@
     <sql id="Base_Column_List">
         id,create_by,update_by,create_time,update_time,deleted,
         version,remark,role_name,role_code,order_num,
-        data_scope,menu_check_strictly,dept_check_strictly,status
+        data_scope,dept_check_strictly,status
     </sql>
 
     <select id="getCustomDeptIds" resultType="java.lang.Long">
