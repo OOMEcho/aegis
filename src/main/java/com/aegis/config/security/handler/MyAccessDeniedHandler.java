@@ -3,6 +3,7 @@ package com.aegis.config.security.handler;
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.PermissionDeniedException;
+import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.common.trace.TraceIdUtils;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
@@ -32,6 +33,8 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
     private final DataChangePublisher dataChangePublisher;
 
+    private final Ip2regionService ip2regionService;
+
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         // 记录授权失败日志
@@ -55,6 +58,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
             log.setBusinessType(0);
             log.setRequestUrl(request.getRequestURI());
             log.setRequestIp(ip);
+            log.setRequestLocal(ip2regionService.getRegion(ip));
             log.setRequestType(request.getMethod());
             log.setRequestMethod("MyAccessDeniedHandler.handle()");
             log.setOperateUser(username);

@@ -2,6 +2,7 @@ package com.aegis.config.security.handler;
 
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.event.DataChangePublisher;
+import com.aegis.common.ip2region.Ip2regionService;
 import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.common.trace.TraceIdUtils;
 import com.aegis.modules.log.domain.entity.SysOperateLog;
@@ -27,6 +28,8 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     private final DataChangePublisher dataChangePublisher;
 
+    private final Ip2regionService ip2regionService;
+
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) {
         // 记录认证失败日志
@@ -48,6 +51,7 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
             log.setBusinessType(0);
             log.setRequestUrl(request.getRequestURI());
             log.setRequestIp(ip);
+            log.setRequestLocal(ip2regionService.getRegion(ip));
             log.setRequestType(request.getMethod());
             log.setRequestMethod("MyAuthenticationEntryPoint.commence()");
             log.setOperateUser("anonymous");
