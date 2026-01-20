@@ -34,11 +34,20 @@ spring:
       connection-test-query: SELECT 1 # 检查连接是否可用的 SQL
   mail: # 邮件配置
     host: smtp.163.com # 协议服务器地址(需要改成你的邮箱的SMTP服务器地址)
-    port: 25 # 端口
+    port: 465 # 端口
     protocol: smtp # 协议
     default-encoding: UTF-8 # 编码
     username: aegis_system@163.com # 账号(需要改成你的邮箱账号)
     password: aegis # 授权码(需要改成你的邮箱授权码)
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          connection-timeout: 10000
+          timeout: 10000
+          write-timeout: 10000
   freemarker: # freemarker配置
     cache: false # 开发环境设置为false，生产环境设置为true
     charset: UTF-8 # 文件编码
