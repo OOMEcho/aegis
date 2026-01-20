@@ -41,6 +41,7 @@ public class ProfileController {
         return profileService.generateCaptcha();
     }
 
+    @RateLimiter(limitType = LimitType.IP)
     @ApiOperation("发送注册验证码")
     @GetMapping("/sendEmailCode")
     public String sendEmailCode(@RequestParam("email") String email) {
