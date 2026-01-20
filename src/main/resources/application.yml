@@ -42,12 +42,12 @@ spring:
     properties:
       mail:
         smtp:
-          auth: true
+          auth: true # 是否需要身份验证
           ssl:
-            enable: true
-          connection-timeout: 10000
-          timeout: 10000
-          write-timeout: 10000
+            enable: true # 是否启用SSL
+          connection-timeout: 10000 # 连接超时
+          timeout: 10000 # 读取超时
+          write-timeout: 10000 # 写入超时
   freemarker: # freemarker配置
     cache: false # 开发环境设置为false，生产环境设置为true
     charset: UTF-8 # 文件编码
