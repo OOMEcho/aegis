@@ -1,6 +1,7 @@
 package com.aegis.modules.menu.service.impl;
 
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.domain.vo.TreeVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.menu.domain.dto.MenuDTO;
@@ -79,6 +80,20 @@ public class MenuServiceImpl implements MenuService {
 
         checkSameMune(menu);
 
+        // 检查父菜单状态
+        if (menu.getParentId() != null && menu.getParentId() != 0L) {
+            Menu parentMenu = menuMapper.selectById(menu.getParentId());
+            if (parentMenu == null) {
+                throw new BusinessException("父菜单不存在");
+            }
+            if (CommonConstants.DISABLE_STATUS.equals(parentMenu.getStatus())) {
+                throw new BusinessException("父菜单已停用，不允许新增子菜单");
+            }
+        }
+
+        // 自动处理路由地址
+        buildMenuPath(menu);
+
         menu.setCreateBy(SecurityUtils.getUserId());
         menuMapper.insert(menu);
 
@@ -96,9 +111,41 @@ public class MenuServiceImpl implements MenuService {
             throw new BusinessException("修改菜单'" + dto.getMenuName() + "'失败,上级菜单不能选择自己");
         }
 
-        menu.setUpdateBy(SecurityUtils.getUserId());
+        // 获取修改前的菜单信息
+        Menu oldMenu = menuMapper.selectById(dto.getId());
+        if (oldMenu == null) {
+            throw new BusinessException("菜单不存在");
+        }
 
+        // 如果要停用菜单，检查是否有启用的子菜单
+        if (CommonConstants.DISABLE_STATUS.equals(menu.getStatus())
+                && !CommonConstants.DISABLE_STATUS.equals(oldMenu.getStatus())) {
+            LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+            queryWrapper.eq(Menu::getParentId, dto.getId())
+                    .eq(Menu::getStatus, CommonConstants.NORMAL_STATUS);
+            if (menuMapper.selectCount(queryWrapper) > 0) {
+                throw new BusinessException("该菜单包含未停用的子菜单，不允许停用");
+            }
+        }
+
+        // 自动处理路由地址
+        String oldPath = oldMenu.getPath();
+        buildMenuPath(menu);
+        String newPath = menu.getPath();
+
+        menu.setUpdateBy(SecurityUtils.getUserId());
         menuMapper.updateById(menu);
+
+        // 如果路径发生变化，需要级联更新所有子孙菜单的路径
+        if (!oldPath.equals(newPath)) {
+            updateChildrenPath(dto.getId(), oldPath, newPath);
+        }
+
+        // 如果启用菜单，需要级联启用所有父菜单
+        if (CommonConstants.NORMAL_STATUS.equals(menu.getStatus())
+                && !CommonConstants.NORMAL_STATUS.equals(oldMenu.getStatus())) {
+            updateParentMenuStatusNormal(menu);
+        }
 
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -153,6 +200,109 @@ public class MenuServiceImpl implements MenuService {
                 .ne(ObjectUtils.isNotEmpty(menu.getId()), Menu::getId, menu.getId());
         if (menuMapper.selectCount(queryWrapper) > 0) {
             throw new BusinessException("同一层级下存在相同名称的菜单");
+        }
+    }
+
+    /**
+     * 构建菜单路由地址
+     * 规则：
+     * 1. 如果是根菜单(parentId为0或null)，path必须以/开头，直接使用
+     * 2. 如果是子菜单，自动拼接父菜单的path
+     *    - 前端传入相对路径(如"user")
+     *    - 后端自动拼接为完整路径(如"/system/user")
+     */
+    private void buildMenuPath(Menu menu) {
+        // 根菜单，path必须以/开头
+        if (menu.getParentId() == null || menu.getParentId() == 0L) {
+            if (!menu.getPath().startsWith(FileConstants.SEPARATOR)) {
+                throw new BusinessException("根菜单的路由地址必须以/开头");
+            }
+            return;
+        }
+
+        // 子菜单，自动拼接父菜单路径
+        Menu parentMenu = menuMapper.selectById(menu.getParentId());
+        if (parentMenu == null) {
+            throw new BusinessException("父菜单不存在");
+        }
+
+        // 如果前端传入的path已经是完整路径(以/开头)，去掉开头的/
+        String relativePath = menu.getPath();
+        if (relativePath.startsWith(FileConstants.SEPARATOR)) {
+            relativePath = relativePath.substring(1);
+        }
+
+        // 拼接父菜单路径
+        String parentPath = parentMenu.getPath();
+        if (parentPath.endsWith(FileConstants.SEPARATOR)) {
+            menu.setPath(parentPath + relativePath);
+        } else {
+            menu.setPath(parentPath + FileConstants.SEPARATOR + relativePath);
+        }
+    }
+
+    /**
+     * 级联更新子孙菜单的路径
+     * 当父菜单路径发生变化时，递归更新所有子孙菜单的路径
+     *
+     * @param parentId 父菜单ID
+     * @param oldParentPath 父菜单的旧路径
+     * @param newParentPath 父菜单的新路径
+     */
+    private void updateChildrenPath(Long parentId, String oldParentPath, String newParentPath) {
+        // 查询所有直接子菜单
+        LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Menu::getParentId, parentId);
+        List<Menu> children = menuMapper.selectList(queryWrapper);
+
+        if (children == null || children.isEmpty()) {
+            return;
+        }
+
+        // 收集所有需要更新的子菜单
+        List<Menu> updateList = new java.util.ArrayList<>();
+
+        // 更新每个子菜单的路径
+        for (Menu child : children) {
+            String oldChildPath = child.getPath();
+
+            // 将子菜单路径中的旧父路径替换为新父路径
+            // 例如：oldParentPath="/system", newParentPath="/admin"
+            //      oldChildPath="/system/user" -> newChildPath="/admin/user"
+            String newChildPath = oldChildPath.replaceFirst("^" + oldParentPath, newParentPath);
+
+            child.setPath(newChildPath);
+            child.setUpdateBy(SecurityUtils.getUserId());
+            updateList.add(child);
+
+            // 递归更新孙菜单
+            updateChildrenPath(child.getId(), oldChildPath, newChildPath);
+        }
+
+        // 批量更新
+        menuMapper.updateBatchPath(updateList);
+    }
+
+    /**
+     * 级联启用所有父菜单
+     * 当启用某个菜单时，需要确保其所有父菜单也是启用状态
+     *
+     * @param menu 当前菜单
+     */
+    private void updateParentMenuStatusNormal(Menu menu) {
+        if (menu.getParentId() == null || menu.getParentId() == 0L) {
+            return;
+        }
+
+        // 递归启用所有父菜单
+        Menu parentMenu = menuMapper.selectById(menu.getParentId());
+        if (parentMenu != null && CommonConstants.DISABLE_STATUS.equals(parentMenu.getStatus())) {
+            parentMenu.setStatus(CommonConstants.NORMAL_STATUS);
+            parentMenu.setUpdateBy(SecurityUtils.getUserId());
+            menuMapper.updateById(parentMenu);
+
+            // 继续向上递归
+            updateParentMenuStatusNormal(parentMenu);
         }
     }
 }

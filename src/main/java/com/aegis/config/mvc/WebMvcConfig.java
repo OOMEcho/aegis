@@ -1,5 +1,6 @@
 package com.aegis.config.mvc;
 
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.file.config.FileUploadProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
@@ -21,6 +22,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 配置本地文件访问路径
         registry.addResourceHandler("/file/localDownload/**")
-                .addResourceLocations("file:" + properties.getLocal().getPath() + "/");
+                .addResourceLocations("file:" + properties.getLocal().getPath() + FileConstants.SEPARATOR);
     }
 }

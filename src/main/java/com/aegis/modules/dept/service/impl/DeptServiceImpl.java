@@ -120,11 +120,11 @@ public class DeptServiceImpl implements DeptService {
             throw new BusinessException("修改部门'" + dept.getDeptName() + "'失败,上级部门不能是自己");
         }
 
-        if (CommonConstants.DISABLE_STATUS.equals(dept.getStatus())
-                && deptMapper.selectCount(new LambdaQueryWrapper<Dept>()
-                .apply("FIND_IN_SET({0}, ancestors)", dept.getId())
-                .eq(Dept::getStatus, CommonConstants.NORMAL_STATUS)) > 0) {
-            throw new BusinessException("该部门包含未停用的子部门");
+        // 如果要停用部门，检查是否有启用的子部门
+        if (CommonConstants.DISABLE_STATUS.equals(dept.getStatus())) {
+            if (hasNormalChildDept(dept.getId())) {
+                throw new BusinessException("该部门包含未停用的子部门");
+            }
         }
 
         Dept newParent = deptMapper.selectById(dept.getParentId());
@@ -173,18 +173,74 @@ public class DeptServiceImpl implements DeptService {
         }
     }
 
-    private void updateDeptChildren(Long id, String newAncestors, String oldAncestors) {
+    /**
+     * 递归检查是否有启用状态的子部门
+     *
+     * @param deptId 部门ID
+     * @return true-存在启用的子部门，false-不存在
+     */
+    private boolean hasNormalChildDept(Long deptId) {
+        // 查询所有直接子部门
         LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.apply("FIND_IN_SET({0}, ancestors)", id);
-
+        queryWrapper.eq(Dept::getParentId, deptId);
         List<Dept> children = deptMapper.selectList(queryWrapper);
-        for (Dept child : children) {
-            child.setAncestors(child.getAncestors().replaceFirst(oldAncestors, newAncestors));
+
+        if (children == null || children.isEmpty()) {
+            return false;
         }
 
-        if (!children.isEmpty()) {
-            deptMapper.updateBatchAncestors(children);
+        // 检查直接子部门是否有启用状态的
+        for (Dept child : children) {
+            if (CommonConstants.NORMAL_STATUS.equals(child.getStatus())) {
+                return true;
+            }
+            // 递归检查孙部门
+            if (hasNormalChildDept(child.getId())) {
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    /**
+     * 递归更新子部门的祖先节点信息
+     *
+     * @param id 父部门ID
+     * @param newAncestors 新的祖先节点信息
+     * @param oldAncestors 旧的祖先节点信息
+     */
+    private void updateDeptChildren(Long id, String newAncestors, String oldAncestors) {
+        // 查询所有直接子部门
+        LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Dept::getParentId, id);
+        List<Dept> children = deptMapper.selectList(queryWrapper);
+
+        if (children == null || children.isEmpty()) {
+            return;
+        }
+
+        // 收集所有需要更新的子部门
+        List<Dept> updateList = new java.util.ArrayList<>();
+
+        // 更新每个子部门的祖先节点
+        for (Dept child : children) {
+            String oldChildAncestors = child.getAncestors();
+
+            // 将子部门的祖先节点中的旧父节点信息替换为新父节点信息
+            // 例如：oldAncestors="0,1", newAncestors="0,2"
+            //      oldChildAncestors="0,1,3" -> newChildAncestors="0,2,3"
+            String newChildAncestors = oldChildAncestors.replaceFirst("^" + oldAncestors, newAncestors);
+
+            child.setAncestors(newChildAncestors);
+            updateList.add(child);
+
+            // 递归更新孙部门
+            updateDeptChildren(child.getId(), newChildAncestors, oldChildAncestors);
+        }
+
+        // 批量更新
+        deptMapper.updateBatchAncestors(updateList);
     }
 
     private void updateParentDeptStatusNormal(Dept dept) {

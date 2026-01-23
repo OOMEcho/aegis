@@ -10,6 +10,7 @@ import com.aegis.modules.resource.mapper.ResourceMapper;
 import com.aegis.modules.resource.service.ResourceConvert;
 import com.aegis.modules.resource.service.ResourceService;
 import com.aegis.utils.PageUtils;
+import com.aegis.utils.PathUtil;
 import com.aegis.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
@@ -69,7 +70,7 @@ public class ResourceServiceImpl implements ResourceService {
     public String add(ResourceDTO dto) {
         Resource resource = resourceConvert.toResource(dto);
 
-        final String url = validateAndNormalize(resource.getRequestUri());
+        final String url = PathUtil.validateAndNormalize(resource.getRequestUri());
         resource.setRequestUri(url);
 
         // 检查是否有重复的路径和方法
@@ -89,7 +90,7 @@ public class ResourceServiceImpl implements ResourceService {
     public String update(ResourceDTO dto) {
         Resource resource = resourceConvert.toResource(dto);
 
-        final String url = validateAndNormalize(resource.getRequestUri());
+        final String url = PathUtil.validateAndNormalize(resource.getRequestUri());
         resource.setRequestUri(url);
 
         // 检查是否有重复的路径和方法
@@ -113,38 +114,5 @@ public class ResourceServiceImpl implements ResourceService {
         if (resourceMapper.selectCount(queryWrapper) > 0) {
             throw new BusinessException("相同请求路径和方法的资源已存在");
         }
-    }
-
-    /**
-     * 校验并规范化资源路径
-     *
-     * @param path 用户输入的路径
-     * @return 规范化后的路径
-     */
-    private String validateAndNormalize(String path) {
-        // 去掉首尾空格，合并连续斜杠
-        path = path.trim().replaceAll("/+", "/");
-
-        // 保证以 / 开头
-        if (!path.startsWith("/")) {
-            path = "/" + path;
-        }
-
-        // 禁止全路径通配符 /* 或 /** 或 /*** 等
-        if (path.matches("/\\*+")) {
-            throw new BusinessException("禁止使用全路径通配符");
-        }
-
-        // 校验合法字符和合法前缀通配符
-        if (!VALID_PATH_PATTERN.matcher(path).matches()) {
-            throw new BusinessException("路径包含非法字符或通配符位置不正确");
-        }
-
-        // 删除尾部多余斜杠（保留 /**）
-        if (path.endsWith("/") && !path.endsWith("/**")) {
-            path = path.substring(0, path.length() - 1);
-        }
-
-        return path;
     }
 }

@@ -45,4 +45,21 @@
           AND m.status = '0'
         ORDER BY m.parent_id, m.order_num
     </select>
+
+    <update id="updateBatchPath">
+        UPDATE t_menu
+        SET path =
+        <foreach collection="children" item="item" separator=" " open="CASE id" close="END">
+            WHEN #{item.id} THEN #{item.path}
+        </foreach>
+        ,
+        update_by =
+        <foreach collection="children" item="item" separator=" " open="CASE id" close="END">
+            WHEN #{item.id} THEN #{item.updateBy}
+        </foreach>
+        WHERE id IN
+        <foreach collection="children" item="item" separator="," open="(" close=")">
+            #{item.id}
+        </foreach>
+    </update>
 </mapper>

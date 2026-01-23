@@ -2,6 +2,7 @@ package com.aegis.modules.menu.mapper;
 
 import com.aegis.modules.menu.domain.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,6 +21,13 @@ public interface MenuMapper extends BaseMapper<Menu> {
      * @return 菜单列表
      */
     List<Menu> selectMenuByUserId(Long userId);
+
+    /**
+     * 批量更新子菜单的路径信息
+     *
+     * @param children 子菜单列表
+     */
+    void updateBatchPath(@Param("children") List<Menu> children);
 }
 
 

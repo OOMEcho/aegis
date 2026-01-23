@@ -45,7 +45,7 @@
     </select>
 
     <update id="updateBatchAncestors">
-        UPDATE sys_dept
+        UPDATE t_dept
         SET ancestors =
         <foreach collection="children" item="item" separator=" " open="CASE id" close="END">
             WHEN #{item.id} THEN #{item.ancestors}

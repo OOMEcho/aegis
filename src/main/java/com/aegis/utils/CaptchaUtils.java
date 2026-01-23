@@ -50,6 +50,12 @@ public final class CaptchaUtils {
     // 背景图数量,对应 resources/static/captcha 目录下的图片数量
     public static final Integer IMAGE_NUM = 5;
 
+    // 背景图路径
+    public static final String FILE_PATH = "/static/captcha/bg";
+
+    // 背景图后缀
+    public static final String FILE_SUFFIX = ".jpg";
+
     // 背景图缓存
     private static final List<BufferedImage> BG_IMAGES = new ArrayList<>();
 
@@ -59,7 +65,7 @@ public final class CaptchaUtils {
     @PostConstruct
     private void preloadBackgrounds() {
         for (int i = 1; i <= IMAGE_NUM; i++) {
-            String path = "/static/captcha/bg" + i + ".jpg";
+            String path = FILE_PATH + i + FILE_SUFFIX;
             try (InputStream in = CaptchaUtils.class.getResourceAsStream(path)) {
                 if (in != null) {
                     BufferedImage img = ImageIO.read(in);

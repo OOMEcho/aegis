@@ -62,7 +62,7 @@ public abstract class AbstractFileStorageService implements FileStorageService {
         }
 
         // 文件名安全校验 - 防止路径穿越
-        if (originalFileName.contains("..") || originalFileName.contains("/") ||
+        if (originalFileName.contains("..") || originalFileName.contains(FileConstants.SEPARATOR) ||
                 originalFileName.contains("\\")) {
             throw new BusinessException("文件名包含非法字符");
         }
