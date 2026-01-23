@@ -20,6 +20,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -210,6 +211,7 @@ public class MenuServiceImpl implements MenuService {
      * 2. 如果是子菜单，自动拼接父菜单的path
      *    - 前端传入相对路径(如"user")
      *    - 后端自动拼接为完整路径(如"/system/user")
+     *    - 如果前端传入的已经是完整路径且包含父路径，直接使用
      */
     private void buildMenuPath(Menu menu) {
         // 根菜单，path必须以/开头
@@ -226,14 +228,21 @@ public class MenuServiceImpl implements MenuService {
             throw new BusinessException("父菜单不存在");
         }
 
-        // 如果前端传入的path已经是完整路径(以/开头)，去掉开头的/
-        String relativePath = menu.getPath();
+        String parentPath = parentMenu.getPath();
+        String inputPath = menu.getPath();
+
+        // 如果前端传入的路径已经包含了父路径，直接使用
+        if (inputPath.startsWith(parentPath + FileConstants.SEPARATOR) || inputPath.equals(parentPath)) {
+            return;
+        }
+
+        // 处理相对路径
+        String relativePath = inputPath;
         if (relativePath.startsWith(FileConstants.SEPARATOR)) {
             relativePath = relativePath.substring(1);
         }
 
         // 拼接父菜单路径
-        String parentPath = parentMenu.getPath();
         if (parentPath.endsWith(FileConstants.SEPARATOR)) {
             menu.setPath(parentPath + relativePath);
         } else {
@@ -260,7 +269,7 @@ public class MenuServiceImpl implements MenuService {
         }
 
         // 收集所有需要更新的子菜单
-        List<Menu> updateList = new java.util.ArrayList<>();
+        List<Menu> updateList = new ArrayList<>();
 
         // 更新每个子菜单的路径
         for (Menu child : children) {

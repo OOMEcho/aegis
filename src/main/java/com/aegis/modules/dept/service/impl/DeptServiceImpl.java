@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -221,7 +222,7 @@ public class DeptServiceImpl implements DeptService {
         }
 
         // 收集所有需要更新的子部门
-        List<Dept> updateList = new java.util.ArrayList<>();
+        List<Dept> updateList = new ArrayList<>();
 
         // 更新每个子部门的祖先节点
         for (Dept child : children) {
