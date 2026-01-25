@@ -90,6 +90,10 @@ public class MenuServiceImpl implements MenuService {
             if (CommonConstants.DISABLE_STATUS.equals(parentMenu.getStatus())) {
                 throw new BusinessException("父菜单已停用，不允许新增子菜单");
             }
+            // 检查父菜单类型，只有目录才能创建子菜单
+            if (!"D".equals(parentMenu.getMenuType())) {
+                throw new BusinessException("只有目录类型的菜单才能创建子菜单");
+            }
         }
 
         // 检查菜单层级，最多只能有4层
@@ -123,6 +127,16 @@ public class MenuServiceImpl implements MenuService {
 
         // 如果修改了父菜单，需要检查新的层级是否超过4层
         if (!oldMenu.getParentId().equals(menu.getParentId())) {
+            // 检查新的父菜单类型，只有目录才能创建子菜单
+            if (menu.getParentId() != null && menu.getParentId() != 0L) {
+                Menu newParentMenu = menuMapper.selectById(menu.getParentId());
+                if (newParentMenu == null) {
+                    throw new BusinessException("父菜单不存在");
+                }
+                if (!"D".equals(newParentMenu.getMenuType())) {
+                    throw new BusinessException("只有目录类型的菜单才能创建子菜单");
+                }
+            }
             checkMenuLevel(menu.getParentId());
         }
 
