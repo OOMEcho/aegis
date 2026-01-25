@@ -92,6 +92,9 @@ public class MenuServiceImpl implements MenuService {
             }
         }
 
+        // 检查菜单层级，最多只能有4层
+        checkMenuLevel(menu.getParentId());
+
         // 自动处理路由地址
         buildMenuPath(menu);
 
@@ -116,6 +119,11 @@ public class MenuServiceImpl implements MenuService {
         Menu oldMenu = menuMapper.selectById(dto.getId());
         if (oldMenu == null) {
             throw new BusinessException("菜单不存在");
+        }
+
+        // 如果修改了父菜单，需要检查新的层级是否超过4层
+        if (!oldMenu.getParentId().equals(menu.getParentId())) {
+            checkMenuLevel(menu.getParentId());
         }
 
         // 如果要停用菜单，检查是否有启用的子菜单
@@ -202,6 +210,49 @@ public class MenuServiceImpl implements MenuService {
         if (menuMapper.selectCount(queryWrapper) > 0) {
             throw new BusinessException("同一层级下存在相同名称的菜单");
         }
+    }
+
+    /**
+     * 检查菜单层级，最多只能有4层
+     * @param parentId 父菜单ID
+     */
+    private void checkMenuLevel(Long parentId) {
+        // 如果是根菜单，层级为1，允许
+        if (parentId == null || parentId == 0L) {
+            return;
+        }
+
+        // 计算当前菜单的层级（新增菜单的层级 = 父菜单层级 + 1）
+        int level = getMenuLevel(parentId) + 1;
+
+        // 如果层级超过4层，抛出异常
+        if (level > 4) {
+            throw new BusinessException("菜单层级最多只能有4层");
+        }
+    }
+
+    /**
+     * 获取菜单的层级
+     * @param menuId 菜单ID
+     * @return 菜单层级（根菜单为1）
+     */
+    private int getMenuLevel(Long menuId) {
+        if (menuId == null || menuId == 0L) {
+            return 0;
+        }
+
+        Menu menu = menuMapper.selectById(menuId);
+        if (menu == null) {
+            return 0;
+        }
+
+        // 如果是根菜单，返回1
+        if (menu.getParentId() == null || menu.getParentId() == 0L) {
+            return 1;
+        }
+
+        // 递归计算父菜单的层级，当前菜单层级 = 父菜单层级 + 1
+        return getMenuLevel(menu.getParentId()) + 1;
     }
 
     /**
