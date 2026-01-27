@@ -47,7 +47,8 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
         queryWrapper.like(StringUtils.isNotBlank(dto.getLoginLocal()), SysLoginLog::getLoginLocal, dto.getLoginLocal())
                 .like(StringUtils.isNotBlank(dto.getLoginUsername()), SysLoginLog::getLoginUsername, dto.getLoginUsername())
                 .eq(StringUtils.isNotBlank(dto.getLoginStatus()), SysLoginLog::getLoginStatus, dto.getLoginStatus())
-                .between(ObjectUtils.isNotEmpty(dto.getBeginTime()) && ObjectUtils.isNotEmpty(dto.getEndTime()), SysLoginLog::getLoginTime, dto.getBeginTime(), dto.getEndTime());
+                .between(ObjectUtils.isNotEmpty(dto.getBeginTime()) && ObjectUtils.isNotEmpty(dto.getEndTime()), SysLoginLog::getLoginTime, dto.getBeginTime(), dto.getEndTime())
+                .orderByDesc(SysLoginLog::getLoginTime);
         return queryWrapper;
     }
 }

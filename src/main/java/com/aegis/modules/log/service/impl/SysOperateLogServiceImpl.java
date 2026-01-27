@@ -48,7 +48,8 @@ public class SysOperateLogServiceImpl implements SysOperateLogService {
                 .like(StringUtils.isNotBlank(dto.getOperateUser()), SysOperateLog::getOperateUser, dto.getOperateUser())
                 .eq(ObjectUtils.isNotEmpty(dto.getBusinessType()), SysOperateLog::getBusinessType, dto.getBusinessType())
                 .eq(StringUtils.isNotBlank(dto.getOperateStatus()), SysOperateLog::getOperateStatus, dto.getOperateStatus())
-                .between(ObjectUtils.isNotEmpty(dto.getBeginTime()) && ObjectUtils.isNotEmpty(dto.getEndTime()), SysOperateLog::getOperateTime, dto.getBeginTime(), dto.getEndTime());
+                .between(ObjectUtils.isNotEmpty(dto.getBeginTime()) && ObjectUtils.isNotEmpty(dto.getEndTime()), SysOperateLog::getOperateTime, dto.getBeginTime(), dto.getEndTime())
+                .orderByDesc(SysOperateLog::getOperateTime);
         return queryWrapper;
     }
 }
