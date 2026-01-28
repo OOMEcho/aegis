@@ -45,11 +45,6 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public Dictionary detail(Long id) {
-        return dictionaryMapper.selectById(id);
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public String delete(Long id) {
         dictionaryMapper.deleteById(id);

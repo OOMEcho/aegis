@@ -22,14 +22,6 @@ public interface DictionaryService {
     PageVO<Dictionary> pageList(DictionaryDTO dto);
 
     /**
-     * 详情
-     *
-     * @param id 字典ID
-     * @return 字典详情
-     */
-    Dictionary detail(Long id);
-
-    /**
      * 删除字典
      *
      * @param id 字典ID
