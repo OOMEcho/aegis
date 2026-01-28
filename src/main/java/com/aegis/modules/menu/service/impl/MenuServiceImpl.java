@@ -174,20 +174,6 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<TreeVO> tree(MenuDTO dto) {
-        List<Menu> menuList = list(dto);
-
-        List<Menu> menuTree = TreeUtil.makeTree(
-                menuList,
-                Menu::getParentId,
-                Menu::getId,
-                menu -> menu.getParentId() == null || menu.getParentId() == 0L,
-                Menu::setChildren);
-
-        return menuTree.stream().map(TreeVO::new).collect(Collectors.toList());
-    }
-
-    @Override
     public List<String> getMenuPermissions(Long menuId) {
         LambdaQueryWrapper<MenuPermission> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(MenuPermission::getMenuId, menuId);

@@ -41,12 +41,6 @@ public class PermissionController {
         return permissionService.list(dto);
     }
 
-    @ApiOperation("详情")
-    @GetMapping("/detail/{id}")
-    public Permission detail(@PathVariable("id") Long id) {
-        return permissionService.detail(id);
-    }
-
     @ApiOperation("修改权限状态")
     @DeleteMapping("/effective/{id}")
     @PreventDuplicateSubmit

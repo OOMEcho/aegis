@@ -24,11 +24,6 @@ public interface PermissionService {
     List<Permission> list(PermissionDTO dto);
 
     /**
-     * 详情
-     */
-    Permission detail(Long id);
-
-    /**
      * 修改权限状态
      */
     String effective(Long id);

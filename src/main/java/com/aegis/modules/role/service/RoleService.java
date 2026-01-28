@@ -27,14 +27,6 @@ public interface RoleService {
     PageVO<Role> pageList(RoleDTO dto);
 
     /**
-     * 详情
-     *
-     * @param id 主键
-     * @return 详情结果
-     */
-    Role detail(Long id);
-
-    /**
      * 修改角色状态
      *
      * @param id 主键

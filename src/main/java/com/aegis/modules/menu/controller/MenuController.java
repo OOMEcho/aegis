@@ -1,6 +1,5 @@
 package com.aegis.modules.menu.controller;
 
-import com.aegis.common.domain.vo.TreeVO;
 import com.aegis.common.duplicate.PreventDuplicateSubmit;
 import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
@@ -63,12 +62,6 @@ public class MenuController {
     @OperationLog(moduleTitle = "修改菜单", businessType = BusinessType.UPDATE)
     public String update(@Validated(ValidGroup.Update.class) @RequestBody MenuDTO dto) {
         return menuService.update(dto);
-    }
-
-    @ApiOperation("获取树形结构菜单")
-    @GetMapping("/tree")
-    public List<TreeVO> tree(MenuDTO dto) {
-        return menuService.tree(dto);
     }
 
     @ApiOperation("获取菜单的权限列表")

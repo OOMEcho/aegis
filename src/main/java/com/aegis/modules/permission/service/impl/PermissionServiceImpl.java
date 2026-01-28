@@ -45,11 +45,6 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public Permission detail(Long id) {
-        return permissionMapper.selectById(id);
-    }
-
-    @Override
     public String effective(Long id) {
         Permission permission = permissionMapper.selectById(id);
         if (permission == null) {

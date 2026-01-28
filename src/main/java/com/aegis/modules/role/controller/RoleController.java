@@ -40,12 +40,6 @@ public class RoleController {
         return roleService.pageList(dto);
     }
 
-    @ApiOperation("详情")
-    @GetMapping("/detail/{id}")
-    public Role detail(@PathVariable("id") Long id) {
-        return roleService.detail(id);
-    }
-
     @ApiOperation("修改角色状态")
     @PutMapping("/updateStatus/{id}")
     @PreventDuplicateSubmit

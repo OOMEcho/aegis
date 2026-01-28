@@ -1,6 +1,5 @@
 package com.aegis.modules.menu.service;
 
-import com.aegis.common.domain.vo.TreeVO;
 import com.aegis.modules.menu.domain.dto.MenuDTO;
 import com.aegis.modules.menu.domain.entity.Menu;
 
@@ -52,14 +51,6 @@ public interface MenuService {
      * @return 响应消息
      */
     String update(MenuDTO dto);
-
-    /**
-     * 树形结构菜单
-     *
-     * @param dto 查询参数
-     * @return 树形菜单列表
-     */
-    List<TreeVO> tree(MenuDTO dto);
 
     /**
      * 获取菜单的权限编码列表

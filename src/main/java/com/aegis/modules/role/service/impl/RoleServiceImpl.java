@@ -67,11 +67,6 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role detail(Long id) {
-        return roleMapper.selectById(id);
-    }
-
-    @Override
     @Transactional(rollbackFor = Exception.class)
     public String updateStatus(Long id) {
         Role role = roleMapper.selectById(id);
