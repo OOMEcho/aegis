@@ -12,7 +12,7 @@ import com.aegis.modules.role.domain.dto.UserAndRoleQueryDTO;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.role.domain.entity.RoleDept;
 import com.aegis.modules.role.domain.entity.RolePermission;
-import com.aegis.modules.role.domain.vo.RoleWithMenuOrDeptVO;
+import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.role.mapper.RoleDeptMapper;
 import com.aegis.modules.role.mapper.RoleMapper;
 import com.aegis.modules.role.mapper.RolePermissionMapper;
@@ -229,14 +229,14 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleWithMenuOrDeptVO roleWithDeptTree(Long roleId) {
+    public RoleWithDeptVO roleWithDeptTree(Long roleId) {
         final Role role = roleMapper.selectById(roleId);
 
-        RoleWithMenuOrDeptVO roleWithMenuOrDeptVO = new RoleWithMenuOrDeptVO();
-        roleWithMenuOrDeptVO.setCheckedKeys(roleDeptMapper.selectDeptListByRoleId(roleId, role.getDeptCheckStrictly()));
-        roleWithMenuOrDeptVO.setTrees(deptService.tree(new DeptDTO()));
+        RoleWithDeptVO roleWithDeptVO = new RoleWithDeptVO();
+        roleWithDeptVO.setCheckedKeys(roleDeptMapper.selectDeptListByRoleId(roleId, role.getDeptCheckStrictly()));
+        roleWithDeptVO.setTrees(deptService.tree(new DeptDTO()));
 
-        return roleWithMenuOrDeptVO;
+        return roleWithDeptVO;
     }
 
     private void checkIsAdminRole(String roleCode) {

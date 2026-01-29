@@ -14,7 +14,7 @@ import java.util.List;
  */
 @Data
 @ApiModel("角色对应的菜单树或部门树")
-public class RoleWithMenuOrDeptVO {
+public class RoleWithDeptVO {
 
     @ApiModelProperty("被选中的节点")
     private List<Long> checkedKeys;

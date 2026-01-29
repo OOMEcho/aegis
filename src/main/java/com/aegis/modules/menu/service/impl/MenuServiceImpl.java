@@ -2,7 +2,6 @@ package com.aegis.modules.menu.service.impl;
 
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.FileConstants;
-import com.aegis.common.domain.vo.TreeVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.menu.domain.dto.MenuDTO;
 import com.aegis.modules.menu.domain.entity.Menu;
@@ -12,7 +11,6 @@ import com.aegis.modules.menu.mapper.MenuPermissionMapper;
 import com.aegis.modules.menu.service.MenuConvert;
 import com.aegis.modules.menu.service.MenuService;
 import com.aegis.utils.SecurityUtils;
-import com.aegis.utils.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

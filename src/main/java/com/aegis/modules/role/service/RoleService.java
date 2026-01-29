@@ -6,7 +6,7 @@ import com.aegis.modules.role.domain.dto.CancelDTO;
 import com.aegis.modules.role.domain.dto.RoleDTO;
 import com.aegis.modules.role.domain.dto.UserAndRoleQueryDTO;
 import com.aegis.modules.role.domain.entity.Role;
-import com.aegis.modules.role.domain.vo.RoleWithMenuOrDeptVO;
+import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.user.domain.vo.UserVO;
 
 import java.util.List;
@@ -112,7 +112,7 @@ public interface RoleService {
      * @param roleId 角色ID
      * @return 角色对应的部门树
      */
-    RoleWithMenuOrDeptVO roleWithDeptTree(Long roleId);
+    RoleWithDeptVO roleWithDeptTree(Long roleId);
 
     /**
      * 获取角色的权限编码列表

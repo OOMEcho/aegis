@@ -10,7 +10,7 @@ import com.aegis.modules.role.domain.dto.CancelDTO;
 import com.aegis.modules.role.domain.dto.RoleDTO;
 import com.aegis.modules.role.domain.dto.UserAndRoleQueryDTO;
 import com.aegis.modules.role.domain.entity.Role;
-import com.aegis.modules.role.domain.vo.RoleWithMenuOrDeptVO;
+import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.role.service.RoleService;
 import com.aegis.modules.user.domain.vo.UserVO;
 import io.swagger.annotations.Api;
@@ -118,7 +118,7 @@ public class RoleController {
 
     @ApiOperation("获取对应角色部门树")
     @GetMapping("/roleWithDeptTree/{roleId}")
-    public RoleWithMenuOrDeptVO roleWithDeptTree(@PathVariable("roleId") Long roleId) {
+    public RoleWithDeptVO roleWithDeptTree(@PathVariable("roleId") Long roleId) {
         return roleService.roleWithDeptTree(roleId);
     }
 
