@@ -60,6 +60,12 @@ public class ProfileController {
         return profileService.info();
     }
 
+    @ApiOperation("预览用户头像")
+    @GetMapping("/avatar/preview")
+    public void previewAvatar(HttpServletResponse response) {
+        profileService.previewAvatar(response);
+    }
+
     @ApiOperation("注册用户")
     @PostMapping("/register")
     @PreventDuplicateSubmit

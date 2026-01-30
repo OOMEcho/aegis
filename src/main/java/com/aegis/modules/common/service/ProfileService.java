@@ -48,6 +48,13 @@ public interface ProfileService {
     UserVO info();
 
     /**
+     * 预览用户头像
+     *
+     * @param response 响应
+     */
+    void previewAvatar(HttpServletResponse response);
+
+    /**
      * 注册用户
      *
      * @param dto 用户注册DTO
