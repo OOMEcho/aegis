@@ -65,6 +65,8 @@ public class UserServiceImpl implements UserService {
 
         PageVO<UserVO> pageResult = PageUtils.of(dto).pagingAndConvert(userMapper, queryWrapper, userConvert::toUserVo);
         setOnlineStatus(pageResult.getRecords());
+        setDeptInfo(pageResult.getRecords());
+        setRoleInfo(pageResult.getRecords());
         return pageResult;
     }
 
@@ -242,6 +244,30 @@ public class UserServiceImpl implements UserService {
         for (UserVO userVo : userList) {
             String key = RedisConstants.USER_TOKEN_JTI + userVo.getUsername();
             userVo.setOnline(redisUtils.hasKey(key));
+        }
+    }
+
+    private void setRoleInfo(List<UserVO> records) {
+        if (ObjectUtils.isEmpty(records)) {
+            return;
+        }
+
+        for (UserVO userVo : records) {
+            userVo.setRoleList(userRoleMapper.selectRoleByUserId(userVo.getId()));
+        }
+    }
+
+    private void setDeptInfo(List<UserVO> records) {
+        if (ObjectUtils.isEmpty(records)) {
+            return;
+        }
+
+        for (UserVO userVo : records) {
+            if (userVo.getDeptId() != null) {
+                String deptName = deptMapper.selectById(userVo.getDeptId()).getDeptName();
+                userVo.setDeptName(deptName);
+            }
+            userVo.setDept(deptMapper.selectById(userVo.getDeptId()));
         }
     }
 }
