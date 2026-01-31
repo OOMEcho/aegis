@@ -155,6 +155,7 @@ public class RoleServiceImpl implements RoleService {
         checkIsAdminRole(roleMapper.selectById(dto.getId()).getRoleCode());
 
         Role updateRole = new Role();
+        updateRole.setId(dto.getId());
         updateRole.setUpdateBy(SecurityUtils.getUserId());
         updateRole.setDeptCheckStrictly(dto.getDeptCheckStrictly());
         updateRole.setDataScope(dto.getDataScope());
