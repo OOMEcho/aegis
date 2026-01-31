@@ -4,6 +4,7 @@ import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.exception.BusinessException;
+import com.aegis.modules.dept.domain.entity.Dept;
 import com.aegis.modules.dept.mapper.DeptMapper;
 import com.aegis.modules.user.domain.dto.UserDTO;
 import com.aegis.modules.user.domain.entity.User;
@@ -264,10 +265,10 @@ public class UserServiceImpl implements UserService {
 
         for (UserVO userVo : records) {
             if (userVo.getDeptId() != null) {
-                String deptName = deptMapper.selectById(userVo.getDeptId()).getDeptName();
-                userVo.setDeptName(deptName);
+                Dept dept = deptMapper.selectById(userVo.getDeptId());
+                userVo.setDeptName(dept.getDeptName());
+                userVo.setDept(dept);
             }
-            userVo.setDept(deptMapper.selectById(userVo.getDeptId()));
         }
     }
 }
