@@ -45,7 +45,7 @@ public class RoleDTO extends PageDTO {
     @ApiModelProperty("显示顺序")
     private Integer orderNum;
 
-    @ApiModelProperty("数据范围(1-全部数据权限,2-自定数据权限,3-本部门数据权限,4-本部门及以下数据权限)")
+    @ApiModelProperty("数据范围(1-全部数据权限,2-自定数据权限,3-本部门数据权限,4-本部门及以下数据权限,5-仅本人数据权限)")
     private String dataScope;
 
     @ApiModelProperty("部门树选择项是否关联显示")

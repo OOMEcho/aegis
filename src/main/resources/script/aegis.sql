@@ -63,7 +63,7 @@ CREATE TABLE `t_role`
     `role_name`           VARCHAR(32)     NOT NULL COMMENT '角色名称',
     `role_code`           VARCHAR(16)     NOT NULL COMMENT '角色编码',
     `order_num`           INT             NOT NULL DEFAULT 0 COMMENT '显示顺序',
-    `data_scope`          CHAR(1)         NOT NULL DEFAULT '1' COMMENT '数据范围(1-全部数据权限,2-自定数据权限,3-本部门数据权限,4-本部门及以下数据权限)',
+    `data_scope`          CHAR(1)         NOT NULL DEFAULT '1' COMMENT '数据范围(1-全部数据权限,2-自定数据权限,3-本部门数据权限,4-本部门及以下数据权限,5-仅本人数据权限)',
     `dept_check_strictly` INT                      DEFAULT 1 COMMENT '部门树选择项是否关联显示',
     `status`              CHAR(1)         NOT NULL DEFAULT '0' COMMENT '角色状态(0-正常,1-停用)',
     PRIMARY KEY (`id`) USING BTREE
