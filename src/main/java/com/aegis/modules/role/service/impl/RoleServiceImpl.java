@@ -5,10 +5,7 @@ import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.dept.domain.dto.DeptDTO;
 import com.aegis.modules.dept.service.DeptService;
-import com.aegis.modules.role.domain.dto.CancelAllDTO;
-import com.aegis.modules.role.domain.dto.CancelDTO;
-import com.aegis.modules.role.domain.dto.RoleDTO;
-import com.aegis.modules.role.domain.dto.UserAndRoleQueryDTO;
+import com.aegis.modules.role.domain.dto.*;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.role.domain.entity.RoleDept;
 import com.aegis.modules.role.domain.entity.RolePermission;
@@ -153,24 +150,24 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public String updateRoleDataScope(RoleDTO dto) {
-        Role role = roleConvert.toRole(dto);
-
+    public String updateRoleDataScope(RoleDataScopeDTO dto) {
         // 不能操作超级管理员角色
-        checkIsAdminRole(roleMapper.selectById(role.getId()).getRoleCode());
+        checkIsAdminRole(roleMapper.selectById(dto.getId()).getRoleCode());
 
-        role.setUpdateBy(SecurityUtils.getUserId());
+        Role updateRole = new Role();
+        updateRole.setUpdateBy(SecurityUtils.getUserId());
+        updateRole.setDeptCheckStrictly(dto.getDeptCheckStrictly());
 
-        roleMapper.updateById(role);
+        roleMapper.updateById(updateRole);
 
         // 先删除角色与部门关联
-        roleDeptMapper.delete(new LambdaQueryWrapper<RoleDept>().eq(RoleDept::getRoleId, role.getId()));
+        roleDeptMapper.delete(new LambdaQueryWrapper<RoleDept>().eq(RoleDept::getRoleId, dto.getId()));
 
         // 再新增角色与部门关联
         List<RoleDept> roleDeptList = new ArrayList<>();
         for (Long deptId : dto.getDeptIds()) {
             RoleDept roleDept = new RoleDept();
-            roleDept.setRoleId(role.getId());
+            roleDept.setRoleId(dto.getId());
             roleDept.setDeptId(deptId);
             roleDeptList.add(roleDept);
         }

@@ -5,10 +5,7 @@ import com.aegis.common.duplicate.PreventDuplicateSubmit;
 import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
 import com.aegis.common.validator.ValidGroup;
-import com.aegis.modules.role.domain.dto.CancelAllDTO;
-import com.aegis.modules.role.domain.dto.CancelDTO;
-import com.aegis.modules.role.domain.dto.RoleDTO;
-import com.aegis.modules.role.domain.dto.UserAndRoleQueryDTO;
+import com.aegis.modules.role.domain.dto.*;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.role.service.RoleService;
@@ -76,7 +73,7 @@ public class RoleController {
     @PutMapping("/updateRoleDataScope")
     @PreventDuplicateSubmit
     @OperationLog(moduleTitle = "修改角色数据权限", businessType = BusinessType.UPDATE)
-    public String updateRoleDataScope(@Validated(ValidGroup.Update.class) @RequestBody RoleDTO dto) {
+    public String updateRoleDataScope(@Validated(ValidGroup.Update.class) @RequestBody RoleDataScopeDTO dto) {
         return roleService.updateRoleDataScope(dto);
     }
 
