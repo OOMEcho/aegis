@@ -157,6 +157,7 @@ public class RoleServiceImpl implements RoleService {
         Role updateRole = new Role();
         updateRole.setUpdateBy(SecurityUtils.getUserId());
         updateRole.setDeptCheckStrictly(dto.getDeptCheckStrictly());
+        updateRole.setDataScope(dto.getDataScope());
 
         roleMapper.updateById(updateRole);
 
