@@ -154,7 +154,8 @@ public class UserServiceImpl implements UserService {
         LambdaQueryWrapper<User> userQueryWrapper = new LambdaQueryWrapper<>();
         userQueryWrapper.eq(StringUtils.isNotBlank(dto.getPhone()), User::getPhone, dto.getPhone())
                 .or()
-                .eq(StringUtils.isNotBlank(dto.getEmail()), User::getEmail, dto.getEmail());
+                .eq(StringUtils.isNotBlank(dto.getEmail()), User::getEmail, dto.getEmail())
+                .ne(User::getId, dto.getId());
         if (userMapper.selectCount(userQueryWrapper) > 0) {
             throw new BusinessException("手机号或邮箱已存在");
         }
