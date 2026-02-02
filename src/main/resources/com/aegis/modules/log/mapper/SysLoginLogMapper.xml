@@ -28,6 +28,6 @@
         WHERE login_time >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY)
           AND login_status = '0'
         GROUP BY DATE_FORMAT(login_time, '%Y-%m-%d')
-        ORDER BY DATE_FORMAT(login_time, '%Y-%m-%d');
+        ORDER BY DATE_FORMAT(login_time, '%Y-%m-%d')
     </select>
 </mapper>
