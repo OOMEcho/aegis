@@ -22,13 +22,12 @@
     </sql>
 
     <select id="selectAccessTrend" resultType="com.aegis.modules.common.domain.vo.AccessTrendVO">
-        SELECT
-            DATE_FORMAT(login_time, '%m-%d') as date,
-            COUNT(*) as count
+        SELECT DATE_FORMAT(login_time, '%Y-%m-%d') AS date,
+               COUNT(*)                            AS count
         FROM t_sys_login_log
         WHERE login_time >= DATE_SUB(CURDATE(), INTERVAL #{days} DAY)
           AND login_status = '0'
-        GROUP BY DATE(login_time)
-        ORDER BY DATE(login_time)
+        GROUP BY DATE_FORMAT(login_time, '%Y-%m-%d')
+        ORDER BY DATE_FORMAT(login_time, '%Y-%m-%d');
     </select>
 </mapper>
