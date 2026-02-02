@@ -10,6 +10,7 @@ import com.aegis.modules.notice.mapper.NoticeMapper;
 import com.aegis.modules.notice.mapper.NoticeUserMapper;
 import com.aegis.modules.notice.service.NoticeConvert;
 import com.aegis.modules.notice.service.NoticeService;
+import com.aegis.utils.HtmlSanitizer;
 import com.aegis.utils.PageUtils;
 import com.aegis.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
@@ -72,6 +73,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String add(NoticeDTO dto) {
+        // 清理富文本内容，防止XSS攻击
+        dto.setNoticeContent(HtmlSanitizer.sanitize(dto.getNoticeContent()));
+
         Notice notice = noticeConvert.toNotice(dto);
         notice.setCreateBy(SecurityUtils.getUserId());
 
@@ -89,6 +93,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public String update(NoticeDTO dto) {
+        // 清理富文本内容，防止XSS攻击
+        dto.setNoticeContent(HtmlSanitizer.sanitize(dto.getNoticeContent()));
+
         Notice notice = noticeConvert.toNotice(dto);
         notice.setUpdateBy(SecurityUtils.getUserId());
 

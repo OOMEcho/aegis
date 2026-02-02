@@ -13,6 +13,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
@@ -41,6 +42,7 @@ public class NoticeDTO extends PageDTO {
 
     @ApiModelProperty("通知内容")
     @NotBlank(groups = {ValidGroup.Create.class, ValidGroup.Update.class}, message = "通知内容不能为空")
+    @Size(max = 100000, groups = {ValidGroup.Create.class, ValidGroup.Update.class}, message = "通知内容不能超过100000字符")
     private String noticeContent;
 
     @ApiModelProperty("目标类型(1=全部用户,2=指定用户,3=指定角色,4=指定部门))")
