@@ -33,6 +33,23 @@ Aegis是一个功能完整的企业级RBAC(Role-Based Access Control)权限管�
 - ⏰ **定时任务**: 支持系统通知自动发布等定时任务功能
 - 🔍 **接口文档**: 集成Knife4j提供完整的API文档
 
+## 🔗 相关项目
+
+- 点击跳转[前端仓库](https://github.com/OOMEcho/aegis-vue)
+
+## 🌐 在线演示
+
+- 点击跳转[演示地址](https://aegis.lxsblogs.cn)
+
+## 🔐 默认账号
+
+- 管理员账号：
+    - 账号：`admin`
+    - 密码：`123456`
+- 普通用户账号：
+    - 账号：`visitor`
+    - 密码：`123456`
+
 ## 🏗️ 技术架构
 
 ### 后端技术栈
