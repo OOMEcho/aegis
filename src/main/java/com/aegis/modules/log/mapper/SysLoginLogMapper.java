@@ -1,7 +1,11 @@
 package com.aegis.modules.log.mapper;
 
+import com.aegis.modules.common.domain.vo.AccessTrendVO;
 import com.aegis.modules.log.domain.entity.SysLoginLog;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @Author: xuesong.lei
@@ -11,6 +15,13 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface SysLoginLogMapper extends BaseMapper<SysLoginLog> {
 
+    /**
+     * 按天统计访问量
+     *
+     * @param days 天数
+     * @return 访问趋势列表
+     */
+    List<AccessTrendVO> selectAccessTrend(@Param("days") Integer days);
 }
 
 
