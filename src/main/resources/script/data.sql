@@ -1,156 +1,203 @@
-INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (1, NULL, NULL, '2025-09-05 11:33:09', '2025-10-04 22:00:42', 0, 62, NULL, 1966151295895171074, 'admin', '$2a$10$GHoUDIvjIXO9ey5sd5D1YOL/YpIWca4PxzrnSepjEG3v8MQcoaFXS', '管理员', '228389787@qq.com', '0', '18888888888', '2025/09/25/e5ced7eae4ac4a82abbaf6fd2155c509.jpg', '0', '127.0.0.1', '2025-10-06 16:17:35');
+INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (1, NULL, NULL, now(), now(), 0, 1, NULL, 1966151295895171074, 'admin', '$2a$10$GHoUDIvjIXO9ey5sd5D1YOL/YpIWca4PxzrnSepjEG3v8MQcoaFXS', '管理员', '228389787@qq.com', '0', '18888888888', '2025/09/25/e5ced7eae4ac4a82abbaf6fd2155c509.jpg', '0', '127.0.0.1', now());
+INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (2017511555723767810, NULL, 1, now(), now(), 0, 1, NULL, 1971211910191857665, 'visitor', '$2a$10$3VwrVo5..iav/GtXko1OGe9oYZO3X.ivu.xoS1ro1Rrsaw3likKGS', '访客', '123456789@qq.com', '1', NULL, NULL, '0', '127.0.0.1', now());
 
-INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `dept_check_strictly`, `status`) VALUES (1974474475076329473, 1, NULL, '2025-10-04 21:59:33', '2025-10-04 22:02:11', 0, 1, NULL, '系统管理员', 'admin', 1, '1', 1, '0');
+INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `dept_check_strictly`, `status`) VALUES (1974474475076329473, 1, NULL, now(), now(), 0, 1, NULL, '系统管理员', 'admin', 1, '1', 1, '0');
+INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `dept_check_strictly`, `status`) VALUES (2017523437851455490, 1, 1, now(), now(), 0, 1, NULL, '普通用户', 'common', 2, '1', 1, '0');
 
 INSERT INTO `t_user_role` (`id`, `user_id`, `role_id`) VALUES (1, 1, 1974474475076329473);
+INSERT INTO `t_user_role` (`id`, `user_id`, `role_id`) VALUES (2, 2017511555723767810, 2017523437851455490);
 
-INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1966151295895171074, 1, NULL, '2025-09-11 22:46:13', '2025-10-04 22:00:57', 0, 1, NULL, '0', 0, '总部', 1, '管理员', '18888888888', 'aegis_system@163.com', '0');
-INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211467696979969, 1, NULL, '2025-09-25 21:53:32', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '开发部', 1, '阿雷', '15111111111', NULL, '0');
-INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211910191857665, 1, NULL, '2025-09-25 21:55:17', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '测试部', 2, NULL, NULL, NULL, '0');
-INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211978257022978, 1, NULL, '2025-09-25 21:55:34', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '产品部', 2, NULL, NULL, NULL, '0');
-INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971212084414857218, 1, NULL, '2025-09-25 21:55:59', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074,1971211467696979969', 1971211467696979969, '后端开发', 1, NULL, NULL, NULL, '0');
-INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971212149770502145, 1, NULL, '2025-09-25 21:56:15', '2025-10-04 22:00:57', 0, 1, NULL, '0,1966151295895171074,1971211467696979969', 1971211467696979969, '前端开发', 1, NULL, NULL, NULL, '0');
+INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1966151295895171074, 1, NULL, now(), now(), 0, 1, NULL, '0', 0, '总部', 1, '管理员', '18888888888', 'aegis_system@163.com', '0');
+INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211467696979969, 1, NULL, now(), now(), 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '开发部', 1, '阿雷', '15111111111', NULL, '0');
+INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211910191857665, 1, NULL, now(), now(), 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '测试部', 2, NULL, NULL, NULL, '0');
+INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971211978257022978, 1, NULL, now(), now(), 0, 1, NULL, '0,1966151295895171074', 1966151295895171074, '产品部', 2, NULL, NULL, NULL, '0');
+INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971212084414857218, 1, NULL, now(), now(), 0, 1, NULL, '0,1966151295895171074,1971211467696979969', 1971211467696979969, '后端开发', 1, NULL, NULL, NULL, '0');
+INSERT INTO `t_dept` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `ancestors`, `parent_id`, `dept_name`, `order_num`, `leader`, `phone`, `email`, `status`) VALUES (1971212149770502145, 1, NULL, now(), now(), 0, 1, NULL, '0,1966151295895171074,1971211467696979969', 1971211467696979969, '前端开发', 1, NULL, NULL, NULL, '0');
 
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212744644444162, 1, NULL, '2025-09-25 21:58:36', '2025-10-04 22:01:03', 0, 1, '请求成功状态', '操作状态', 'OPERATION_STATUS', 1, '成功', '0', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212812822855682, 1, NULL, '2025-09-25 21:58:53', '2025-10-04 22:01:03', 0, 1, '请求失败状态', '操作状态', 'OPERATION_STATUS', 2, '失败', '1', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212982402760705, 1, NULL, '2025-09-25 21:59:33', '2025-10-04 22:01:03', 0, 1, '正常使用状态', '数据状态', 'DATA_STATUS', 1, '正常', '0', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213035355848706, 1, NULL, '2025-09-25 21:59:46', '2025-10-04 22:01:03', 0, 1, '暂停使用状态', '数据状态', 'DATA_STATUS', 2, '停用', '1', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213204281442306, 1, NULL, '2025-09-25 22:00:26', '2025-10-04 22:01:03', 0, 1, '性别为男', '用户性别', 'USER_GENDER', 1, '男', '0', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213247025594370, 1, NULL, '2025-09-25 22:00:36', '2025-10-04 22:01:03', 0, 1, '性别为女', '用户性别', 'USER_GENDER', 2, '女', '1', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213614182383618, 1, NULL, '2025-09-25 22:02:04', '2025-10-04 22:01:03', 0, 1, '其他操作', '操作类型', 'BUSINESS_TYPE', 1, '其他', '0', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213660361670658, 1, NULL, '2025-09-25 22:02:15', '2025-10-04 22:01:03', 0, 1, '新增操作', '操作类型', 'BUSINESS_TYPE', 2, '新增', '1', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213719924981762, 1, NULL, '2025-09-25 22:02:29', '2025-10-04 22:01:03', 0, 1, '修改操作', '操作类型', 'BUSINESS_TYPE', 3, '修改', '2', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213804326961153, 1, NULL, '2025-09-25 22:02:49', '2025-10-04 22:01:03', 0, 1, '删除操作', '操作类型', 'BUSINESS_TYPE', 4, '删除', '3', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213845649244161, 1, NULL, '2025-09-25 22:02:59', '2025-10-04 22:01:03', 0, 1, '导出操作', '操作类型', 'BUSINESS_TYPE', 5, '导出', '4', '0');
-INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213882416513026, 1, NULL, '2025-09-25 22:03:08', '2025-10-04 22:01:03', 0, 1, '导入操作', '操作类型', 'BUSINESS_TYPE', 6, '导入', '5', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212744644444162, 1, NULL, now(), now(), 0, 1, '请求成功状态', '操作状态', 'OPERATION_STATUS', 1, '成功', '0', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212812822855682, 1, NULL, now(), now(), 0, 1, '请求失败状态', '操作状态', 'OPERATION_STATUS', 2, '失败', '1', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971212982402760705, 1, NULL, now(), now(), 0, 1, '正常使用状态', '数据状态', 'DATA_STATUS', 1, '正常', '0', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213035355848706, 1, NULL, now(), now(), 0, 1, '暂停使用状态', '数据状态', 'DATA_STATUS', 2, '停用', '1', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213204281442306, 1, NULL, now(), now(), 0, 1, '性别为男', '用户性别', 'USER_GENDER', 1, '男', '0', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213247025594370, 1, NULL, now(), now(), 0, 1, '性别为女', '用户性别', 'USER_GENDER', 2, '女', '1', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213614182383618, 1, NULL, now(), now(), 0, 1, '其他操作', '操作类型', 'BUSINESS_TYPE', 1, '其他', '0', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213660361670658, 1, NULL, now(), now(), 0, 1, '新增操作', '操作类型', 'BUSINESS_TYPE', 2, '新增', '1', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213719924981762, 1, NULL, now(), now(), 0, 1, '修改操作', '操作类型', 'BUSINESS_TYPE', 3, '修改', '2', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213804326961153, 1, NULL, now(), now(), 0, 1, '删除操作', '操作类型', 'BUSINESS_TYPE', 4, '删除', '3', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213845649244161, 1, NULL, now(), now(), 0, 1, '导出操作', '操作类型', 'BUSINESS_TYPE', 5, '导出', '4', '0');
+INSERT INTO `t_dictionary` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dict_name`, `dict_type`, `dict_sort`, `dict_label`, `dict_value`, `status`) VALUES (1971213882416513026, 1, NULL, now(), now(), 0, 1, '导入操作', '操作类型', 'BUSINESS_TYPE', 6, '导入', '5', '0');
 
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963484537937846274, NULL, NULL, '2025-09-04 14:09:28', '2025-10-04 12:01:03', 0, 1, NULL, 'GET', '/profile/generate/captcha', '获取滑块验证码', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963484964007829505, NULL, NULL, '2025-09-04 14:11:10', '2025-10-04 12:01:12', 0, 1, NULL, 'GET', '/profile/sendEmailCode', '发送邮箱验证码', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963975961120718849, NULL, NULL, '2025-09-05 22:42:13', '2025-09-25 22:58:16', 0, 1, NULL, 'ALL', '/doc.html', 'knife4j文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963983992990494721, NULL, NULL, '2025-09-05 23:14:08', '2025-09-25 22:58:16', 0, 1, NULL, 'ALL', '/swagger-resources', 'knife4j文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963984031683047426, NULL, NULL, '2025-09-05 23:14:17', '2025-09-25 22:58:16', 0, 1, NULL, 'ALL', '/v2/api-docs', 'knife4j文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963984285845159938, NULL, NULL, '2025-09-05 23:15:17', '2025-09-25 22:58:16', 0, 1, NULL, 'ALL', '/webjars/**', 'knife4j文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963984550132539393, NULL, NULL, '2025-09-05 23:16:20', '2025-10-04 22:03:11', 0, 1, NULL, 'ALL', '/favicon.ico', 'knife4j文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1964687436378345474, NULL, NULL, '2025-09-07 21:49:22', '2025-09-25 21:52:42', 1, 1, NULL, 'ALL', '/**', '放行所有接口', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974320977298948097, NULL, NULL, '2025-10-04 11:49:37', '2025-10-04 11:57:31', 0, 1, NULL, 'ALL', '/swagger-ui.html', 'swagger文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974322619540955138, NULL, NULL, '2025-10-04 11:56:08', '2025-10-04 11:57:32', 0, 1, NULL, 'ALL', '/swagger-ui/**', 'swagger文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974322934918963201, NULL, NULL, '2025-10-04 11:57:23', '2025-10-04 11:58:28', 0, 1, NULL, 'ALL', '/v3/api-docs/**', 'swagger文档', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974337249415794689, NULL, NULL, '2025-10-04 12:54:16', '2025-10-04 12:54:16', 0, 1, NULL, 'GET', '/profile/publicKey', '获取RSA公钥', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974459418292531201, NULL, NULL, '2025-10-04 20:59:44', '2025-10-04 20:59:44', 0, 1, NULL, 'GET', '/profile/refreshToken', '刷新token', '0');
-INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1975094173811982337, NULL, NULL, '2025-10-06 15:02:01', '2025-10-06 15:02:01', 0, 1, NULL, 'POST', '/profile/register', '注册用户', '0');
-
-INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
-('system:manage', '系统管理', 'M', '0', '系统管理', 1),
-('system:user:page', '用户管理', 'M', '0', '用户管理', 1),
-('system:role:page', '角色管理', 'M', '0', '角色管理', 1),
-('system:menu:page', '菜单管理', 'M', '0', '菜单管理', 1),
-('system:permission:page', '权限管理', 'M', '0', '权限管理', 1),
-('system:resource:page', '资源管理', 'M', '0', '资源管理', 1),
-('system:dept:page', '部门管理', 'M', '0', '部门管理', 1),
-('system:dict:page', '字典管理', 'M', '0', '字典管理', 1),
-('system:whitelist:page', '白名单管理', 'M', '0', '白名单管理', 1),
-('system:log:manage', '日志管理', 'M', '0', '日志管理', 1),
-('system:loginLog:page', '登录日志', 'M', '0', '登录日志', 1),
-('system:operateLog:page', '操作日志', 'M', '0', '操作日志', 1),
-('system:notice:manage', '通知管理', 'M', '0', '通知管理', 1),
-('system:notice:page', '通知公告', 'M', '0', '通知公告', 1),
-('system:noticeUser:page', '我的通知', 'M', '0', '我的通知', 1),
-('system:file:page', '文件管理', 'M', '0', '文件管理', 1);
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963484537937846274, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/profile/generate/captcha', '获取滑块验证码', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963484964007829505, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/profile/sendEmailCode', '发送邮箱验证码', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963975961120718849, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/doc.html', 'knife4j文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963983992990494721, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/swagger-resources', 'knife4j文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963984031683047426, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/v2/api-docs', 'knife4j文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963984285845159938, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/webjars/**', 'knife4j文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1963984550132539393, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/favicon.ico', 'knife4j文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974320977298948097, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/swagger-ui.html', 'swagger文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974322619540955138, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/swagger-ui/**', 'swagger文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974322934918963201, NULL, NULL, now(), now(), 0, 1, NULL, 'ALL', '/v3/api-docs/**', 'swagger文档', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974337249415794689, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/profile/publicKey', '获取RSA公钥', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974459418292531201, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/profile/refreshToken', '刷新token', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1975094173811982337, NULL, NULL, now(), now(), 0, 1, NULL, 'POST', '/profile/register', '注册用户', '0');
 
 INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
-('system:user:list', '用户管理-分页列表', 'A', '0', '用户管理-分页列表', 1),
-('system:user:detail', '用户管理-详情', 'A', '0', '用户管理-详情', 1),
-('system:user:status', '用户管理-状态修改', 'A', '0', '用户管理-状态修改', 1),
-('system:user:delete', '用户管理-删除', 'A', '0', '用户管理-删除', 1),
-('system:user:add', '用户管理-新增', 'A', '0', '用户管理-新增', 1),
-('system:user:update', '用户管理-修改', 'A', '0', '用户管理-修改', 1),
-('system:user:resetPwd', '用户管理-重置密码', 'A', '0', '用户管理-重置密码', 1),
-('system:user:kick', '用户管理-踢下线', 'A', '0', '用户管理-踢下线', 1),
-('system:role:list', '角色管理-分页列表', 'A', '0', '角色管理-分页列表', 1),
-('system:role:status', '角色管理-状态修改', 'A', '0', '角色管理-状态修改', 1),
-('system:role:delete', '角色管理-删除', 'A', '0', '角色管理-删除', 1),
-('system:role:add', '角色管理-新增', 'A', '0', '角色管理-新增', 1),
-('system:role:update', '角色管理-修改', 'A', '0', '角色管理-修改', 1),
-('system:role:dataScope', '角色管理-数据权限', 'A', '0', '角色管理-数据权限', 1),
-('system:role:allocatedList', '角色管理-已分配用户', 'A', '0', '角色管理-已分配用户', 1),
-('system:role:unallocatedList', '角色管理-未分配用户', 'A', '0', '角色管理-未分配用户', 1),
-('system:role:cancel', '角色管理-取消授权', 'A', '0', '角色管理-取消授权', 1),
-('system:role:cancelAll', '角色管理-批量取消授权', 'A', '0', '角色管理-批量取消授权', 1),
-('system:role:selectAll', '角色管理-批量授权', 'A', '0', '角色管理-批量授权', 1),
-('system:role:deptTree', '角色管理-部门树', 'A', '0', '角色管理-部门树', 1),
-('system:role:perm:list', '角色管理-权限列表', 'A', '0', '角色管理-权限列表', 1),
-('system:role:perm:assign', '角色管理-分配权限', 'A', '0', '角色管理-分配权限', 1),
-('system:dept:list', '部门管理-列表', 'A', '0', '部门管理-列表', 1),
-('system:dept:detail', '部门管理-详情', 'A', '0', '部门管理-详情', 1),
-('system:dept:exclude', '部门管理-排除节点', 'A', '0', '部门管理-排除节点', 1),
-('system:dept:delete', '部门管理-删除', 'A', '0', '部门管理-删除', 1),
-('system:dept:add', '部门管理-新增', 'A', '0', '部门管理-新增', 1),
-('system:dept:update', '部门管理-修改', 'A', '0', '部门管理-修改', 1),
-('system:dept:tree', '部门管理-树形结构', 'A', '0', '部门管理-树形结构', 1),
-('system:menu:list', '菜单管理-列表', 'A', '0', '菜单管理-列表', 1),
-('system:menu:detail', '菜单管理-详情', 'A', '0', '菜单管理-详情', 1),
-('system:menu:delete', '菜单管理-删除', 'A', '0', '菜单管理-删除', 1),
-('system:menu:add', '菜单管理-新增', 'A', '0', '菜单管理-新增', 1),
-('system:menu:update', '菜单管理-修改', 'A', '0', '菜单管理-修改', 1),
-('system:menu:perm:list', '菜单管理-权限列表', 'A', '0', '菜单管理-权限列表', 1),
-('system:menu:perm:assign', '菜单管理-配置权限', 'A', '0', '菜单管理-配置权限', 1),
-('system:permission:list', '权限管理-分页列表', 'A', '0', '权限管理-分页列表', 1),
-('system:permission:all', '权限管理-全部列表', 'A', '0', '权限管理-全部列表', 1),
-('system:permission:effective', '权限管理-状态修改', 'A', '0', '权限管理-状态修改', 1),
-('system:permission:add', '权限管理-新增', 'A', '0', '权限管理-新增', 1),
-('system:permission:update', '权限管理-修改', 'A', '0', '权限管理-修改', 1),
-('system:resource:list', '资源管理-分页列表', 'A', '0', '资源管理-分页列表', 1),
-('system:resource:detail', '资源管理-详情', 'A', '0', '资源管理-详情', 1),
-('system:resource:delete', '资源管理-删除', 'A', '0', '资源管理-删除', 1),
-('system:resource:add', '资源管理-新增', 'A', '0', '资源管理-新增', 1),
-('system:resource:update', '资源管理-修改', 'A', '0', '资源管理-修改', 1),
-('system:dict:list', '字典管理-分页列表', 'A', '0', '字典管理-分页列表', 1),
-('system:dict:delete', '字典管理-删除', 'A', '0', '字典管理-删除', 1),
-('system:dict:add', '字典管理-新增', 'A', '0', '字典管理-新增', 1),
-('system:dict:update', '字典管理-修改', 'A', '0', '字典管理-修改', 1),
-('system:dict:items', '字典管理-按类型查询', 'A', '0', '字典管理-按类型查询', 1),
-('system:whitelist:list', '白名单管理-分页列表', 'A', '0', '白名单管理-分页列表', 1),
-('system:whitelist:detail', '白名单管理-详情', 'A', '0', '白名单管理-详情', 1),
-('system:whitelist:delete', '白名单管理-删除', 'A', '0', '白名单管理-删除', 1),
-('system:whitelist:add', '白名单管理-新增', 'A', '0', '白名单管理-新增', 1),
-('system:whitelist:update', '白名单管理-修改', 'A', '0', '白名单管理-修改', 1),
-('system:notice:list', '通知管理-分页列表', 'A', '0', '通知管理-分页列表', 1),
-('system:notice:detail', '通知管理-详情', 'A', '0', '通知管理-详情', 1),
-('system:notice:delete', '通知管理-删除', 'A', '0', '通知管理-删除', 1),
-('system:notice:add', '通知管理-新增', 'A', '0', '通知管理-新增', 1),
-('system:notice:update', '通知管理-修改', 'A', '0', '通知管理-修改', 1),
-('system:notice:publish', '通知管理-发布', 'A', '0', '通知管理-发布', 1),
-('system:notice:revoke', '通知管理-撤销', 'A', '0', '通知管理-撤销', 1),
-('system:loginLog:list', '登录日志-分页列表', 'A', '0', '登录日志-分页列表', 1),
-('system:loginLog:export', '登录日志-导出', 'A', '0', '登录日志-导出', 1),
-('system:operateLog:list', '操作日志-分页列表', 'A', '0', '操作日志-分页列表', 1),
-('system:operateLog:export', '操作日志-导出', 'A', '0', '操作日志-导出', 1),
-('system:file:upload', '文件管理-上传', 'A', '0', '文件管理-上传', 1),
-('system:file:uploadBatch', '文件管理-批量上传', 'A', '0', '文件管理-批量上传', 1),
-('system:file:tempDownload', '文件管理-临时下载URL', 'A', '0', '文件管理-临时下载URL', 1),
-('system:file:download', '文件管理-下载', 'A', '0', '文件管理-下载', 1),
-('system:file:localDownload', '文件管理-本地临时下载', 'A', '0', '文件管理-本地临时下载', 1),
-('system:file:uploadPlatform', '文件管理-指定平台上传', 'A', '0', '文件管理-指定平台上传', 1),
-('system:file:delete', '文件管理-删除', 'A', '0', '文件管理-删除', 1),
-('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '文件管理-预签名上传URL', 1);
+('system:manage', '系统管理', 'M', '0', '页面权限', 1),
+('system:user:page', '用户管理', 'M', '0', '页面权限', 1),
+('system:role:page', '角色管理', 'M', '0', '页面权限', 1),
+('system:menu:page', '菜单管理', 'M', '0', '页面权限', 1),
+('system:permission:page', '权限管理', 'M', '0', '页面权限', 1),
+('system:resource:page', '资源管理', 'M', '0', '页面权限', 1),
+('system:dept:page', '部门管理', 'M', '0', '页面权限', 1),
+('system:dict:page', '字典管理', 'M', '0', '页面权限', 1),
+('system:whitelist:page', '白名单管理', 'M', '0', '页面权限', 1),
+('system:log:manage', '日志管理', 'M', '0', '页面权限', 1),
+('system:loginLog:page', '登录日志', 'M', '0', '页面权限', 1),
+('system:operateLog:page', '操作日志', 'M', '0', '页面权限', 1),
+('system:notice:manage', '通知管理', 'M', '0', '页面权限', 1),
+('system:notice:page', '通知公告', 'M', '0', '页面权限', 1),
+('system:noticeUser:page', '我的通知', 'M', '0', '页面权限', 1),
+('system:file:page', '文件管理', 'M', '0', '页面权限', 1);
+
+INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
+('system:user:add:btn', '用户管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:user:update:btn', '用户管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:user:delete:btn', '用户管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:user:status:btn', '用户管理-状态修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:user:resetPwd:btn', '用户管理-重置密码(按钮)', 'B', '0', '按钮权限', 1),
+('system:user:kick:btn', '用户管理-踢下线(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:add:btn', '角色管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:update:btn', '角色管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:delete:btn', '角色管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:status:btn', '角色管理-状态修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:permConfig:btn', '角色管理-权限配置(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:dataScope:btn', '角色管理-数据权限(按钮)', 'B', '0', '按钮权限', 1),
+('system:role:assignUser:btn', '角色管理-分配用户(按钮)', 'B', '0', '按钮权限', 1),
+('system:menu:add:btn', '菜单管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:menu:update:btn', '菜单管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:menu:delete:btn', '菜单管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:menu:permConfig:btn', '菜单管理-权限配置(按钮)', 'B', '0', '按钮权限', 1),
+('system:permission:add:btn', '权限管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:permission:update:btn', '权限管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:permission:effective:btn', '权限管理-状态修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:resource:add:btn', '资源管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:resource:update:btn', '资源管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:resource:delete:btn', '资源管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:dept:add:btn', '部门管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:dept:update:btn', '部门管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:dept:delete:btn', '部门管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:dict:add:btn', '字典管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:dict:update:btn', '字典管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:dict:delete:btn', '字典管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:whitelist:add:btn', '白名单管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:whitelist:update:btn', '白名单管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:whitelist:delete:btn', '白名单管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:notice:add:btn', '通知管理-新增(按钮)', 'B', '0', '按钮权限', 1),
+('system:notice:update:btn', '通知管理-修改(按钮)', 'B', '0', '按钮权限', 1),
+('system:notice:delete:btn', '通知管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:notice:publish:btn', '通知管理-发布(按钮)', 'B', '0', '按钮权限', 1),
+('system:notice:revoke:btn', '通知管理-撤销(按钮)', 'B', '0', '按钮权限', 1),
+('system:file:upload:btn', '文件管理-上传(按钮)', 'B', '0', '按钮权限', 1),
+('system:file:uploadBatch:btn', '文件管理-批量上传(按钮)', 'B', '0', '按钮权限', 1),
+('system:file:tempDownload:btn', '文件管理-临时下载(按钮)', 'B', '0', '按钮权限', 1),
+('system:file:download:btn', '文件管理-下载(按钮)', 'B', '0', '按钮权限', 1),
+('system:file:delete:btn', '文件管理-删除(按钮)', 'B', '0', '按钮权限', 1),
+('system:loginLog:export:btn', '登录日志-导出(按钮)', 'B', '0', '按钮权限', 1),
+('system:operateLog:export:btn', '操作日志-导出(按钮)', 'B', '0', '按钮权限', 1);
+
+INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
+('system:user:list', '用户管理-分页列表', 'A', '0', '接口权限', 1),
+('system:user:detail', '用户管理-详情', 'A', '0', '接口权限', 1),
+('system:user:status', '用户管理-状态修改', 'A', '0', '接口权限', 1),
+('system:user:delete', '用户管理-删除', 'A', '0', '接口权限', 1),
+('system:user:add', '用户管理-新增', 'A', '0', '接口权限', 1),
+('system:user:update', '用户管理-修改', 'A', '0', '接口权限', 1),
+('system:user:resetPwd', '用户管理-重置密码', 'A', '0', '接口权限', 1),
+('system:user:kick', '用户管理-踢下线', 'A', '0', '接口权限', 1),
+('system:role:list', '角色管理-分页列表', 'A', '0', '接口权限', 1),
+('system:role:status', '角色管理-状态修改', 'A', '0', '接口权限', 1),
+('system:role:delete', '角色管理-删除', 'A', '0', '接口权限', 1),
+('system:role:add', '角色管理-新增', 'A', '0', '接口权限', 1),
+('system:role:update', '角色管理-修改', 'A', '0', '接口权限', 1),
+('system:role:dataScope', '角色管理-数据权限', 'A', '0', '接口权限', 1),
+('system:role:allocatedList', '角色管理-已分配用户', 'A', '0', '接口权限', 1),
+('system:role:unallocatedList', '角色管理-未分配用户', 'A', '0', '接口权限', 1),
+('system:role:cancel', '角色管理-取消授权', 'A', '0', '接口权限', 1),
+('system:role:cancelAll', '角色管理-批量取消授权', 'A', '0', '接口权限', 1),
+('system:role:selectAll', '角色管理-批量授权', 'A', '0', '接口权限', 1),
+('system:role:deptTree', '角色管理-部门树', 'A', '0', '接口权限', 1),
+('system:role:perm:list', '角色管理-权限列表', 'A', '0', '接口权限', 1),
+('system:role:perm:assign', '角色管理-分配权限', 'A', '0', '接口权限', 1),
+('system:dept:list', '部门管理-列表', 'A', '0', '接口权限', 1),
+('system:dept:detail', '部门管理-详情', 'A', '0', '接口权限', 1),
+('system:dept:exclude', '部门管理-排除节点', 'A', '0', '接口权限', 1),
+('system:dept:delete', '部门管理-删除', 'A', '0', '接口权限', 1),
+('system:dept:add', '部门管理-新增', 'A', '0', '接口权限', 1),
+('system:dept:update', '部门管理-修改', 'A', '0', '接口权限', 1),
+('system:dept:tree', '部门管理-树形结构', 'A', '0', '接口权限', 1),
+('system:menu:list', '菜单管理-列表', 'A', '0', '接口权限', 1),
+('system:menu:detail', '菜单管理-详情', 'A', '0', '接口权限', 1),
+('system:menu:delete', '菜单管理-删除', 'A', '0', '接口权限', 1),
+('system:menu:add', '菜单管理-新增', 'A', '0', '接口权限', 1),
+('system:menu:update', '菜单管理-修改', 'A', '0', '接口权限', 1),
+('system:menu:perm:list', '菜单管理-权限列表', 'A', '0', '接口权限', 1),
+('system:menu:perm:assign', '菜单管理-配置权限', 'A', '0', '接口权限', 1),
+('system:permission:list', '权限管理-分页列表', 'A', '0', '接口权限', 1),
+('system:permission:all', '权限管理-全部列表', 'A', '0', '接口权限', 1),
+('system:permission:effective', '权限管理-状态修改', 'A', '0', '接口权限', 1),
+('system:permission:add', '权限管理-新增', 'A', '0', '接口权限', 1),
+('system:permission:update', '权限管理-修改', 'A', '0', '接口权限', 1),
+('system:resource:list', '资源管理-分页列表', 'A', '0', '接口权限', 1),
+('system:resource:detail', '资源管理-详情', 'A', '0', '接口权限', 1),
+('system:resource:delete', '资源管理-删除', 'A', '0', '接口权限', 1),
+('system:resource:add', '资源管理-新增', 'A', '0', '接口权限', 1),
+('system:resource:update', '资源管理-修改', 'A', '0', '接口权限', 1),
+('system:dict:list', '字典管理-分页列表', 'A', '0', '接口权限', 1),
+('system:dict:delete', '字典管理-删除', 'A', '0', '接口权限', 1),
+('system:dict:add', '字典管理-新增', 'A', '0', '接口权限', 1),
+('system:dict:update', '字典管理-修改', 'A', '0', '接口权限', 1),
+('system:whitelist:list', '白名单管理-分页列表', 'A', '0', '接口权限', 1),
+('system:whitelist:detail', '白名单管理-详情', 'A', '0', '接口权限', 1),
+('system:whitelist:delete', '白名单管理-删除', 'A', '0', '接口权限', 1),
+('system:whitelist:add', '白名单管理-新增', 'A', '0', '接口权限', 1),
+('system:whitelist:update', '白名单管理-修改', 'A', '0', '接口权限', 1),
+('system:notice:list', '通知管理-分页列表', 'A', '0', '接口权限', 1),
+('system:notice:detail', '通知管理-详情', 'A', '0', '接口权限', 1),
+('system:notice:delete', '通知管理-删除', 'A', '0', '接口权限', 1),
+('system:notice:add', '通知管理-新增', 'A', '0', '接口权限', 1),
+('system:notice:update', '通知管理-修改', 'A', '0', '接口权限', 1),
+('system:notice:publish', '通知管理-发布', 'A', '0', '接口权限', 1),
+('system:notice:revoke', '通知管理-撤销', 'A', '0', '接口权限', 1),
+('system:loginLog:list', '登录日志-分页列表', 'A', '0', '接口权限', 1),
+('system:loginLog:export', '登录日志-导出', 'A', '0', '接口权限', 1),
+('system:operateLog:list', '操作日志-分页列表', 'A', '0', '接口权限', 1),
+('system:operateLog:export', '操作日志-导出', 'A', '0', '接口权限', 1),
+('system:file:upload', '文件管理-上传', 'A', '0', '接口权限', 1),
+('system:file:uploadBatch', '文件管理-批量上传', 'A', '0', '接口权限', 1),
+('system:file:tempDownload', '文件管理-临时下载URL', 'A', '0', '接口权限', 1),
+('system:file:download', '文件管理-下载', 'A', '0', '接口权限', 1),
+('system:file:localDownload', '文件管理-本地临时下载', 'A', '0', '接口权限', 1),
+('system:file:uploadPlatform', '文件管理-指定平台上传', 'A', '0', '接口权限', 1),
+('system:file:delete', '文件管理-删除', 'A', '0', '接口权限', 1),
+('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '接口权限', 1);
 
 INSERT INTO `t_menu` (`id`, `menu_code`, `menu_name`, `parent_id`, `order_num`, `name`, `path`, `menu_type`, `icon`, `hidden`, `status`, `create_by`) VALUES
-(1, 'system', '系统管理', 0, 1, 'System', '/system', 'D', '#', 0, '0', 1),
-(2, 'system:user', '用户管理', 1, 1, 'User', '/system/user', 'M', '#', 0, '0', 1),
-(3, 'system:role', '角色管理', 1, 2, 'Role', '/system/role', 'M', '#', 0, '0', 1),
-(4, 'system:menu', '菜单管理', 1, 3, 'Menu', '/system/menu', 'M', '#', 0, '0', 1),
-(5, 'system:permission', '权限管理', 1, 4, 'Permission', '/system/permission', 'M', '#', 0, '0', 1),
-(6, 'system:resource', '资源管理', 1, 5, 'Resource', '/system/resource', 'M', '#', 0, '0', 1),
-(7, 'system:dept', '部门管理', 1, 6, 'Dept', '/system/dept', 'M', '#', 0, '0', 1),
-(8, 'system:dict', '字典管理', 1, 7, 'Dictionary', '/system/dictionary', 'M', '#', 0, '0', 1),
-(9, 'system:whitelist', '白名单管理', 1, 8, 'Whitelist', '/system/whitelist', 'M', '#', 0, '0', 1),
-(10, 'log', '日志管理', 0, 2, 'Log', '/log', 'D', '#', 0, '0', 1),
-(11, 'log:login', '登录日志', 10, 1, 'LoginLog', '/log/login', 'M', '#', 0, '0', 1),
-(12, 'log:operate', '操作日志', 10, 2, 'OperateLog', '/log/operate', 'M', '#', 0, '0', 1),
-(13, 'notice', '通知管理', 0, 3, 'Notice', '/notice', 'D', '#', 0, '0', 1),
-(14, 'notice:list', '通知公告', 13, 1, 'NoticeList', '/notice/list', 'M', '#', 0, '0', 1),
-(15, 'notice:user', '我的通知', 13, 2, 'NoticeUser', '/notice/user', 'M', '#', 0, '0', 1),
-(16, 'file', '文件管理', 0, 4, 'File', '/file', 'M', '#', 0, '0', 1);
+(1, 'system', '系统管理', 0, 1, 'System', '/system', 'D', 'icon-shezhi', 0, '0', 1),
+(2, 'system:user', '用户管理', 1, 1, 'User', '/system/user', 'M', 'icon-yonghuzhuzhanghaoguanli', 0, '0', 1),
+(3, 'system:role', '角色管理', 1, 2, 'Role', '/system/role', 'M', 'icon-zhuzhanghaoliebiao', 0, '0', 1),
+(4, 'system:menu', '菜单管理', 1, 3, 'Menu', '/system/menu', 'M', 'icon-fenpeishebei', 0, '0', 1),
+(5, 'system:permission', '权限管理', 1, 4, 'Permission', '/system/permission', 'M', 'icon-anquanduixiang', 0, '0', 1),
+(6, 'system:resource', '资源管理', 1, 5, 'Resource', '/system/resource', 'M', 'icon-mobanguanli', 0, '0', 1),
+(7, 'system:dept', '部门管理', 1, 6, 'Dept', '/system/dept', 'M', 'icon-zuzhijigou', 0, '0', 1),
+(8, 'system:dict', '字典管理', 1, 7, 'Dictionary', '/system/dictionary', 'M', 'icon-shezhipingfenfangan', 0, '0', 1),
+(9, 'system:whitelist', '白名单管理', 1, 8, 'Whitelist', '/system/whitelist', 'M', 'icon-jintian', 0, '0', 1),
+(10, 'log', '日志管理', 0, 2, 'Log', '/log', 'D', 'icon-jiansuo', 0, '0', 1),
+(11, 'log:login', '登录日志', 10, 1, 'LoginLog', '/log/login', 'M', 'icon-mingdanshujuguanli', 0, '0', 1),
+(12, 'log:operate', '操作日志', 10, 2, 'OperateLog', '/log/operate', 'M', 'icon-lousaojieguobaobiao', 0, '0', 1),
+(13, 'notice', '通知管理', 0, 3, 'Notice', '/notice', 'D', 'icon-tixing', 0, '0', 1),
+(14, 'notice:list', '通知公告', 13, 1, 'NoticeList', '/notice/list', 'M', 'icon-zuoyerili', 0, '0', 1),
+(15, 'notice:user', '我的通知', 13, 2, 'NoticeUser', '/notice/user', 'M', 'icon-moban', 0, '0', 1),
+(16, 'file', '文件管理', 0, 4, 'File', '/file', 'M', 'icon-zuoyejihuafenlei', 0, '0', 1);
 
 INSERT INTO `t_menu_permission` (`menu_id`, `perm_code`) VALUES
 (1, 'system:manage'),
@@ -221,7 +268,6 @@ INSERT INTO `t_resource` (`request_method`, `request_uri`, `perm_code`, `status`
 ('DELETE', '/dictionary/delete/*', 'system:dict:delete', '0', '字典管理-删除', 1),
 ('POST', '/dictionary/add', 'system:dict:add', '0', '字典管理-新增', 1),
 ('PUT', '/dictionary/update', 'system:dict:update', '0', '字典管理-修改', 1),
-('GET', '/dictionary/list', 'system:dict:items', '0', '字典管理-按类型查询', 1),
 ('GET', '/whitelist/pageList', 'system:whitelist:list', '0', '白名单管理-分页列表', 1),
 ('GET', '/whitelist/detail/*', 'system:whitelist:detail', '0', '白名单管理-详情', 1),
 ('DELETE', '/whitelist/delete/*', 'system:whitelist:delete', '0', '白名单管理-删除', 1),
@@ -264,6 +310,50 @@ INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:notice:page'),
 (1974474475076329473, 'system:noticeUser:page'),
 (1974474475076329473, 'system:file:page'),
+(1974474475076329473,'system:user:add:btn'),
+(1974474475076329473,'system:user:update:btn'),
+(1974474475076329473,'system:user:delete:btn'),
+(1974474475076329473,'system:user:status:btn'),
+(1974474475076329473,'system:user:resetPwd:btn'),
+(1974474475076329473,'system:user:kick:btn'),
+(1974474475076329473,'system:role:add:btn'),
+(1974474475076329473,'system:role:update:btn'),
+(1974474475076329473,'system:role:delete:btn'),
+(1974474475076329473,'system:role:status:btn'),
+(1974474475076329473,'system:role:permConfig:btn'),
+(1974474475076329473,'system:role:dataScope:btn'),
+(1974474475076329473,'system:role:assignUser:btn'),
+(1974474475076329473,'system:menu:add:btn'),
+(1974474475076329473,'system:menu:update:btn'),
+(1974474475076329473,'system:menu:delete:btn'),
+(1974474475076329473,'system:menu:permConfig:btn'),
+(1974474475076329473,'system:permission:add:btn'),
+(1974474475076329473,'system:permission:update:btn'),
+(1974474475076329473,'system:permission:effective:btn'),
+(1974474475076329473,'system:resource:add:btn'),
+(1974474475076329473,'system:resource:update:btn'),
+(1974474475076329473,'system:resource:delete:btn'),
+(1974474475076329473,'system:dept:add:btn'),
+(1974474475076329473,'system:dept:update:btn'),
+(1974474475076329473,'system:dept:delete:btn'),
+(1974474475076329473,'system:dict:add:btn'),
+(1974474475076329473,'system:dict:update:btn'),
+(1974474475076329473,'system:dict:delete:btn'),
+(1974474475076329473,'system:whitelist:add:btn'),
+(1974474475076329473,'system:whitelist:update:btn'),
+(1974474475076329473,'system:whitelist:delete:btn'),
+(1974474475076329473,'system:notice:add:btn'),
+(1974474475076329473,'system:notice:update:btn'),
+(1974474475076329473,'system:notice:delete:btn'),
+(1974474475076329473,'system:notice:publish:btn'),
+(1974474475076329473,'system:notice:revoke:btn'),
+(1974474475076329473,'system:file:upload:btn'),
+(1974474475076329473,'system:file:uploadBatch:btn'),
+(1974474475076329473,'system:file:tempDownload:btn'),
+(1974474475076329473,'system:file:download:btn'),
+(1974474475076329473,'system:file:delete:btn'),
+(1974474475076329473,'system:loginLog:export:btn'),
+(1974474475076329473,'system:operateLog:export:btn'),
 (1974474475076329473, 'system:user:list'),
 (1974474475076329473, 'system:user:detail'),
 (1974474475076329473, 'system:user:status'),
@@ -314,7 +404,6 @@ INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:dict:delete'),
 (1974474475076329473, 'system:dict:add'),
 (1974474475076329473, 'system:dict:update'),
-(1974474475076329473, 'system:dict:items'),
 (1974474475076329473, 'system:whitelist:list'),
 (1974474475076329473, 'system:whitelist:detail'),
 (1974474475076329473, 'system:whitelist:delete'),
@@ -339,144 +428,3 @@ INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:file:uploadPlatform'),
 (1974474475076329473, 'system:file:delete'),
 (1974474475076329473, 'system:file:presignedUpload');
-
--- ===== Button permissions (B) =====
-INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
-('system:user:add:btn', '用户管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:user:update:btn', '用户管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:user:delete:btn', '用户管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:user:status:btn', '用户管理-状态修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:user:resetPwd:btn', '用户管理-重置密码(按钮)', 'B', '0', '按钮权限', 1),
-('system:user:kick:btn', '用户管理-踢下线(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:add:btn', '角色管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:update:btn', '角色管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:delete:btn', '角色管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:status:btn', '角色管理-状态修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:permConfig:btn', '角色管理-权限配置(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:dataScope:btn', '角色管理-数据权限(按钮)', 'B', '0', '按钮权限', 1),
-('system:role:assignUser:btn', '角色管理-分配用户(按钮)', 'B', '0', '按钮权限', 1),
-('system:menu:add:btn', '菜单管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:menu:update:btn', '菜单管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:menu:delete:btn', '菜单管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:menu:permConfig:btn', '菜单管理-权限配置(按钮)', 'B', '0', '按钮权限', 1),
-('system:permission:add:btn', '权限管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:permission:update:btn', '权限管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:permission:effective:btn', '权限管理-状态修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:resource:add:btn', '资源管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:resource:update:btn', '资源管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:resource:delete:btn', '资源管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:dept:add:btn', '部门管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:dept:update:btn', '部门管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:dept:delete:btn', '部门管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:dict:add:btn', '字典管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:dict:update:btn', '字典管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:dict:delete:btn', '字典管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:whitelist:add:btn', '白名单管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:whitelist:update:btn', '白名单管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:whitelist:delete:btn', '白名单管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:notice:add:btn', '通知管理-新增(按钮)', 'B', '0', '按钮权限', 1),
-('system:notice:update:btn', '通知管理-修改(按钮)', 'B', '0', '按钮权限', 1),
-('system:notice:delete:btn', '通知管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:notice:publish:btn', '通知管理-发布(按钮)', 'B', '0', '按钮权限', 1),
-('system:notice:revoke:btn', '通知管理-撤销(按钮)', 'B', '0', '按钮权限', 1),
-('system:file:upload:btn', '文件管理-上传(按钮)', 'B', '0', '按钮权限', 1),
-('system:file:uploadBatch:btn', '文件管理-批量上传(按钮)', 'B', '0', '按钮权限', 1),
-('system:file:tempDownload:btn', '文件管理-临时下载(按钮)', 'B', '0', '按钮权限', 1),
-('system:file:download:btn', '文件管理-下载(按钮)', 'B', '0', '按钮权限', 1),
-('system:file:delete:btn', '文件管理-删除(按钮)', 'B', '0', '按钮权限', 1),
-('system:loginLog:export:btn', '登录日志-导出(按钮)', 'B', '0', '按钮权限', 1),
-('system:operateLog:export:btn', '操作日志-导出(按钮)', 'B', '0', '按钮权限', 1);
-
--- ===== Bind button permissions to menus =====
-INSERT INTO `t_menu_permission` (`menu_id`, `perm_code`) VALUES
-(2,'system:user:add:btn'),
-(2,'system:user:update:btn'),
-(2,'system:user:delete:btn'),
-(2,'system:user:status:btn'),
-(2,'system:user:resetPwd:btn'),
-(2,'system:user:kick:btn'),
-(3,'system:role:add:btn'),
-(3,'system:role:update:btn'),
-(3,'system:role:delete:btn'),
-(3,'system:role:status:btn'),
-(3,'system:role:permConfig:btn'),
-(3,'system:role:dataScope:btn'),
-(3,'system:role:assignUser:btn'),
-(4,'system:menu:add:btn'),
-(4,'system:menu:update:btn'),
-(4,'system:menu:delete:btn'),
-(4,'system:menu:permConfig:btn'),
-(5,'system:permission:add:btn'),
-(5,'system:permission:update:btn'),
-(5,'system:permission:effective:btn'),
-(6,'system:resource:add:btn'),
-(6,'system:resource:update:btn'),
-(6,'system:resource:delete:btn'),
-(7,'system:dept:add:btn'),
-(7,'system:dept:update:btn'),
-(7,'system:dept:delete:btn'),
-(8,'system:dict:add:btn'),
-(8,'system:dict:update:btn'),
-(8,'system:dict:delete:btn'),
-(9,'system:whitelist:add:btn'),
-(9,'system:whitelist:update:btn'),
-(9,'system:whitelist:delete:btn'),
-(11,'system:loginLog:export:btn'),
-(12,'system:operateLog:export:btn'),
-(14,'system:notice:add:btn'),
-(14,'system:notice:update:btn'),
-(14,'system:notice:delete:btn'),
-(14,'system:notice:publish:btn'),
-(14,'system:notice:revoke:btn'),
-(16,'system:file:upload:btn'),
-(16,'system:file:uploadBatch:btn'),
-(16,'system:file:tempDownload:btn'),
-(16,'system:file:download:btn'),
-(16,'system:file:delete:btn');
-
--- ===== Assign button permissions to admin role =====
-INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
-(1974474475076329473,'system:user:add:btn'),
-(1974474475076329473,'system:user:update:btn'),
-(1974474475076329473,'system:user:delete:btn'),
-(1974474475076329473,'system:user:status:btn'),
-(1974474475076329473,'system:user:resetPwd:btn'),
-(1974474475076329473,'system:user:kick:btn'),
-(1974474475076329473,'system:role:add:btn'),
-(1974474475076329473,'system:role:update:btn'),
-(1974474475076329473,'system:role:delete:btn'),
-(1974474475076329473,'system:role:status:btn'),
-(1974474475076329473,'system:role:permConfig:btn'),
-(1974474475076329473,'system:role:dataScope:btn'),
-(1974474475076329473,'system:role:assignUser:btn'),
-(1974474475076329473,'system:menu:add:btn'),
-(1974474475076329473,'system:menu:update:btn'),
-(1974474475076329473,'system:menu:delete:btn'),
-(1974474475076329473,'system:menu:permConfig:btn'),
-(1974474475076329473,'system:permission:add:btn'),
-(1974474475076329473,'system:permission:update:btn'),
-(1974474475076329473,'system:permission:effective:btn'),
-(1974474475076329473,'system:resource:add:btn'),
-(1974474475076329473,'system:resource:update:btn'),
-(1974474475076329473,'system:resource:delete:btn'),
-(1974474475076329473,'system:dept:add:btn'),
-(1974474475076329473,'system:dept:update:btn'),
-(1974474475076329473,'system:dept:delete:btn'),
-(1974474475076329473,'system:dict:add:btn'),
-(1974474475076329473,'system:dict:update:btn'),
-(1974474475076329473,'system:dict:delete:btn'),
-(1974474475076329473,'system:whitelist:add:btn'),
-(1974474475076329473,'system:whitelist:update:btn'),
-(1974474475076329473,'system:whitelist:delete:btn'),
-(1974474475076329473,'system:notice:add:btn'),
-(1974474475076329473,'system:notice:update:btn'),
-(1974474475076329473,'system:notice:delete:btn'),
-(1974474475076329473,'system:notice:publish:btn'),
-(1974474475076329473,'system:notice:revoke:btn'),
-(1974474475076329473,'system:file:upload:btn'),
-(1974474475076329473,'system:file:uploadBatch:btn'),
-(1974474475076329473,'system:file:tempDownload:btn'),
-(1974474475076329473,'system:file:download:btn'),
-(1974474475076329473,'system:file:delete:btn'),
-(1974474475076329473,'system:loginLog:export:btn'),
-(1974474475076329473,'system:operateLog:export:btn');
