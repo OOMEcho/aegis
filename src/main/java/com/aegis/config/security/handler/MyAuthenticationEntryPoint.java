@@ -42,6 +42,12 @@ public class MyAuthenticationEntryPoint implements AuthenticationEntryPoint {
      * 记录认证失败日志
      */
     private void logAuthenticationFailure(HttpServletRequest request, AuthenticationException authException) {
+        // 排除根路径请求的日志记录,日志降噪
+        String requestURI = request.getRequestURI();
+        if ("/".equals(requestURI)) {
+            return;
+        }
+
         try {
             String ip = IpUtils.getIpAddr(request);
 
