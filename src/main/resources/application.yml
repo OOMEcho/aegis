@@ -120,6 +120,12 @@ task:
   scheduling:
     enabled: true # 是否启用定时任务
 
+# CORS 跨域配置
+cors:
+  # 允许的源地址列表
+  allowed-origins:
+    - https://aegis.example.cn  # 前端域名
+
 logging:
   file:
     path: ./logs # 日志路径
