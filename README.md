@@ -40,6 +40,7 @@ Aegis是一个功能完整的企业级RBAC(Role-Based Access Control)权限管�
 ## 🌐 在线演示
 
 - 点击跳转[演示地址](https://aegis.lxsblogs.cn)
+  > **演示环境会定期重置，请勿存放重要数据。**
 
 ## 🔐 默认账号
 
