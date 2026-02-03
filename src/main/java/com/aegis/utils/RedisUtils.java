@@ -59,6 +59,13 @@ public final class RedisUtils {
     }
 
     /**
+     * 根据模式匹配获取所有key
+     */
+    public Set<String> keys(String pattern) {
+        return redisTemplate.keys(pattern);
+    }
+
+    /**
      * 从Redis中获取缓存数据,转成对象
      */
     public <K, V> V getObject(K key, Class<V> clazz) {

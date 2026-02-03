@@ -96,4 +96,14 @@ public class RedisConstants {
      * 白名单分布式锁 key
      */
     public static final String WHITELIST_LOCK_KEY = "lock:security:whitelist";
+
+    /**
+     * 演示数据重置分布式锁 key
+     */
+    public static final String DEMO_RESET_LOCK_KEY = "lock:demo:reset";
+
+    /**
+     * 演示数据上次重置时间 key
+     */
+    public static final String DEMO_LAST_RESET_TIME = "demo:last_reset_time";
 }

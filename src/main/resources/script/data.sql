@@ -40,6 +40,7 @@ INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `updat
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974337249415794689, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/profile/publicKey', '获取RSA公钥', '0');
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1974459418292531201, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/profile/refreshToken', '刷新token', '0');
 INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1975094173811982337, NULL, NULL, now(), now(), 0, 1, NULL, 'POST', '/profile/register', '注册用户', '0');
+INSERT INTO `t_whitelist` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `request_method`, `request_uri`, `description`, `status`) VALUES (1975094173811982338, NULL, NULL, now(), now(), 0, 1, NULL, 'GET', '/demo/reset/countdown', '演示数据重置倒计时', '0');
 
 INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `remark`, `create_by`) VALUES
 ('system:manage', '系统管理', 'M', '0', '页面权限', 1),

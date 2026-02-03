@@ -120,6 +120,12 @@ task:
   scheduling:
     enabled: true # 是否启用定时任务
 
+# 演示模式配置（用于保护演示环境数据）
+demo:
+  reset:
+    enabled: false                # 是否启用演示数据重置（演示环境设置为 true）
+    cron: "0 0 * * * ?"           # 重置执行时间（默认每小时整点）
+
 # CORS 跨域配置
 cors:
   # 允许的源地址列表
