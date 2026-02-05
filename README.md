@@ -5,6 +5,7 @@
 [![MySQL](https://img.shields.io/badge/MySQL-5.7+-blue.svg)](https://www.mysql.com/)
 [![Redis](https://img.shields.io/badge/Redis-6.0+-red.svg)](https://redis.io/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
+[![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/OOMEcho/aegis)
 ## 🍟 如果您觉得有帮助，请点右上角 "Star" 支持一下谢谢
 
 
