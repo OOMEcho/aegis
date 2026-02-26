@@ -69,6 +69,7 @@ public class ProfileController {
     @ApiOperation("注册用户")
     @PostMapping("/register")
     @PreventDuplicateSubmit
+    @RateLimiter(limitType = LimitType.IP)
     @OperationLog(moduleTitle = "注册用户", businessType = BusinessType.INSERT)
     public String register(@Validated @RequestBody UserRegisterDTO dto) {
         return profileService.register(dto);
