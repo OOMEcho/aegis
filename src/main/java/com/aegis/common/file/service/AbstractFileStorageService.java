@@ -167,8 +167,9 @@ public abstract class AbstractFileStorageService implements FileStorageService {
      * 构建存储对象名称，包含目录和文件名
      */
     protected String buildObjectName(String directory, String fileName) {
-        return (StrUtil.isNotBlank(directory) ? directory + FileConstants.SEPARATOR : "")
-                + FileConstants.FILE_FOLDER + FileConstants.SEPARATOR + fileName;
+        directory = FileConstants.sanitizeDirectory(directory);
+        return (directory != null ? directory + FileConstants.SEPARATOR : "")
+                + FileConstants.getFileFolder() + FileConstants.SEPARATOR + fileName;
     }
 
     /**

@@ -50,7 +50,9 @@ public class FileConstants {
      * 文件存储目录
      * 按照日期进行分类存储，格式为yyyy-MM-dd
      */
-    public static final String FILE_FOLDER = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    public static String getFileFolder(){
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd"));
+    }
 
     /**
      * 允许的文件类型
@@ -88,4 +90,46 @@ public class FileConstants {
             "<script", "javascript:", "vbscript:", "onload=", "onerror=",
             "<?php", "<%", "#!/bin/sh", "#!/bin/bash"
     };
+
+    /**
+     * 校验并清洗目录参数
+     * @return 校验后的目录字符串，如果为空则返回 null
+     */
+    public static String sanitizeDirectory(String directory) {
+        if (directory == null || directory.trim().isEmpty()) {
+            return null;
+        }
+        directory = directory.trim();
+        // 去除首尾分隔符
+        if (directory.startsWith(SEPARATOR)) {
+            directory = directory.substring(1);
+        }
+        if (directory.endsWith(SEPARATOR)) {
+            directory = directory.substring(0, directory.length() - 1);
+        }
+        if (directory.isEmpty()) {
+            return null;
+        }
+        // 禁止路径遍历和反斜杠
+        if (directory.contains("..") || directory.contains("\\")) {
+            throw new IllegalArgumentException("目录参数包含非法字符");
+        }
+        // 白名单：只允许字母、数字、中划线、下划线、正斜杠
+        if (!directory.matches("^[a-zA-Z0-9_\\-/]+$")) {
+            throw new IllegalArgumentException("目录名称只允许包含字母、数字、中划线、下划线");
+        }
+        String[] segments = directory.split(SEPARATOR);
+        for (String segment : segments) {
+            if (segment.isEmpty()) {
+                throw new IllegalArgumentException("目录路径格式不正确");
+            }
+            if (segment.length() > 64) {
+                throw new IllegalArgumentException("单级目录名称不能超过64个字符");
+            }
+        }
+        if (segments.length > 5) {
+            throw new IllegalArgumentException("目录层级不能超过5层");
+        }
+        return directory;
+    }
 }

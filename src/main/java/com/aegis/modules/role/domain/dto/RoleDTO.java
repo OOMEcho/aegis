@@ -33,8 +33,8 @@ public class RoleDTO extends PageDTO {
     private String remark;
 
     @ApiModelProperty("角色名称")
-    @NotBlank(groups = {ValidGroup.Create.class, ValidGroup.Update.class}, message = "菜单名称不能为空")
-    @Size(groups = {ValidGroup.Create.class, ValidGroup.Update.class}, max = 32, message = "菜单名称长度不能超过32个字符")
+    @NotBlank(groups = {ValidGroup.Create.class, ValidGroup.Update.class}, message = "角色名称不能为空")
+    @Size(groups = {ValidGroup.Create.class, ValidGroup.Update.class}, max = 32, message = "角色名称长度不能超过32个字符")
     private String roleName;
 
     @ApiModelProperty("角色编码")

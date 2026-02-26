@@ -42,7 +42,7 @@ public class PermissionController {
     }
 
     @ApiOperation("修改权限状态")
-    @DeleteMapping("/effective/{id}")
+    @GetMapping("/effective/{id}")
     @PreventDuplicateSubmit
     @OperationLog(moduleTitle = "修改权限状态", businessType = BusinessType.UPDATE)
     public String effective(@PathVariable("id") Long id) {

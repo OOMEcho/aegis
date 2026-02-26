@@ -192,9 +192,16 @@ public class FileServiceImpl implements FileService {
     }
 
     private String buildFilePath(String directory, String fileName) {
+        if (StrUtil.isNotBlank(directory)) {
+            directory = directory.trim();
+            if (directory.contains("..") || directory.contains("\\") ||
+                    !directory.matches("^[a-zA-Z0-9_\\-/]+$")) {
+                throw new BusinessException("目录参数包含非法字符");
+            }
+        }
         String uniqueFileName = IdUtil.simpleUUID() + FileConstants.POINT + FileUtil.extName(fileName);
         return (StrUtil.isNotBlank(directory) ? directory + FileConstants.SEPARATOR : "")
-                + FileConstants.FILE_FOLDER + FileConstants.SEPARATOR + uniqueFileName;
+                + FileConstants.getFileFolder() + FileConstants.SEPARATOR + uniqueFileName;
     }
 
     private String getFileNameByFilePatch(String filePath) {
