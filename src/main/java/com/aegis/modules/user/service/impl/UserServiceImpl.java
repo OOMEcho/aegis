@@ -25,7 +25,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @Author: xuesong.lei
@@ -120,11 +123,15 @@ public class UserServiceImpl implements UserService {
     public String add(UserDTO dto) {
 
         LambdaQueryWrapper<User> userQueryWrapper = new LambdaQueryWrapper<>();
-        userQueryWrapper.eq(User::getUsername, dto.getUsername())
-                .or()
-                .eq(StringUtils.isNotBlank(dto.getPhone()), User::getPhone, dto.getPhone())
-                .or()
-                .eq(StringUtils.isNotBlank(dto.getEmail()), User::getEmail, dto.getEmail());
+        userQueryWrapper.and(w -> {
+            w.eq(User::getUsername, dto.getUsername());
+            if (StringUtils.isNotBlank(dto.getPhone())) {
+                w.or().eq(User::getPhone, dto.getPhone());
+            }
+            if (StringUtils.isNotBlank(dto.getEmail())) {
+                w.or().eq(User::getEmail, dto.getEmail());
+            }
+        });
 
         if (userMapper.selectCount(userQueryWrapper) > 0) {
             throw new BusinessException("用户名、手机号或邮箱已存在");
@@ -152,16 +159,34 @@ public class UserServiceImpl implements UserService {
         User user = userConvert.toUser(dto);
 
         LambdaQueryWrapper<User> userQueryWrapper = new LambdaQueryWrapper<>();
-        userQueryWrapper.eq(StringUtils.isNotBlank(dto.getPhone()), User::getPhone, dto.getPhone())
-                .or()
-                .eq(StringUtils.isNotBlank(dto.getEmail()), User::getEmail, dto.getEmail())
-                .ne(User::getId, dto.getId());
+        userQueryWrapper.ne(User::getId, dto.getId())
+                .and(w -> {
+                    boolean hasCondition = false;
+                    if (StringUtils.isNotBlank(dto.getPhone())) {
+                        w.eq(User::getPhone, dto.getPhone());
+                        hasCondition = true;
+                    }
+                    if (StringUtils.isNotBlank(dto.getEmail())) {
+                        if (hasCondition) {
+                            w.or();
+                        }
+                        w.eq(User::getEmail, dto.getEmail());
+                        hasCondition = true;
+                    }
+                    if (!hasCondition) {
+                        // 无需校验，添加恒假条件跳过查询
+                        w.apply("1 = 0");
+                    }
+                });
         if (userMapper.selectCount(userQueryWrapper) > 0) {
             throw new BusinessException("手机号或邮箱已存在");
         }
 
         user.setUpdateBy(SecurityUtils.getUserId());
-        user.setNickname(StringUtils.isNotBlank(dto.getNickname()) ? user.getNickname() : dto.getUsername());
+        if (StringUtils.isBlank(dto.getNickname())) {
+            // nickname为空时保持原昵称不变，不覆盖
+            user.setNickname(null);
+        }
         userMapper.updateById(user);
 
         userRoleMapper.delete(new LambdaQueryWrapper<UserRole>().eq(UserRole::getUserId, dto.getId()));

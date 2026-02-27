@@ -90,13 +90,16 @@ public final class IpUtils {
                 if (b1 >= sectionThree && b1 <= sectionFour) {
                     return true;
                 }
+                break;
             case sectionFive:
                 if (b1 == sectionSix) {
                     return true;
                 }
+                break;
             default:
                 return false;
         }
+        return false;
     }
 
     /**

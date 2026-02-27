@@ -64,15 +64,15 @@ public class NoticeController {
     }
 
     @ApiOperation("发布通知")
-    @GetMapping("/publish/{id}")
+    @PutMapping("/publish/{id}")
     @PreventDuplicateSubmit
-    @OperationLog(moduleTitle = "发布通知", businessType = BusinessType.INSERT)
+    @OperationLog(moduleTitle = "发布通知", businessType = BusinessType.UPDATE)
     public String publish(@PathVariable("id") Long id) {
         return noticeService.publish(id);
     }
 
     @ApiOperation("撤销通知")
-    @GetMapping("/revoke/{id}")
+    @PutMapping("/revoke/{id}")
     @PreventDuplicateSubmit
     @OperationLog(moduleTitle = "撤销通知", businessType = BusinessType.UPDATE)
     public String revoke(@PathVariable("id") Long id) {

@@ -165,7 +165,7 @@ public class FileServiceImpl implements FileService {
         Map<String, String> response = new HashMap<>();
         response.put("uploadUrl", presignedUrl);
         response.put("filePath", filePath);
-        response.put("expiresIn", "60"); // 秒
+        response.put("expiresIn", "600"); // 秒
         return response;
     }
 

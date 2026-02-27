@@ -73,6 +73,7 @@ public class WhitelistServiceImpl implements WhitelistService {
         Whitelist whitelist = whitelistConvert.toWhitelist(dto);
 
         final String url = PathUtil.validateAndNormalize(whitelist.getRequestUri());
+        whitelist.setRequestUri(url);
 
         // 检查是否有重复的路径和方法
         checkSameWhitelist(whitelist, url);
@@ -91,6 +92,7 @@ public class WhitelistServiceImpl implements WhitelistService {
         Whitelist whitelist = whitelistConvert.toWhitelist(dto);
 
         final String url = PathUtil.validateAndNormalize(whitelist.getRequestUri());
+        whitelist.setRequestUri(url);
 
         // 检查是否有重复的路径和方法
         checkSameWhitelist(whitelist, url);
