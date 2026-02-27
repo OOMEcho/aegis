@@ -6,6 +6,7 @@ import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.menu.domain.dto.MenuDTO;
 import com.aegis.modules.menu.domain.entity.Menu;
 import com.aegis.modules.menu.domain.entity.MenuPermission;
+import com.aegis.modules.menu.domain.vo.MenuVO;
 import com.aegis.modules.menu.mapper.MenuMapper;
 import com.aegis.modules.menu.mapper.MenuPermissionMapper;
 import com.aegis.modules.menu.service.MenuConvert;
@@ -38,7 +39,7 @@ public class MenuServiceImpl implements MenuService {
     private final MenuConvert menuConvert;
 
     @Override
-    public List<Menu> list(MenuDTO dto) {
+    public List<MenuVO> list(MenuDTO dto) {
         LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(ObjectUtils.isNotEmpty(dto.getMenuCode()), Menu::getMenuCode, dto.getMenuCode())
                 .like(StringUtils.isNotBlank(dto.getMenuName()), Menu::getMenuName, dto.getMenuName())
@@ -47,12 +48,14 @@ public class MenuServiceImpl implements MenuService {
                 .eq(StringUtils.isNotBlank(dto.getMenuType()), Menu::getMenuType, dto.getMenuType())
                 .eq(StringUtils.isNotBlank(dto.getStatus()), Menu::getStatus, dto.getStatus())
                 .orderBy(true, true, Menu::getParentId, Menu::getOrderNum);
-        return menuMapper.selectList(queryWrapper);
+        List<Menu> menus = menuMapper.selectList(queryWrapper);
+        return menus.stream().map(menuConvert::toMenuVo).collect(Collectors.toList());
     }
 
     @Override
-    public Menu detail(Long id) {
-        return menuMapper.selectById(id);
+    public MenuVO detail(Long id) {
+        Menu menu = menuMapper.selectById(id);
+        return menuConvert.toMenuVo(menu);
     }
 
     @Override

@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @Author: xuesong.lei
  * @Date: 2025/09/13 18:41
@@ -17,6 +19,7 @@ import lombok.EqualsAndHashCode;
 public class UserAndRoleQueryDTO extends PageDTO {
 
     @ApiModelProperty("角色ID")
+    @NotNull(message = "角色ID不能为空")
     private Long roleId;
 
     @ApiModelProperty("用户名")

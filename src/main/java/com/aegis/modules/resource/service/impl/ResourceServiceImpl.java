@@ -6,6 +6,7 @@ import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.resource.domain.dto.ResourceDTO;
 import com.aegis.modules.resource.domain.entity.Resource;
+import com.aegis.modules.resource.domain.vo.ResourceVO;
 import com.aegis.modules.resource.mapper.ResourceMapper;
 import com.aegis.modules.resource.service.ResourceConvert;
 import com.aegis.modules.resource.service.ResourceService;
@@ -18,8 +19,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.regex.Pattern;
 
 /**
  * @Author: xuesong.lei
@@ -36,22 +35,19 @@ public class ResourceServiceImpl implements ResourceService {
 
     private final DataChangePublisher dataChangePublisher;
 
-    // 正则：只允许 / 开头，后面可有字母数字、下划线、横杠、单斜杠，最多允许末尾 /** 前缀
-    private static final Pattern VALID_PATH_PATTERN = Pattern.compile("^(/[a-zA-Z0-9_-]+)*(?:/\\*{2})?$");
-
     @Override
-    public PageVO<Resource> pageList(ResourceDTO dto) {
+    public PageVO<ResourceVO> pageList(ResourceDTO dto) {
         LambdaQueryWrapper<Resource> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(StringUtils.isNotBlank(dto.getRequestMethod()), Resource::getRequestMethod, dto.getRequestMethod())
                 .like(StringUtils.isNotBlank(dto.getRequestUri()), Resource::getRequestUri, dto.getRequestUri())
                 .like(StringUtils.isNotBlank(dto.getPermCode()), Resource::getPermCode, dto.getPermCode())
                 .eq(StringUtils.isNotBlank(dto.getStatus()), Resource::getStatus, dto.getStatus());
-        return PageUtils.of(dto).paging(resourceMapper, queryWrapper);
+        return PageUtils.of(dto).pagingAndConvert(resourceMapper, queryWrapper, resourceConvert::toResourceVo);
     }
 
     @Override
-    public Resource detail(Long id) {
-        return resourceMapper.selectById(id);
+    public ResourceVO detail(Long id) {
+        return resourceConvert.toResourceVo(resourceMapper.selectById(id));
     }
 
     @Override

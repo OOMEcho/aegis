@@ -2,7 +2,7 @@ package com.aegis.modules.notice.service;
 
 import com.aegis.common.domain.vo.PageVO;
 import com.aegis.modules.notice.domain.dto.NoticeDTO;
-import com.aegis.modules.notice.domain.entity.Notice;
+import com.aegis.modules.notice.domain.vo.NoticeAdminVO;
 
 /**
  * @Author: xuesong.lei
@@ -17,7 +17,7 @@ public interface NoticeService {
      * @param dto 查询参数
      * @return 通知分页列表
      */
-    PageVO<Notice> pageList(NoticeDTO dto);
+    PageVO<NoticeAdminVO> pageList(NoticeDTO dto);
 
     /**
      * 详情
@@ -25,7 +25,7 @@ public interface NoticeService {
      * @param id 通知ID
      * @return 通知详情
      */
-    Notice detail(Long id);
+    NoticeAdminVO detail(Long id);
 
     /**
      * 删除通知

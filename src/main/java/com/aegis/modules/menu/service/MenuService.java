@@ -1,7 +1,7 @@
 package com.aegis.modules.menu.service;
 
 import com.aegis.modules.menu.domain.dto.MenuDTO;
-import com.aegis.modules.menu.domain.entity.Menu;
+import com.aegis.modules.menu.domain.vo.MenuVO;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ public interface MenuService {
      * @param dto 查询参数
      * @return 菜单列表
      */
-    List<Menu> list(MenuDTO dto);
+    List<MenuVO> list(MenuDTO dto);
 
     /**
      * 详情
@@ -26,7 +26,7 @@ public interface MenuService {
      * @param id 菜单ID
      * @return 菜单详情
      */
-    Menu detail(Long id);
+    MenuVO detail(Long id);
 
     /**
      * 删除菜单

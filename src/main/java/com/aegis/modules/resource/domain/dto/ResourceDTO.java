@@ -25,15 +25,15 @@ public class ResourceDTO extends PageDTO {
     private Long id;
 
     @ApiModelProperty("请求方法(GET/POST/PUT/DELETE/ALL)")
-    @NotBlank(message = "请求方法不能为空", groups = {ValidGroup.Create.class})
+    @NotBlank(message = "请求方法不能为空", groups = {ValidGroup.Create.class, ValidGroup.Update.class})
     private String requestMethod;
 
     @ApiModelProperty("URI匹配模式(Ant风格)")
-    @NotBlank(message = "URI不能为空", groups = {ValidGroup.Create.class})
+    @NotBlank(message = "URI不能为空", groups = {ValidGroup.Create.class, ValidGroup.Update.class})
     private String requestUri;
 
     @ApiModelProperty("关联权限编码")
-    @NotBlank(message = "权限编码不能为空", groups = {ValidGroup.Create.class})
+    @NotBlank(message = "权限编码不能为空", groups = {ValidGroup.Create.class, ValidGroup.Update.class})
     private String permCode;
 
     @ApiModelProperty("状态(0-正常,1-停用)")

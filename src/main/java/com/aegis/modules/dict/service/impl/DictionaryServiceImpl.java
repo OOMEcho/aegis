@@ -5,6 +5,7 @@ import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.dict.domain.dto.DictionaryDTO;
 import com.aegis.modules.dict.domain.entity.Dictionary;
+import com.aegis.modules.dict.domain.vo.DictionaryVO;
 import com.aegis.modules.dict.mapper.DictionaryMapper;
 import com.aegis.modules.dict.service.DictionaryConvert;
 import com.aegis.modules.dict.service.DictionaryService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: xuesong.lei
@@ -33,7 +35,7 @@ public class DictionaryServiceImpl implements DictionaryService {
     private final DictionaryConvert dictionaryConvert;
 
     @Override
-    public PageVO<Dictionary> pageList(DictionaryDTO dto) {
+    public PageVO<DictionaryVO> pageList(DictionaryDTO dto) {
         LambdaQueryWrapper<Dictionary> queryWrapper = new LambdaQueryWrapper<>();
 
         queryWrapper.like(StringUtils.isNotBlank(dto.getDictName()), Dictionary::getDictName, dto.getDictName())
@@ -41,7 +43,7 @@ public class DictionaryServiceImpl implements DictionaryService {
                 .like(StringUtils.isNotBlank(dto.getDictLabel()), Dictionary::getDictLabel, dto.getDictLabel())
                 .eq(StringUtils.isNotBlank(dto.getStatus()), Dictionary::getStatus, dto.getStatus());
 
-        return PageUtils.of(dto).paging(dictionaryMapper, queryWrapper);
+        return PageUtils.of(dto).pagingAndConvert(dictionaryMapper, queryWrapper, dictionaryConvert::toDictionaryVo);
     }
 
     @Override
@@ -88,12 +90,14 @@ public class DictionaryServiceImpl implements DictionaryService {
     }
 
     @Override
-    public List<Dictionary> list(String dictType) {
+    public List<DictionaryVO> list(String dictType) {
         LambdaQueryWrapper<Dictionary> queryWrapper = new LambdaQueryWrapper<>();
 
         queryWrapper.eq(Dictionary::getDictType, dictType);
 
-        return dictionaryMapper.selectList(queryWrapper);
+        return dictionaryMapper.selectList(queryWrapper).stream()
+                .map(dictionaryConvert::toDictionaryVo)
+                .collect(Collectors.toList());
     }
 
     private void checkSameDictionary(Dictionary dictionary) {

@@ -2,6 +2,7 @@ package com.aegis.modules.dept.service;
 
 import com.aegis.modules.dept.domain.dto.DeptDTO;
 import com.aegis.modules.dept.domain.entity.Dept;
+import com.aegis.modules.dept.domain.vo.DeptVO;
 import org.mapstruct.Mapper;
 
 /**
@@ -13,4 +14,6 @@ import org.mapstruct.Mapper;
 public interface DeptConvert {
 
     Dept toDept(DeptDTO dto);
+
+    DeptVO toDeptVo(Dept dept);
 }

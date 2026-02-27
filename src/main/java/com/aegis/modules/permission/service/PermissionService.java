@@ -2,7 +2,7 @@ package com.aegis.modules.permission.service;
 
 import com.aegis.common.domain.vo.PageVO;
 import com.aegis.modules.permission.domain.dto.PermissionDTO;
-import com.aegis.modules.permission.domain.entity.Permission;
+import com.aegis.modules.permission.domain.vo.PermissionVO;
 
 import java.util.List;
 
@@ -16,12 +16,12 @@ public interface PermissionService {
     /**
      * 分页列表
      */
-    PageVO<Permission> pageList(PermissionDTO dto);
+    PageVO<PermissionVO> pageList(PermissionDTO dto);
 
     /**
      * 全部列表
      */
-    List<Permission> list(PermissionDTO dto);
+    List<PermissionVO> list(PermissionDTO dto);
 
     /**
      * 修改权限状态

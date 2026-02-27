@@ -5,6 +5,7 @@ import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.permission.domain.dto.PermissionDTO;
 import com.aegis.modules.permission.domain.entity.Permission;
+import com.aegis.modules.permission.domain.vo.PermissionVO;
 import com.aegis.modules.permission.mapper.PermissionMapper;
 import com.aegis.modules.permission.service.PermissionConvert;
 import com.aegis.modules.permission.service.PermissionService;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Author: xuesong.lei
@@ -33,15 +35,17 @@ public class PermissionServiceImpl implements PermissionService {
     private final PermissionConvert permissionConvert;
 
     @Override
-    public PageVO<Permission> pageList(PermissionDTO dto) {
+    public PageVO<PermissionVO> pageList(PermissionDTO dto) {
         LambdaQueryWrapper<Permission> queryWrapper = buildQueryWrapper(dto);
-        return PageUtils.of(dto).paging(permissionMapper, queryWrapper);
+        return PageUtils.of(dto).pagingAndConvert(permissionMapper, queryWrapper, permissionConvert::toPermissionVo);
     }
 
     @Override
-    public List<Permission> list(PermissionDTO dto) {
+    public List<PermissionVO> list(PermissionDTO dto) {
         LambdaQueryWrapper<Permission> queryWrapper = buildQueryWrapper(dto);
-        return permissionMapper.selectList(queryWrapper);
+        return permissionMapper.selectList(queryWrapper).stream()
+                .map(permissionConvert::toPermissionVo)
+                .collect(Collectors.toList());
     }
 
     @Override

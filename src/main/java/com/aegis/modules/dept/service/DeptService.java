@@ -2,7 +2,7 @@ package com.aegis.modules.dept.service;
 
 import com.aegis.common.domain.vo.TreeVO;
 import com.aegis.modules.dept.domain.dto.DeptDTO;
-import com.aegis.modules.dept.domain.entity.Dept;
+import com.aegis.modules.dept.domain.vo.DeptVO;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface DeptService {
      * @param dto 查询参数
      * @return 部门列表
      */
-    List<Dept> list(DeptDTO dto);
+    List<DeptVO> list(DeptDTO dto);
 
     /**
      * 详情
@@ -27,7 +27,7 @@ public interface DeptService {
      * @param id 部门ID
      * @return 部门详情
      */
-    Dept detail(Long id);
+    DeptVO detail(Long id);
 
     /**
      * 查询部门列表(排除查询节点)
@@ -35,7 +35,7 @@ public interface DeptService {
      * @param id 部门ID
      * @return 部门列表
      */
-    List<Dept> exclude(Long id);
+    List<DeptVO> exclude(Long id);
 
     /**
      * 删除部门

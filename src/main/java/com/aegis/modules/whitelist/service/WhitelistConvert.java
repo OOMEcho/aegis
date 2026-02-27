@@ -2,6 +2,7 @@ package com.aegis.modules.whitelist.service;
 
 import com.aegis.modules.whitelist.domain.dto.WhitelistDTO;
 import com.aegis.modules.whitelist.domain.entity.Whitelist;
+import com.aegis.modules.whitelist.domain.vo.WhitelistVO;
 import org.mapstruct.Mapper;
 
 /**
@@ -13,4 +14,6 @@ import org.mapstruct.Mapper;
 public interface WhitelistConvert {
 
     Whitelist toWhitelist(WhitelistDTO dto);
+
+    WhitelistVO toWhitelistVo(Whitelist whitelist);
 }

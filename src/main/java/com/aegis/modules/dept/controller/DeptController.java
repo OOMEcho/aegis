@@ -6,7 +6,7 @@ import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
 import com.aegis.common.validator.ValidGroup;
 import com.aegis.modules.dept.domain.dto.DeptDTO;
-import com.aegis.modules.dept.domain.entity.Dept;
+import com.aegis.modules.dept.domain.vo.DeptVO;
 import com.aegis.modules.dept.service.DeptService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,19 +31,19 @@ public class DeptController {
 
     @ApiOperation("列表")
     @GetMapping("/list")
-    public List<Dept> list(DeptDTO dto) {
+    public List<DeptVO> list(DeptDTO dto) {
         return deptService.list(dto);
     }
 
     @ApiOperation("详情")
     @GetMapping("/detail/{id}")
-    public Dept detail(@PathVariable("id") Long id) {
+    public DeptVO detail(@PathVariable("id") Long id) {
         return deptService.detail(id);
     }
 
     @ApiOperation("查询部门列表(排除查询节点)")
     @GetMapping("/exclude/{id}")
-    public List<Dept> exclude(@PathVariable("id") Long id) {
+    public List<DeptVO> exclude(@PathVariable("id") Long id) {
         return deptService.exclude(id);
     }
 

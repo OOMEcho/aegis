@@ -6,6 +6,7 @@ import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.notice.domain.dto.NoticeDTO;
 import com.aegis.modules.notice.domain.entity.Notice;
 import com.aegis.modules.notice.domain.entity.NoticeUser;
+import com.aegis.modules.notice.domain.vo.NoticeAdminVO;
 import com.aegis.modules.notice.mapper.NoticeMapper;
 import com.aegis.modules.notice.mapper.NoticeUserMapper;
 import com.aegis.modules.notice.service.NoticeConvert;
@@ -42,19 +43,19 @@ public class NoticeServiceImpl implements NoticeService {
     private final NoticeConvert noticeConvert;
 
     @Override
-    public PageVO<Notice> pageList(NoticeDTO dto) {
+    public PageVO<NoticeAdminVO> pageList(NoticeDTO dto) {
         LambdaQueryWrapper<Notice> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.like(StringUtils.isNotBlank(dto.getNoticeTitle()), Notice::getNoticeTitle, dto.getNoticeTitle())
                 .eq(StringUtils.isNotBlank(dto.getNoticeType()), Notice::getNoticeType, dto.getNoticeType())
                 .eq(StringUtils.isNotBlank(dto.getStatus()), Notice::getStatus, dto.getStatus())
                 .orderByDesc(Notice::getCreateTime);
 
-        return PageUtils.of(dto).paging(noticeMapper, queryWrapper);
+        return PageUtils.of(dto).pagingAndConvert(noticeMapper, queryWrapper, noticeConvert::toNoticeAdminVo);
     }
 
     @Override
-    public Notice detail(Long id) {
-        return noticeMapper.selectById(id);
+    public NoticeAdminVO detail(Long id) {
+        return noticeConvert.toNoticeAdminVo(noticeMapper.selectById(id));
     }
 
     @Override

@@ -6,7 +6,7 @@ import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
 import com.aegis.common.validator.ValidGroup;
 import com.aegis.modules.dict.domain.dto.DictionaryDTO;
-import com.aegis.modules.dict.domain.entity.Dictionary;
+import com.aegis.modules.dict.domain.vo.DictionaryVO;
 import com.aegis.modules.dict.service.DictionaryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,7 +31,7 @@ public class DictionaryController {
 
     @ApiOperation("分页列表")
     @GetMapping("/pageList")
-    public PageVO<Dictionary> pageList(DictionaryDTO dto) {
+    public PageVO<DictionaryVO> pageList(DictionaryDTO dto) {
         return dictionaryService.pageList(dto);
     }
 
@@ -61,7 +61,7 @@ public class DictionaryController {
 
     @ApiOperation("根据类型获取字典列表")
     @GetMapping("/list")
-    public List<Dictionary> list(@RequestParam("dictType") String dictType) {
+    public List<DictionaryVO> list(@RequestParam("dictType") String dictType) {
         return dictionaryService.list(dictType);
     }
 }

@@ -2,7 +2,7 @@ package com.aegis.modules.dict.service;
 
 import com.aegis.common.domain.vo.PageVO;
 import com.aegis.modules.dict.domain.dto.DictionaryDTO;
-import com.aegis.modules.dict.domain.entity.Dictionary;
+import com.aegis.modules.dict.domain.vo.DictionaryVO;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public interface DictionaryService {
      * @param dto 查询参数
      * @return 字典分页列表
      */
-    PageVO<Dictionary> pageList(DictionaryDTO dto);
+    PageVO<DictionaryVO> pageList(DictionaryDTO dto);
 
     /**
      * 删除字典
@@ -51,5 +51,5 @@ public interface DictionaryService {
      * @param dictType 字典类型
      * @return 字典列表
      */
-    List<Dictionary> list(String dictType);
+    List<DictionaryVO> list(String dictType);
 }

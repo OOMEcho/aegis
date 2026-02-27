@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.security.SecureRandom;
 
 /**
  * @Author: xuesong.lei
@@ -115,7 +115,7 @@ public class EmailServiceImpl implements EmailService {
         String numbers = "1234567890";
         int codeLength = 6;
         StringBuilder builder = new StringBuilder();
-        Random random = new Random();
+        SecureRandom random = new SecureRandom();
         for (int i = 0; i < codeLength; i++) {
             int index = random.nextInt(10);
             builder.append(numbers.charAt(index));

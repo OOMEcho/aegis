@@ -6,7 +6,7 @@ import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
 import com.aegis.common.validator.ValidGroup;
 import com.aegis.modules.whitelist.domain.dto.WhitelistDTO;
-import com.aegis.modules.whitelist.domain.entity.Whitelist;
+import com.aegis.modules.whitelist.domain.vo.WhitelistVO;
 import com.aegis.modules.whitelist.service.WhitelistService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,13 +29,13 @@ public class WhitelistController {
 
     @ApiOperation("分页列表")
     @GetMapping("/pageList")
-    public PageVO<Whitelist> pageList(WhitelistDTO dto) {
+    public PageVO<WhitelistVO> pageList(WhitelistDTO dto) {
         return whitelistService.pageList(dto);
     }
 
     @ApiOperation("详情")
     @GetMapping("/detail/{id}")
-    public Whitelist detail(@PathVariable("id") Long id) {
+    public WhitelistVO detail(@PathVariable("id") Long id) {
         return whitelistService.detail(id);
     }
 

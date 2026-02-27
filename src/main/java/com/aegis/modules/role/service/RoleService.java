@@ -2,7 +2,7 @@ package com.aegis.modules.role.service;
 
 import com.aegis.common.domain.vo.PageVO;
 import com.aegis.modules.role.domain.dto.*;
-import com.aegis.modules.role.domain.entity.Role;
+import com.aegis.modules.role.domain.vo.RoleVO;
 import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.user.domain.vo.UserVO;
 
@@ -21,7 +21,7 @@ public interface RoleService {
      * @param dto 角色DTO
      * @return 角色列表
      */
-    PageVO<Role> pageList(RoleDTO dto);
+    PageVO<RoleVO> pageList(RoleDTO dto);
 
     /**
      * 修改角色状态

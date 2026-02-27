@@ -25,15 +25,15 @@ public class PermissionDTO extends PageDTO {
     private Long id;
 
     @ApiModelProperty("权限编码")
-    @NotBlank(message = "权限编码不能为空", groups = {ValidGroup.Create.class})
+    @NotBlank(message = "权限编码不能为空", groups = {ValidGroup.Create.class, ValidGroup.Update.class})
     private String permCode;
 
     @ApiModelProperty("权限名称")
-    @NotBlank(message = "权限名称不能为空", groups = {ValidGroup.Create.class})
+    @NotBlank(message = "权限名称不能为空", groups = {ValidGroup.Create.class, ValidGroup.Update.class})
     private String permName;
 
     @ApiModelProperty("权限类型(M=页面,B=按钮,A=API)")
-    @NotBlank(message = "权限类型不能为空", groups = {ValidGroup.Create.class})
+    @NotBlank(message = "权限类型不能为空", groups = {ValidGroup.Create.class, ValidGroup.Update.class})
     private String permType;
 
     @ApiModelProperty("状态(0-正常,1-停用)")

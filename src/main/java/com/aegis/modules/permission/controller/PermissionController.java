@@ -6,7 +6,7 @@ import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
 import com.aegis.common.validator.ValidGroup;
 import com.aegis.modules.permission.domain.dto.PermissionDTO;
-import com.aegis.modules.permission.domain.entity.Permission;
+import com.aegis.modules.permission.domain.vo.PermissionVO;
 import com.aegis.modules.permission.service.PermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,13 +31,13 @@ public class PermissionController {
 
     @ApiOperation("分页列表")
     @GetMapping("/pageList")
-    public PageVO<Permission> pageList(PermissionDTO dto) {
+    public PageVO<PermissionVO> pageList(PermissionDTO dto) {
         return permissionService.pageList(dto);
     }
 
     @ApiOperation("全部列表")
     @GetMapping("/list")
-    public List<Permission> list(PermissionDTO dto) {
+    public List<PermissionVO> list(PermissionDTO dto) {
         return permissionService.list(dto);
     }
 

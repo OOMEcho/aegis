@@ -6,7 +6,7 @@ import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
 import com.aegis.common.validator.ValidGroup;
 import com.aegis.modules.role.domain.dto.*;
-import com.aegis.modules.role.domain.entity.Role;
+import com.aegis.modules.role.domain.vo.RoleVO;
 import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.role.service.RoleService;
 import com.aegis.modules.user.domain.vo.UserVO;
@@ -33,7 +33,7 @@ public class RoleController {
 
     @ApiOperation("分页列表")
     @GetMapping("/pageList")
-    public PageVO<Role> pageList(RoleDTO dto) {
+    public PageVO<RoleVO> pageList(RoleDTO dto) {
         return roleService.pageList(dto);
     }
 
@@ -79,13 +79,13 @@ public class RoleController {
 
     @ApiOperation("查询已分配用户角色列表")
     @GetMapping("/allocatedList")
-    public PageVO<UserVO> allocatedList(UserAndRoleQueryDTO dto) {
+    public PageVO<UserVO> allocatedList(@Validated UserAndRoleQueryDTO dto) {
         return roleService.allocatedList(dto);
     }
 
     @ApiOperation("查询未分配用户角色列表")
     @GetMapping("/unallocatedList")
-    public PageVO<UserVO> unallocatedList(UserAndRoleQueryDTO dto) {
+    public PageVO<UserVO> unallocatedList(@Validated UserAndRoleQueryDTO dto) {
         return roleService.unallocatedList(dto);
     }
 

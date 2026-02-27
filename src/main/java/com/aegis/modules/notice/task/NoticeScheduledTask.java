@@ -27,9 +27,9 @@ public class NoticeScheduledTask {
 
     /**
      * 每分钟执行一次，扫描待发布通知
+     * 注意：不在此方法上加 @Transactional，每条通知独立事务（由 noticeService.doPublish 内部管理）
      */
     @Scheduled(cron = "0 */1 * * * ?")
-    @Transactional(rollbackFor = Exception.class)
     public void autoPublishNotices() {
         log.info("开始扫描待发布通知...");
 

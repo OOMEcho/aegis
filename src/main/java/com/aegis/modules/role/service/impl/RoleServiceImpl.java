@@ -9,6 +9,7 @@ import com.aegis.modules.role.domain.dto.*;
 import com.aegis.modules.role.domain.entity.Role;
 import com.aegis.modules.role.domain.entity.RoleDept;
 import com.aegis.modules.role.domain.entity.RolePermission;
+import com.aegis.modules.role.domain.vo.RoleVO;
 import com.aegis.modules.role.domain.vo.RoleWithDeptVO;
 import com.aegis.modules.role.mapper.RoleDeptMapper;
 import com.aegis.modules.role.mapper.RoleMapper;
@@ -52,7 +53,7 @@ public class RoleServiceImpl implements RoleService {
     private final DeptService deptService;
 
     @Override
-    public PageVO<Role> pageList(RoleDTO dto) {
+    public PageVO<RoleVO> pageList(RoleDTO dto) {
         LambdaQueryWrapper<Role> queryWrapper = new LambdaQueryWrapper<>();
 
         queryWrapper.like(StringUtils.isNotBlank(dto.getRoleName()), Role::getRoleName, dto.getRoleName())
@@ -60,7 +61,7 @@ public class RoleServiceImpl implements RoleService {
                 .eq(StringUtils.isNotBlank(dto.getStatus()), Role::getStatus, dto.getStatus())
                 .orderBy(true, true, Role::getOrderNum);
 
-        return PageUtils.of(dto).paging(roleMapper, queryWrapper);
+        return PageUtils.of(dto).pagingAndConvert(roleMapper, queryWrapper, roleConvert::toRoleVo);
     }
 
     @Override

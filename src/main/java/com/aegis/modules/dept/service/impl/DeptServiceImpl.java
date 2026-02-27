@@ -6,6 +6,7 @@ import com.aegis.common.domain.vo.TreeVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.dept.domain.dto.DeptDTO;
 import com.aegis.modules.dept.domain.entity.Dept;
+import com.aegis.modules.dept.domain.vo.DeptVO;
 import com.aegis.modules.dept.mapper.DeptMapper;
 import com.aegis.modules.dept.service.DeptConvert;
 import com.aegis.modules.dept.service.DeptService;
@@ -43,21 +44,17 @@ public class DeptServiceImpl implements DeptService {
     private final DeptConvert deptConvert;
 
     @Override
-    public List<Dept> list(DeptDTO dto) {
-        LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.like(StringUtils.isNotBlank(dto.getDeptName()), Dept::getDeptName, dto.getDeptName())
-                .eq(StringUtils.isNotBlank(dto.getStatus()), Dept::getStatus, dto.getStatus())
-                .orderBy(true, true, Dept::getParentId, Dept::getOrderNum);
-        return deptMapper.selectList(queryWrapper);
+    public List<DeptVO> list(DeptDTO dto) {
+        return selectDeptList(dto).stream().map(deptConvert::toDeptVo).collect(Collectors.toList());
     }
 
     @Override
-    public Dept detail(Long id) {
-        return deptMapper.selectById(id);
+    public DeptVO detail(Long id) {
+        return deptConvert.toDeptVo(deptMapper.selectById(id));
     }
 
     @Override
-    public List<Dept> exclude(Long id) {
+    public List<DeptVO> exclude(Long id) {
         List<Dept> deptList = deptMapper.selectList(new QueryWrapper<>());
         deptList.removeIf(item -> {
             if (item.getId() != null && item.getId().equals(id)) {
@@ -66,7 +63,7 @@ public class DeptServiceImpl implements DeptService {
             String ancestors = item.getAncestors();
             return ancestors != null && Arrays.asList(ancestors.split(",")).contains(String.valueOf(id));
         });
-        return deptList;
+        return deptList.stream().map(deptConvert::toDeptVo).collect(Collectors.toList());
     }
 
     @Override
@@ -155,7 +152,7 @@ public class DeptServiceImpl implements DeptService {
 
     @Override
     public List<TreeVO> tree(DeptDTO dto) {
-        List<Dept> deptList = list(dto);
+        List<Dept> deptList = selectDeptList(dto);
 
         List<Dept> deptTree = TreeUtil.makeTree(
                 deptList,
@@ -165,6 +162,14 @@ public class DeptServiceImpl implements DeptService {
                 Dept::setChildren);
 
         return deptTree.stream().map(TreeVO::new).collect(Collectors.toList());
+    }
+
+    private List<Dept> selectDeptList(DeptDTO dto) {
+        LambdaQueryWrapper<Dept> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StringUtils.isNotBlank(dto.getDeptName()), Dept::getDeptName, dto.getDeptName())
+                .eq(StringUtils.isNotBlank(dto.getStatus()), Dept::getStatus, dto.getStatus())
+                .orderBy(true, true, Dept::getParentId, Dept::getOrderNum);
+        return deptMapper.selectList(queryWrapper);
     }
 
     private void checkSameDept(Dept dept) {
@@ -249,9 +254,16 @@ public class DeptServiceImpl implements DeptService {
 
     private void updateParentDeptStatusNormal(Dept dept) {
         String ancestors = dept.getAncestors();
+        if (ancestors == null || ancestors.isEmpty()) {
+            return;
+        }
         List<Long> deptIds = Arrays.stream(ancestors.split(","))
+                .filter(s -> !s.isEmpty())
                 .map(Long::valueOf)
                 .collect(Collectors.toList());
+        if (deptIds.isEmpty()) {
+            return;
+        }
         LambdaUpdateWrapper<Dept> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.set(Dept::getStatus, CommonConstants.NORMAL_STATUS).in(Dept::getId, deptIds);
         deptMapper.update(updateWrapper);
