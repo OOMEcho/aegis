@@ -33,6 +33,7 @@ build/
 .vscode/
 /logs/
 /src/main/resources/application-dev.yml
+/src/main/resources/application-prod.yml
 /.claude/
 /CLAUDE.md
 .env
