@@ -27,14 +27,14 @@ public final class RedisUtils {
      * 数据缓存至Redis
      */
     public <K, V> void set(K key, V value) {
-        redisTemplate.opsForValue().set(String.valueOf(key), JSONUtil.toJsonStr(value));
+        redisTemplate.opsForValue().set(String.valueOf(key), toStringValue(value));
     }
 
     /**
      * 数据缓存至Redis,并设置过期时间
      */
     public <K, V> void set(K key, V value, long timeout, TimeUnit unit) {
-        redisTemplate.opsForValue().set(String.valueOf(key), JSONUtil.toJsonStr(value), timeout, unit);
+        redisTemplate.opsForValue().set(String.valueOf(key), toStringValue(value), timeout, unit);
     }
 
     /**
@@ -308,5 +308,18 @@ public final class RedisUtils {
      */
     public Long execute(RedisScript<Long> limitScript, List<String> keys, int count, int time) {
         return redisTemplate.execute(limitScript, keys, String.valueOf(count), String.valueOf(time));
+    }
+
+    /**
+     * 将值转换为字符串存储，避免对简单类型（String/Number）进行JSON双重序列化
+     */
+    private <V> String toStringValue(V value) {
+        if (value == null) {
+            return null;
+        }
+        if (value instanceof CharSequence || value instanceof Number || value instanceof Boolean) {
+            return String.valueOf(value);
+        }
+        return JSONUtil.toJsonStr(value);
     }
 }

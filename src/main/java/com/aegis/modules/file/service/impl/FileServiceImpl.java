@@ -105,7 +105,13 @@ public class FileServiceImpl implements FileService {
 
         // 检查过期时间
         long now = System.currentTimeMillis();
-        if (Long.parseLong(expires) < now) {
+        long expiresTime;
+        try {
+            expiresTime = Long.parseLong(expires);
+        } catch (NumberFormatException e) {
+            throw new BusinessException("无效链接");
+        }
+        if (expiresTime < now) {
             throw new BusinessException("链接已过期");
         }
 
@@ -185,7 +191,7 @@ public class FileServiceImpl implements FileService {
         FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
 
         if (!storageService.exists(filePath)) {
-            return null;
+            throw new BusinessException("文件不存在");
         }
 
         Duration expiration = Duration.ofSeconds(expirationSeconds);

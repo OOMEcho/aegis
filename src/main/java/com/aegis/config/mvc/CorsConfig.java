@@ -36,6 +36,7 @@ public class CorsConfig {
         configuration.setAllowedHeaders(Collections.singletonList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedOrigins(corsProperties.getAllowedOrigins());
+        configuration.setExposedHeaders(Arrays.asList("Authorization", "Content-Disposition"));
         configuration.setMaxAge(3600L);
 
         // 注册 CORS 配置到所有路径

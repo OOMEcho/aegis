@@ -46,9 +46,4 @@
         </root>
     </springProfile>
 
-    <root level="INFO">
-        <appender-ref ref="CONSOLE"/>
-        <appender-ref ref="COMMON_FILE_LOG"/>
-    </root>
-
 </configuration>

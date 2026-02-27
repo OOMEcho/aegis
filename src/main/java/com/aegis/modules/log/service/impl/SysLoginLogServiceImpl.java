@@ -11,17 +11,19 @@ import com.aegis.utils.ResponseUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @Author: xuesong.lei
  * @Date: 2025/9/7 16:28
  * @Description: 登录业务实现层
  */
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SysLoginLogServiceImpl implements SysLoginLogService {
@@ -35,11 +37,15 @@ public class SysLoginLogServiceImpl implements SysLoginLogService {
     }
 
     @Override
-    @SneakyThrows
     public void export(SysLoginLogDTO dto, HttpServletResponse response) {
         ResponseUtils.setExcelResponse(response);
         LambdaQueryWrapper<SysLoginLog> queryWrapper = getQueryWrapper(dto);
-        FastExcel.write(response.getOutputStream(), SysLoginLog.class).sheet("登录日志").doWrite(sysLoginLogMapper.selectList(queryWrapper));
+        try {
+            FastExcel.write(response.getOutputStream(), SysLoginLog.class).sheet("登录日志").doWrite(sysLoginLogMapper.selectList(queryWrapper));
+        } catch (IOException e) {
+            log.error("登录日志导出失败", e);
+            throw new RuntimeException("登录日志导出失败", e);
+        }
     }
 
     private LambdaQueryWrapper<SysLoginLog> getQueryWrapper(SysLoginLogDTO dto) {
