@@ -294,11 +294,28 @@ public class UserServiceImpl implements UserService {
             return;
         }
 
+        // 批量查询部门信息，避免 N+1
+        List<Long> deptIds = records.stream()
+                .map(UserVO::getDeptId)
+                .filter(Objects::nonNull)
+                .distinct()
+                .collect(Collectors.toList());
+
+        if (deptIds.isEmpty()) {
+            return;
+        }
+
+        List<Dept> depts = deptMapper.selectByIds(deptIds);
+        Map<Long, Dept> deptMap = depts.stream()
+                .collect(Collectors.toMap(Dept::getId, d -> d, (a, b) -> a));
+
         for (UserVO userVo : records) {
             if (userVo.getDeptId() != null) {
-                Dept dept = deptMapper.selectById(userVo.getDeptId());
-                userVo.setDeptName(dept.getDeptName());
-                userVo.setDept(dept);
+                Dept dept = deptMap.get(userVo.getDeptId());
+                if (dept != null) {
+                    userVo.setDeptName(dept.getDeptName());
+                    userVo.setDept(dept);
+                }
             }
         }
     }

@@ -9,6 +9,7 @@ import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.utils.JwtTokenUtil;
 import com.aegis.utils.RedisUtils;
 import com.aegis.utils.ResponseUtils;
+import com.aegis.utils.SecurityUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.lang.NonNull;
@@ -82,8 +83,9 @@ public class JwtTokenFilter extends OncePerRequestFilter {
             // 其他异常统一当作未登录处理
             ResponseUtils.writeError(response, ResultCodeEnum.NOT_LOGGED_IN);
         } finally {
-            // 确保在请求结束后清理SecurityContext
+            // 确保在请求结束后清理SecurityContext和用户缓存
             SecurityContextHolder.clearContext();
+            SecurityUtils.clearCurrentUser();
         }
     }
 }

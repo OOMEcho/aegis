@@ -309,9 +309,7 @@ public class RoleServiceImpl implements RoleService {
                 rp.setPermCode(permCode);
                 rolePermissionList.add(rp);
             }
-            for (RolePermission rp : rolePermissionList) {
-                rolePermissionMapper.insert(rp);
-            }
+            rolePermissionMapper.insert(rolePermissionList);
         }
 
         return CommonConstants.SUCCESS_MESSAGE;
