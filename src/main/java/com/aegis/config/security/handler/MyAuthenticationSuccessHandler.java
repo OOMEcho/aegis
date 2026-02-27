@@ -8,6 +8,7 @@ import com.aegis.modules.log.domain.entity.SysLoginLog;
 import com.aegis.modules.log.mapper.SysLoginLogMapper;
 import com.aegis.modules.user.domain.entity.User;
 import com.aegis.modules.user.mapper.UserMapper;
+import com.aegis.config.security.LoginSecurityProperties;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.JwtTokenUtil;
 import com.aegis.utils.RedisUtils;
@@ -44,6 +45,8 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
     private final RedisUtils redisUtils;
 
+    private final LoginSecurityProperties loginSecurityProperties;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         // 生成token
@@ -71,7 +74,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, tokenResponse.getRefreshToken());
         cookie.setHttpOnly(true);
         cookie.setPath("/api/profile/refreshToken");
-        cookie.setSecure(false); // 如果你本地是 http，可以临时改为 false
+        cookie.setSecure(loginSecurityProperties.isCookieSecure());
         cookie.setMaxAge(Math.toIntExact(jwtTokenUtil.getRefreshTokenExpiration()));
         response.addCookie(cookie);
 

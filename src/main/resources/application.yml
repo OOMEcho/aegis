@@ -6,19 +6,19 @@ spring:
       max-file-size: 100MB # 上传文件大小限制
       max-request-size: 100MB # 上传文件总大小限制
   redis: # Redis配置
-    host: 127.0.0.1 # 地址(需要改成你的Redis地址)
-    port: 6379 # 端口
-    password: aegis # 密码(需要改成你的Redis密码)
-    database: 1 # Redis数据库索引
+    host: ${REDIS_HOST:127.0.0.1} # 地址(需要改成你的Redis地址)
+    port: ${REDIS_PORT:6379} # 端口
+    password: ${REDIS_PASSWORD:} # 密码(需要改成你的Redis密码)
+    database: ${REDIS_DATABASE:1} # Redis数据库索引
     lettuce:
       pool: # Redis连接池配置
         max-idle: 16 # 连接池中的最大空闲连接
         min-idle: 8 # 连接池中的最小空闲连接
         max-active: 32 # 最大连接数
   datasource: # 数据库配置
-    url: jdbc:mysql://127.0.0.1:3306/aegis?serverTimezone=Asia/Shanghai&useSSL=false # 连接地址(需要改成你的MySQL地址)
-    username: root # 账号(需要改成你的MySQL账号)
-    password: aegis # 密码(需要改成你的MySQL密码)
+    url: ${MYSQL_URL:jdbc:mysql://127.0.0.1:3306/aegis?serverTimezone=Asia/Shanghai&useSSL=false} # 连接地址(需要改成你的MySQL地址)
+    username: ${MYSQL_USERNAME:root} # 账号(需要改成你的MySQL账号)
+    password: ${MYSQL_PASSWORD:} # 密码(需要改成你的MySQL密码)
     driver-class-name: com.mysql.cj.jdbc.Driver # 驱动
     hikari:
       # 连接池核心配置
@@ -33,12 +33,12 @@ spring:
       leak-detection-threshold: 20000 # 连接泄漏检测阈值 20 秒
       connection-test-query: SELECT 1 # 检查连接是否可用的 SQL
   mail: # 邮件配置
-    host: smtp.163.com # 协议服务器地址(需要改成你的邮箱的SMTP服务器地址)
-    port: 465 # 端口
+    host: ${MAIL_HOST:smtp.163.com} # 协议服务器地址(需要改成你的邮箱的SMTP服务器地址)
+    port: ${MAIL_PORT:465} # 端口
     protocol: smtp # 协议
     default-encoding: UTF-8 # 编码
-    username: aegis_system@163.com # 账号(需要改成你的邮箱账号)
-    password: aegis # 授权码(需要改成你的邮箱授权码)
+    username: ${MAIL_USERNAME:} # 账号(需要改成你的邮箱账号)
+    password: ${MAIL_PASSWORD:} # 授权码(需要改成你的邮箱授权码)
     properties:
       mail:
         smtp:
@@ -74,8 +74,8 @@ file:
     platform: LOCAL
     # 本地存储配置
     local:
-      path: /opt/uploads/
-      secret-key: local-file-secret-key
+      path: ${FILE_LOCAL_PATH:/opt/uploads/}
+      secret-key: ${FILE_LOCAL_SECRET_KEY:changeme-local-file-secret-key}
     # Minio配置
     minio:
       endpoint: http://127.0.0.1:9000
@@ -98,23 +98,24 @@ file:
 # JWT配置
 jwt:
   issuer: aegis
-  secret: mySecretKeyForJWTTokenGenerationThatShouldBeLongEnough
-  access-token-expiration: 900  # 15分钟
-  refresh-token-expiration: 604800  # 7天
+  secret: ${JWT_SECRET:changeme-in-production-use-a-long-random-string}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:900}  # 15分钟
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800}  # 7天
 
 # 安全登录配置
 security:
   login:
     enable-captcha: true # 是否启用滑块验证码校验
     enable-password-encryption: true # 是否启用密码加密
+    cookie-secure: ${COOKIE_SECURE:false} # Cookie Secure标志（生产环境应设为true）
 
 knife4j:
   enable: true # 是否启用Knife4j
-  production: false # 是否生产环境
+  production: ${KNIFE4J_PRODUCTION:false} # 是否生产环境
   basic:
     enable: true # 是否启用基础认证
-    username: aegis # 用户名
-    password: aegis # 密码
+    username: ${KNIFE4J_USERNAME:aegis} # 用户名
+    password: ${KNIFE4J_PASSWORD:aegis} # 密码
 
 task:
   scheduling:

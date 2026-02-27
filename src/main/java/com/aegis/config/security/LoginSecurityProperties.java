@@ -23,4 +23,9 @@ public class LoginSecurityProperties {
      * 是否启用密码加密
      */
     private boolean enablePasswordEncryption = true;
+
+    /**
+     * Cookie 是否启用 Secure 标志（生产环境应设为 true）
+     */
+    private boolean cookieSecure = false;
 }

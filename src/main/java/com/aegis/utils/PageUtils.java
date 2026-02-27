@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -21,6 +22,11 @@ import java.util.stream.Collectors;
  * @Description: 分页工具类
  */
 public final class PageUtils {
+
+    /**
+     * 合法排序字段名正则：只允许字母、数字、下划线，且以字母或下划线开头
+     */
+    private static final Pattern SAFE_SORT_FIELD_PATTERN = Pattern.compile("^[a-zA-Z_][a-zA-Z0-9_]*$");
 
     private PageUtils() {
         throw new UnsupportedOperationException("Utility class cannot be instantiated");
@@ -230,8 +236,8 @@ public final class PageUtils {
         private <T> Page<T> createPage() {
             Page<T> page = new Page<>(pageNum, pageSize);
 
-            // 处理排序
-            if (StringUtils.hasText(sortField)) {
+            // 处理排序 — 校验排序字段名防止SQL注入
+            if (StringUtils.hasText(sortField) && SAFE_SORT_FIELD_PATTERN.matcher(sortField).matches()) {
                 boolean isAsc = "asc".equalsIgnoreCase(sortOrder);
                 OrderItem orderItem = new OrderItem();
                 orderItem.setColumn(sortField);

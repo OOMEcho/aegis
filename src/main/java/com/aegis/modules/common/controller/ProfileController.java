@@ -102,6 +102,6 @@ public class ProfileController {
     @ApiOperation("获取RSA公钥")
     @GetMapping("/publicKey")
     public String publicKey() {
-        return RsaUtils.RSA_KEY_PAIR.getPublicKey();
+        return RsaUtils.getKeyPair().getPublicKey();
     }
 }
