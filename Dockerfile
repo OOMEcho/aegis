@@ -12,4 +12,4 @@ ADD ./target/aegis-1.0.0.jar aegis-1.0.0.jar
 
 EXPOSE 8088
 
-ENTRYPOINT ["java", "-jar", "aegis-1.0.0.jar"]
+ENTRYPOINT ["java", "-jar", "aegis-1.0.0.jar", "--spring.profiles.active=prod"]

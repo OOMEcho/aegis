@@ -31,7 +31,6 @@ fi
 
 echo "5. 启动Docker容器..."
 docker run -d -it --restart=always \
-  --env-file /home/aegis/.env \
   -p 8088:8088 \
   -v /home/aegis/logs:/aegis/logs \
   --name aegis \
