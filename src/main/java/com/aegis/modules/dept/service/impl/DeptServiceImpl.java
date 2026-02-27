@@ -98,6 +98,9 @@ public class DeptServiceImpl implements DeptService {
         checkSameDept(dept);
 
         Dept parentDept = deptMapper.selectById(dept.getParentId());
+        if (parentDept == null) {
+            throw new BusinessException("上级部门不存在");
+        }
         if (CommonConstants.DISABLE_STATUS.equals(parentDept.getStatus())) {
             throw new BusinessException("部门停用，不允许新增");
         }

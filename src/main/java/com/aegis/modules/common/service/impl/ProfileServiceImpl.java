@@ -9,10 +9,12 @@ import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileStorageServiceFactory;
 import com.aegis.common.file.service.FileStorageService;
 import com.aegis.common.result.ResultCodeEnum;
+import com.aegis.config.security.LoginSecurityProperties;
 import com.aegis.modules.common.domain.dto.UserRegisterDTO;
 import com.aegis.modules.common.domain.dto.UserUpdateDTO;
 import com.aegis.modules.common.service.EmailService;
 import com.aegis.modules.common.service.ProfileService;
+import com.aegis.modules.dept.domain.entity.Dept;
 import com.aegis.modules.dept.mapper.DeptMapper;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import com.aegis.modules.file.service.FileService;
@@ -148,8 +150,10 @@ public class ProfileServiceImpl implements ProfileService {
         UserVO userVo = userConvert.toUserVo(currentUser);
 
         if (userVo.getDeptId() != null) {
-            String deptName = deptMapper.selectById(userVo.getDeptId()).getDeptName();
-            userVo.setDeptName(deptName);
+            Dept dept = deptMapper.selectById(userVo.getDeptId());
+            if (dept != null) {
+                userVo.setDeptName(dept.getDeptName());
+            }
         }
 
         List<Role> roles = userRoleMapper.selectRoleByUserId(userVo.getId());

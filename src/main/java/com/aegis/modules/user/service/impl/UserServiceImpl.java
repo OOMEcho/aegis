@@ -77,9 +77,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserVO detail(Long id) {
         User user = userMapper.selectById(id);
+        if (user == null) {
+            throw new BusinessException("用户不存在");
+        }
         UserVO userVo = userConvert.toUserVo(user);
         userVo.setRoleList(userRoleMapper.selectRoleByUserId(userVo.getId()));
-        userVo.setDept(deptMapper.selectById(user.getDeptId()));
+        if (user.getDeptId() != null) {
+            userVo.setDept(deptMapper.selectById(user.getDeptId()));
+        }
         return userVo;
     }
 

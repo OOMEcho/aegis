@@ -2,7 +2,6 @@ package com.aegis.modules.notice.domain.dto;
 
 import com.aegis.common.domain.dto.PageDTO;
 import com.aegis.common.validator.ValidGroup;
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -53,7 +52,6 @@ public class NoticeDTO extends PageDTO {
     private List<Long> targetIds;
 
     @ApiModelProperty("通知状态(0=待发布,1=已发布,2=已撤回)")
-    @TableField(value = "status")
     private String status;
 
     @ApiModelProperty("计划发布时间,为空则立即发布")

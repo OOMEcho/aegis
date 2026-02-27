@@ -147,9 +147,16 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String deleteFile(String filePath) {
         FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
         storageService.delete(filePath);
+
+        // 同步删除文件元数据记录
+        LambdaQueryWrapper<FileMetadata> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FileMetadata::getFilePath, filePath);
+        fileMetadataMapper.delete(queryWrapper);
+
         return filePath;
     }
 

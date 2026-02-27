@@ -45,6 +45,7 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public String effective(Long id) {
         Permission permission = permissionMapper.selectById(id);
         if (permission == null) {

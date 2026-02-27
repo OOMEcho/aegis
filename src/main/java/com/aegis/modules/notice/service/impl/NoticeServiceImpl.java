@@ -61,6 +61,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional(rollbackFor = Exception.class)
     public String delete(Long id) {
         Notice notice = noticeMapper.selectById(id);
+        if (notice == null) {
+            throw new BusinessException("通知不存在");
+        }
         if (!CommonConstants.NORMAL_STATUS.equals(notice.getStatus())) {
             throw new BusinessException("只能删除未发布的通知");
         }
@@ -124,6 +127,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Transactional(rollbackFor = Exception.class)
     public String revoke(Long id) {
         Notice notice = noticeMapper.selectById(id);
+        if (notice == null) {
+            throw new BusinessException("通知不存在");
+        }
         if (!CommonConstants.DISABLE_STATUS.equals(notice.getStatus())) {
             throw new BusinessException("只能撤销已发布的通知");
         }
@@ -142,6 +148,9 @@ public class NoticeServiceImpl implements NoticeService {
     @Override
     public void doPublish(Long id, Long userId) {
         Notice notice = noticeMapper.selectById(id);
+        if (notice == null) {
+            throw new BusinessException("通知不存在");
+        }
         if (!CommonConstants.NORMAL_STATUS.equals(notice.getStatus())) {
             throw new BusinessException("只能发布未发布的通知");
         }

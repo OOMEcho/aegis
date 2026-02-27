@@ -133,7 +133,11 @@ public class RoleServiceImpl implements RoleService {
         Role role = roleConvert.toRole(dto);
 
         // 不能操作超级管理员角色
-        checkIsAdminRole(roleMapper.selectById(role.getId()).getRoleCode());
+        Role existingRole = roleMapper.selectById(role.getId());
+        if (existingRole == null) {
+            throw new BusinessException("角色不存在");
+        }
+        checkIsAdminRole(existingRole.getRoleCode());
 
         // 检查角色名称是否存在
         checkSameRoleName(role);
@@ -152,7 +156,11 @@ public class RoleServiceImpl implements RoleService {
     @Transactional(rollbackFor = Exception.class)
     public String updateRoleDataScope(RoleDataScopeDTO dto) {
         // 不能操作超级管理员角色
-        checkIsAdminRole(roleMapper.selectById(dto.getId()).getRoleCode());
+        Role existingRole = roleMapper.selectById(dto.getId());
+        if (existingRole == null) {
+            throw new BusinessException("角色不存在");
+        }
+        checkIsAdminRole(existingRole.getRoleCode());
 
         Role updateRole = new Role();
         updateRole.setId(dto.getId());
@@ -167,11 +175,13 @@ public class RoleServiceImpl implements RoleService {
 
         // 再新增角色与部门关联
         List<RoleDept> roleDeptList = new ArrayList<>();
-        for (Long deptId : dto.getDeptIds()) {
-            RoleDept roleDept = new RoleDept();
-            roleDept.setRoleId(dto.getId());
-            roleDept.setDeptId(deptId);
-            roleDeptList.add(roleDept);
+        if (dto.getDeptIds() != null) {
+            for (Long deptId : dto.getDeptIds()) {
+                RoleDept roleDept = new RoleDept();
+                roleDept.setRoleId(dto.getId());
+                roleDept.setDeptId(deptId);
+                roleDeptList.add(roleDept);
+            }
         }
         if (!roleDeptList.isEmpty()) {
             roleDeptMapper.insert(roleDeptList);
@@ -230,6 +240,9 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleWithDeptVO roleWithDeptTree(Long roleId) {
         final Role role = roleMapper.selectById(roleId);
+        if (role == null) {
+            throw new BusinessException("角色不存在");
+        }
 
         RoleWithDeptVO roleWithDeptVO = new RoleWithDeptVO();
         roleWithDeptVO.setCheckedKeys(roleDeptMapper.selectDeptListByRoleId(roleId, role.getDeptCheckStrictly()));
@@ -279,9 +292,10 @@ public class RoleServiceImpl implements RoleService {
     public String assignPermissions(Long roleId, List<String> permCodes) {
         // 不能操作超级管理员角色
         Role role = roleMapper.selectById(roleId);
-        if (role != null) {
-            checkIsAdminRole(role.getRoleCode());
+        if (role == null) {
+            throw new BusinessException("角色不存在");
         }
+        checkIsAdminRole(role.getRoleCode());
 
         // 先删除角色原有权限
         rolePermissionMapper.delete(new LambdaQueryWrapper<RolePermission>().eq(RolePermission::getRoleId, roleId));

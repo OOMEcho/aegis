@@ -2,6 +2,7 @@ package com.aegis.modules.notice.service.impl;
 
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.domain.vo.PageVO;
+import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.notice.domain.dto.NoticeUserDTO;
 import com.aegis.modules.notice.domain.entity.Notice;
 import com.aegis.modules.notice.domain.entity.NoticeUser;
@@ -44,6 +45,9 @@ public class NoticeUserServiceImpl implements NoticeUserService {
     @Override
     public NoticeVO detail(Long id) {
         Notice notice = noticeMapper.selectById(id);
+        if (notice == null) {
+            throw new BusinessException("通知不存在");
+        }
 
         LambdaUpdateWrapper<NoticeUser> updateWrapper = new LambdaUpdateWrapper<>();
         updateWrapper.eq(NoticeUser::getNoticeId, id)
