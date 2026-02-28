@@ -1,10 +1,12 @@
+server:
+  port: 8088
 spring:
   application:
     name: aegis # 应用名称
   servlet: # 文件上传配置
     multipart:
-      max-file-size: 100MB # 上传文件大小限制
-      max-request-size: 100MB # 上传文件总大小限制
+      max-file-size: 2MB # 上传文件大小限制
+      max-request-size: 10MB # 上传文件总大小限制
   redis: # Redis配置
     host: 127.0.0.1 # 地址(需要改成你的Redis地址)
     port: 6379 # 端口
@@ -107,6 +109,7 @@ security:
   login:
     enable-captcha: true # 是否启用滑块验证码校验
     enable-password-encryption: true # 是否启用密码加密
+    cookie-secure: false # 是否启用安全Cookie（生产环境建议启用）
 
 knife4j:
   enable: true # 是否启用Knife4j
@@ -129,8 +132,7 @@ demo:
 # CORS 跨域配置
 cors:
   # 允许的源地址列表
-  allowed-origins:
-    - https://aegis.example.cn  # 前端域名
+  allowed-origins: http://127.0.0.1:9090,http://localhost:9090,https://aegis.example.cn
 
 logging:
   file:
