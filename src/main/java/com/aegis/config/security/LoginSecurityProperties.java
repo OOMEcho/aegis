@@ -28,4 +28,9 @@ public class LoginSecurityProperties {
      * Cookie 是否启用 Secure 标志（生产环境应设为 true）
      */
     private boolean cookieSecure = false;
+
+    /*
+     * refreshToken Cookie 路径
+     */
+    private String cookiePath;
 }

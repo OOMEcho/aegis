@@ -57,7 +57,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
         // 删除 Cookie 中的 refreshToken
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, null);
         cookie.setHttpOnly(true);
-        cookie.setPath("/api/profile/refreshToken");
+        cookie.setPath(loginSecurityProperties.getCookiePath());
         cookie.setSecure(loginSecurityProperties.isCookieSecure());
         cookie.setMaxAge(0);
         response.addCookie(cookie);

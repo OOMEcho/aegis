@@ -110,6 +110,7 @@ security:
     enable-captcha: true # 是否启用滑块验证码校验
     enable-password-encryption: true # 是否启用密码加密
     cookie-secure: false # 是否启用安全Cookie（生产环境建议启用）
+    cookie-path: /api/profile/refreshToken # refreshToken Cookie 路径
 
 knife4j:
   enable: true # 是否启用Knife4j
