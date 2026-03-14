@@ -51,6 +51,14 @@ public interface FileService {
     void localDownload(HttpServletRequest request, HttpServletResponse response);
 
     /**
+     * 文件公开预览（按文件ID）
+     *
+     * @param id       文件ID
+     * @param response HttpServletResponse
+     */
+    void preview(Long id, HttpServletResponse response);
+
+    /**
      * 指定存储平台上传文件
      *
      * @param platform  存储平台

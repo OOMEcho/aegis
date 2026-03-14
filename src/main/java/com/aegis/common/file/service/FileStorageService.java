@@ -42,4 +42,5 @@ public interface FileStorageService {
      * 获取文件的临时下载链接
      */
     String getTemporaryDownloadUrl(String filePath, Duration expiration);
+
 }

@@ -59,6 +59,12 @@ public class FileServiceController {
         return fileService.getTemporaryDownloadUrl(filePath, expirationSeconds);
     }
 
+    @ApiOperation("文件公开预览")
+    @GetMapping("/preview/{id}")
+    public void preview(@PathVariable("id") Long id, HttpServletResponse response) {
+        fileService.preview(id, response);
+    }
+
     @ApiOperation("文件下载")
     @GetMapping("/download")
     @PreventDuplicateSubmit

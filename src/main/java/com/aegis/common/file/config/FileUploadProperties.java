@@ -20,6 +20,10 @@ public class FileUploadProperties {
     private MinioConfig minio = new MinioConfig();
     private AliyunConfig aliyun = new AliyunConfig();
     private TencentConfig tencent = new TencentConfig();
+    /**
+     * 对外可访问的后端基础地址，用于拼接文件预览URL
+     */
+    private String publicBaseUrl;
 
     @Data
     public static class LocalConfig {

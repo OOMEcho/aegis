@@ -4,17 +4,18 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.aegis.common.constant.FileConstants;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileStorageServiceFactory;
 import com.aegis.common.file.StoragePlatform;
+import com.aegis.common.file.config.FileUploadProperties;
 import com.aegis.common.file.service.FileStorageService;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import com.aegis.modules.file.mapper.FileMetadataMapper;
 import com.aegis.modules.file.service.FileService;
 import com.aegis.utils.ResponseUtils;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,6 +48,8 @@ public class FileServiceImpl implements FileService {
 
     private final FileMetadataMapper fileMetadataMapper;
 
+    private final FileUploadProperties fileUploadProperties;
+
     @Value("${file.upload.local.path}")
     private String basePath;
 
@@ -58,6 +61,7 @@ public class FileServiceImpl implements FileService {
     public FileMetadata uploadFile(MultipartFile file, String directory) {
         FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
         FileMetadata result = storageService.upload(file, directory);
+        populateAccessUrl(result);
         log.info("文件上传成功: {}", result.getFileName());
         return result;
     }
@@ -67,7 +71,11 @@ public class FileServiceImpl implements FileService {
     public List<FileMetadata> uploadBatchFiles(MultipartFile[] files, String directory) {
         FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
         List<FileMetadata> results = Arrays.stream(files)
-                .map(file -> storageService.upload(file, directory))
+                .map(file -> {
+                    FileMetadata metadata = storageService.upload(file, directory);
+                    populateAccessUrl(metadata);
+                    return metadata;
+                })
                 .collect(Collectors.toList());
         log.info("批量文件上传成功，共{}个文件", results.size());
         return results;
@@ -145,9 +153,53 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void preview(Long id, HttpServletResponse response) {
+        if (ObjectUtils.isNull(id)) {
+            throw new BusinessException("无效链接");
+        }
+
+        FileMetadata fileMetadata = fileMetadataMapper.selectById(id);
+        if (ObjectUtils.isNull(fileMetadata)) {
+            throw new BusinessException("文件不存在");
+        }
+
+        String contentType = fileMetadata.getContentType();
+        if (StrUtil.isBlank(contentType) || !contentType.startsWith("image/")) {
+            throw new BusinessException("不支持预览的文件类型");
+        }
+
+        StoragePlatform platform;
+        try {
+            platform = StoragePlatform.valueOf(fileMetadata.getPlatform());
+        } catch (Exception e) {
+            throw new BusinessException("文件存储平台不支持");
+        }
+
+        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService(platform);
+
+        response.setContentType(contentType);
+        response.setHeader("Cache-Control", "public, max-age=3600");
+
+        try (InputStream inputStream = storageService.download(fileMetadata.getFilePath());
+             ServletOutputStream outputStream = response.getOutputStream()) {
+
+            byte[] buffer = new byte[8192];
+            int bytesRead;
+            while ((bytesRead = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, bytesRead);
+            }
+            outputStream.flush();
+        } catch (Exception e) {
+            log.error("文件预览失败->{}", e.getMessage());
+            throw new BusinessException("文件预览失败");
+        }
+    }
+
+    @Override
     public FileMetadata uploadFileWithPlatform(StoragePlatform platform, MultipartFile file, String directory) {
         FileStorageService storageService = fileStorageServiceFactory.getFileStorageService(platform);
         FileMetadata result = storageService.upload(file, directory);
+        populateAccessUrl(result);
         log.info("文件上传成功到{}: {}", platform.getDescription(), result.getFileName());
         return result;
     }
@@ -225,5 +277,21 @@ public class FileServiceImpl implements FileService {
             throw new BusinessException("文件不存在");
         }
         return fileMetadata.getOriginalFileName();
+    }
+
+    private void populateAccessUrl(FileMetadata metadata) {
+        if (ObjectUtils.isNull(metadata) || ObjectUtils.isNull(metadata.getId())) {
+            return;
+        }
+        metadata.setAccessUrl(buildAccessUrl(metadata.getId()));
+    }
+
+    private String buildAccessUrl(Long fileId) {
+        String publicBaseUrl = fileUploadProperties.getPublicBaseUrl();
+        if (StrUtil.isBlank(publicBaseUrl)) {
+            throw new BusinessException("请先配置 file.upload.public-base-url");
+        }
+        String baseUrl = StrUtil.removeSuffix(publicBaseUrl.trim(), "/");
+        return baseUrl + "/file/preview/" + fileId;
     }
 }
