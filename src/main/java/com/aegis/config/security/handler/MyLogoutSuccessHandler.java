@@ -3,6 +3,7 @@ package com.aegis.config.security.handler;
 import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.RedisConstants;
+import com.aegis.config.security.LoginSecurityProperties;
 import com.aegis.utils.JwtTokenUtil;
 import com.aegis.utils.RedisUtils;
 import com.aegis.utils.ResponseUtils;
@@ -31,6 +32,8 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 
     private final JwtTokenUtil jwtTokenUtil;
 
+    private final LoginSecurityProperties loginSecurityProperties;
+
     @Override
     public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -55,7 +58,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, null);
         cookie.setHttpOnly(true);
         cookie.setPath("/api/profile/refreshToken");
-        cookie.setSecure(false); // 如果你本地是 http，可以临时改为 false
+        cookie.setSecure(loginSecurityProperties.isCookieSecure());
         cookie.setMaxAge(0);
         response.addCookie(cookie);
 
