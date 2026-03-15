@@ -46,6 +46,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -128,7 +129,8 @@ public class ProfileServiceImpl implements ProfileService {
             throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
         }
 
-        JwtTokenUtil.TokenResponse tokenResponse = jwtTokenUtil.refreshAccessToken(refreshToken);
+        String authorities = loadAuthoritiesByUsername(username);
+        JwtTokenUtil.TokenResponse tokenResponse = jwtTokenUtil.refreshAccessToken(refreshToken, authorities);
         String accessJti = jwtTokenUtil.getJti(tokenResponse.getAccessToken());
         Long accessExpireSeconds = jwtTokenUtil.getAccessTokenExpireSeconds(tokenResponse.getAccessToken());
         redisUtils.set(RedisConstants.USER_TOKEN_JTI + username, accessJti, accessExpireSeconds, TimeUnit.SECONDS);
@@ -327,6 +329,26 @@ public class ProfileServiceImpl implements ProfileService {
         userMapper.updateById(user);
 
         return CommonConstants.SUCCESS_MESSAGE;
+    }
+
+    /*
+     * 根据用户名获取权限
+     */
+    private String loadAuthoritiesByUsername(String username) {
+        User user = userMapper.loadUserByUsername(username);
+        if (user == null || !CommonConstants.NORMAL_STATUS.equals(user.getStatus())) {
+            throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
+        }
+
+        LinkedHashSet<String> authoritySet = new LinkedHashSet<>();
+        if (user.getPermCodeList() != null) {
+            for (String permCode : user.getPermCodeList()) {
+                if (StrUtil.isNotBlank(permCode)) {
+                    authoritySet.add(permCode);
+                }
+            }
+        }
+        return String.join(",", authoritySet);
     }
 
     /**

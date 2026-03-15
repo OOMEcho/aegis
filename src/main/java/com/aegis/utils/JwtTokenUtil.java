@@ -73,7 +73,7 @@ public final class JwtTokenUtil {
                 .collect(Collectors.joining(","));
 
         String accessToken = generateAccessToken(username, authorities, accessJti);
-        String refreshToken = generateRefreshToken(username, authorities, refreshJti);
+        String refreshToken = generateRefreshToken(username, refreshJti);
 
         return new TokenResponse(accessToken, refreshToken);
     }
@@ -81,15 +81,14 @@ public final class JwtTokenUtil {
     /**
      * 使用Refresh Token刷新Access Token
      */
-    public TokenResponse refreshAccessToken(String refreshToken) {
+    public TokenResponse refreshAccessToken(String refreshToken, String authorities) {
         String accessJti = UUID.randomUUID().toString();
         String refreshJti = UUID.randomUUID().toString();
 
         String username = getUsernameFromToken(refreshToken);
-        String authorities = getUserAuthorities(refreshToken);
 
         String newAccessToken = generateAccessToken(username, authorities, accessJti);
-        String newRefreshToken = generateRefreshToken(username, authorities, refreshJti);
+        String newRefreshToken = generateRefreshToken(username, refreshJti);
 
         return new TokenResponse(newAccessToken, newRefreshToken);
     }
@@ -128,12 +127,11 @@ public final class JwtTokenUtil {
     /**
      * 生成Refresh Token
      */
-    public String generateRefreshToken(String username, String authorities, String jti) {
+    public String generateRefreshToken(String username, String jti) {
         Instant now = Instant.now();
         Instant expiration = now.plusSeconds(refreshTokenExpiration);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_AUTHORITIES, authorities);
         claims.put(TOKEN_TYPE, TOKEN_TYPE_REFRESH);
         claims.put(TOKEN_JTI, jti);
 
@@ -220,13 +218,6 @@ public final class JwtTokenUtil {
                 .filter(str -> !str.trim().isEmpty())
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
-    }
-
-    /**
-     * 从Token获取用户权限
-     */
-    public String getUserAuthorities(String token) {
-        return getClaimsFromToken(token).get(CLAIM_KEY_AUTHORITIES, String.class);
     }
 
     /**
