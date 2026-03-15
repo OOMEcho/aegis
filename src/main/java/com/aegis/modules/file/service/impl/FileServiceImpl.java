@@ -128,14 +128,18 @@ public class FileServiceImpl implements FileService {
             throw new BusinessException("无效链接");
         }
 
-        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
-
         FileMetadata fileMetadata = getMetadataByFilePath(filePath);
+        if (!StoragePlatform.LOCAL.name().equals(fileMetadata.getPlatform())) {
+            throw new BusinessException("无效链接");
+        }
+
+        FileStorageService storageService = resolveStorageService(fileMetadata.getPlatform());
         final String fileName = fileMetadata.getOriginalFileName();
 
         ResponseUtils.setFileDownloadHeader(response, fileName);
 
-        try (InputStream inputStream = storageService.download(filePath); ServletOutputStream outputStream = response.getOutputStream()) {
+        try (InputStream inputStream = storageService.download(fileMetadata.getFilePath());
+             ServletOutputStream outputStream = response.getOutputStream()) {
 
             byte[] buffer = new byte[8192];
             int bytesRead;
