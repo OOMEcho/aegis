@@ -1,5 +1,7 @@
 package com.aegis.common.constant;
 
+import cn.hutool.core.util.StrUtil;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
@@ -66,6 +68,18 @@ public class FileConstants {
     ).collect(Collectors.toSet());
 
     /**
+     * 支持预览的图片后缀
+     */
+    public static final Set<String> IMAGE_EXTENSIONS = Stream.of(
+            "jpg", "jpeg", "png", "gif", "bmp", "webp"
+    ).collect(Collectors.toSet());
+
+    /**
+     * 图片后缀对应的标准Content-Type
+     */
+    public static final Map<String, String> IMAGE_CONTENT_TYPES;
+
+    /**
      * 危险文件类型黑名单
      */
     public static final Set<String> DANGEROUS_EXTENSIONS = Stream.of(
@@ -84,6 +98,15 @@ public class FileConstants {
         map.put("pdf", new byte[]{0x25, 0x50, 0x44, 0x46});
         map.put("zip", new byte[]{0x50, 0x4B, 0x03, 0x04});
         FILE_SIGNATURES = Collections.unmodifiableMap(map);
+
+        Map<String, String> imageContentTypes = new HashMap<>();
+        imageContentTypes.put("jpg", "image/jpeg");
+        imageContentTypes.put("jpeg", "image/jpeg");
+        imageContentTypes.put("png", "image/png");
+        imageContentTypes.put("gif", "image/gif");
+        imageContentTypes.put("bmp", "image/bmp");
+        imageContentTypes.put("webp", "image/webp");
+        IMAGE_CONTENT_TYPES = Collections.unmodifiableMap(imageContentTypes);
     }
 
     public static final String[]  MALICIOUS_PATTERNS= {
@@ -131,5 +154,20 @@ public class FileConstants {
             throw new IllegalArgumentException("目录层级不能超过5层");
         }
         return directory;
+    }
+
+    public static String normalizeExtension(String suffix) {
+        if (StrUtil.isBlank(suffix)) {
+            return "";
+        }
+        return StrUtil.removePrefix(suffix.trim().toLowerCase(), POINT);
+    }
+
+    public static boolean isImageExtension(String suffix) {
+        return IMAGE_EXTENSIONS.contains(normalizeExtension(suffix));
+    }
+
+    public static String getImageContentType(String suffix) {
+        return IMAGE_CONTENT_TYPES.get(normalizeExtension(suffix));
     }
 }

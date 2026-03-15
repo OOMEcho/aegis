@@ -161,8 +161,12 @@ public class FileServiceImpl implements FileService {
             throw new BusinessException("文件不存在");
         }
 
-        String contentType = fileMetadata.getContentType();
-        if (StrUtil.isBlank(contentType) || !contentType.startsWith("image/")) {
+        String suffix = FileConstants.normalizeExtension(fileMetadata.getSuffix());
+        if (!FileConstants.isImageExtension(suffix)) {
+            throw new BusinessException("不支持预览的文件类型");
+        }
+        String contentType = FileConstants.getImageContentType(suffix);
+        if (StrUtil.isBlank(contentType)) {
             throw new BusinessException("不支持预览的文件类型");
         }
 

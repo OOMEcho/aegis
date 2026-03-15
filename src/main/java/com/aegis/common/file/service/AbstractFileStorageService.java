@@ -160,7 +160,12 @@ public abstract class AbstractFileStorageService implements FileStorageService {
      * 获取文件的Content-Type，默认值为 application/octet-stream
      */
     protected String getContentType(MultipartFile file) {
-        return file.getContentType() != null ? file.getContentType() : "application/octet-stream";
+        String extension = FileConstants.normalizeExtension(FileUtil.extName(file.getOriginalFilename()));
+        String imageContentType = FileConstants.getImageContentType(extension);
+        if (StrUtil.isNotBlank(imageContentType)) {
+            return imageContentType;
+        }
+        return StrUtil.isNotBlank(file.getContentType()) ? file.getContentType() : "application/octet-stream";
     }
 
     /**
