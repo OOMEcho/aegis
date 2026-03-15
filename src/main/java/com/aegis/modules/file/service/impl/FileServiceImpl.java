@@ -252,6 +252,7 @@ public class FileServiceImpl implements FileService {
 
         Duration expiration = Duration.ofSeconds(expirationSeconds);
         String temporaryUrl = storageService.getTemporaryDownloadUrl(fileMetadata.getFilePath(), expiration);
+        temporaryUrl = normalizePublicDownloadUrl(temporaryUrl);
 
         Map<String, String> response = new HashMap<>();
         response.put("downloadUrl", temporaryUrl);
@@ -305,5 +306,25 @@ public class FileServiceImpl implements FileService {
         }
         String baseUrl = StrUtil.removeSuffix(publicBaseUrl.trim(), "/");
         return baseUrl + "/file/preview/" + fileId;
+    }
+
+    private String normalizePublicDownloadUrl(String downloadUrl) {
+        if (StrUtil.isBlank(downloadUrl)) {
+            return downloadUrl;
+        }
+        String lowerUrl = downloadUrl.trim().toLowerCase();
+        if (lowerUrl.startsWith("http://") || lowerUrl.startsWith("https://")) {
+            return downloadUrl;
+        }
+
+        String publicBaseUrl = fileUploadProperties.getPublicBaseUrl();
+        if (StrUtil.isBlank(publicBaseUrl)) {
+            throw new BusinessException("请先配置 file.upload.public-base-url");
+        }
+        String baseUrl = StrUtil.removeSuffix(publicBaseUrl.trim(), "/");
+        String normalizedPath = downloadUrl.startsWith(FileConstants.SEPARATOR)
+                ? downloadUrl
+                : FileConstants.SEPARATOR + downloadUrl;
+        return baseUrl + normalizedPath;
     }
 }
