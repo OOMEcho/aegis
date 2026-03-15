@@ -10,7 +10,6 @@ import com.aegis.common.file.service.AbstractFileStorageService;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import com.aegis.modules.file.mapper.FileMetadataMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +25,6 @@ import java.time.Duration;
  */
 @Slf4j
 @Service(FileConstants.LOCAL)
-@ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "local")
 public class LocalFileStorageServiceImpl extends AbstractFileStorageService {
 
     private final String basePath;

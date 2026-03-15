@@ -10,7 +10,6 @@ import com.aegis.modules.file.mapper.FileMetadataMapper;
 import io.minio.*;
 import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,22 +24,23 @@ import java.time.Duration;
  */
 @Slf4j
 @Service(FileConstants.MINIO)
-@ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "minio")
 public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
 
-    private final MinioClient minioClient;
+    private volatile MinioClient minioClient;
 
     private final FileUploadProperties.MinioConfig config;
 
-    public MinioFileStorageServiceImpl(FileUploadProperties properties, FileMetadataMapper fileMetadataMapper, MinioClient minioClient) {
+    public MinioFileStorageServiceImpl(FileUploadProperties properties, FileMetadataMapper fileMetadataMapper) {
         super(properties, fileMetadataMapper);
-        this.minioClient = minioClient;
         this.config = properties.getMinio();
     }
 
     @Override
     public FileMetadata upload(MultipartFile file, String directory) {
         try {
+            MinioClient client = getMinioClient();
+            ensureBucketExists(client);
+
             String fileName = generateFileName(file.getOriginalFilename());
             String objectName = buildObjectName(directory, fileName);
 
@@ -48,7 +48,7 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
             validateFile(file, fileBytes);
 
             try (InputStream inputStream = new ByteArrayInputStream(fileBytes)) {
-                minioClient.putObject(PutObjectArgs.builder()
+                client.putObject(PutObjectArgs.builder()
                         .bucket(config.getBucketName())
                         .object(objectName)
                         .stream(inputStream, fileBytes.length, -1)
@@ -68,7 +68,7 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public InputStream download(String filePath) {
         try {
-            return minioClient.getObject(GetObjectArgs.builder()
+            return getMinioClient().getObject(GetObjectArgs.builder()
                     .bucket(config.getBucketName())
                     .object(filePath)
                     .build());
@@ -81,7 +81,7 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public void delete(String filePath) {
         try {
-            minioClient.removeObject(RemoveObjectArgs.builder()
+            getMinioClient().removeObject(RemoveObjectArgs.builder()
                     .bucket(config.getBucketName())
                     .object(filePath)
                     .build());
@@ -94,7 +94,7 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public boolean exists(String filePath) {
         try {
-            minioClient.statObject(StatObjectArgs.builder()
+            getMinioClient().statObject(StatObjectArgs.builder()
                     .bucket(config.getBucketName())
                     .object(filePath)
                     .build());
@@ -107,7 +107,7 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public String generatePresignedUploadUrl(String filePath, Duration expiration) {
         try {
-            return minioClient.getPresignedObjectUrl(
+            return getMinioClient().getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Method.PUT)
                             .bucket(config.getBucketName())
@@ -124,7 +124,7 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
     @Override
     public String getTemporaryDownloadUrl(String filePath, Duration expiration) {
         try {
-            return minioClient.getPresignedObjectUrl(
+            return getMinioClient().getPresignedObjectUrl(
                     GetPresignedObjectUrlArgs.builder()
                             .method(Method.GET)
                             .bucket(config.getBucketName())
@@ -135,6 +135,32 @@ public class MinioFileStorageServiceImpl extends AbstractFileStorageService {
         } catch (Exception e) {
             log.error("生成MinIO临时下载URL失败: {}", filePath, e);
             throw new BusinessException("下载失败,请联系系统管理员");
+        }
+    }
+
+    private MinioClient getMinioClient() {
+        if (minioClient != null) {
+            return minioClient;
+        }
+        synchronized (this) {
+            if (minioClient == null) {
+                minioClient = MinioClient.builder()
+                        .endpoint(config.getEndpoint())
+                        .credentials(config.getAccessKey(), config.getSecretKey())
+                        .build();
+            }
+            return minioClient;
+        }
+    }
+
+    private void ensureBucketExists(MinioClient client) throws Exception {
+        boolean exists = client.bucketExists(
+                BucketExistsArgs.builder().bucket(config.getBucketName()).build()
+        );
+        if (!exists) {
+            client.makeBucket(
+                    MakeBucketArgs.builder().bucket(config.getBucketName()).build()
+            );
         }
     }
 }
