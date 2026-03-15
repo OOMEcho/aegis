@@ -2,11 +2,13 @@ package com.aegis.modules.common.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
+import com.aegis.common.constant.FileConstants;
 import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.domain.vo.CaptchaVO;
 import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileStorageServiceFactory;
+import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.file.service.FileStorageService;
 import com.aegis.common.result.ResultCodeEnum;
 import com.aegis.config.security.LoginSecurityProperties;
@@ -17,6 +19,7 @@ import com.aegis.modules.common.service.ProfileService;
 import com.aegis.modules.dept.domain.entity.Dept;
 import com.aegis.modules.dept.mapper.DeptMapper;
 import com.aegis.modules.file.domain.entity.FileMetadata;
+import com.aegis.modules.file.mapper.FileMetadataMapper;
 import com.aegis.modules.file.service.FileService;
 import com.aegis.modules.menu.domain.entity.Menu;
 import com.aegis.modules.menu.domain.vo.RouterVo;
@@ -41,7 +44,9 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -52,10 +57,6 @@ import java.util.concurrent.TimeUnit;
 @Service
 @RequiredArgsConstructor
 public class ProfileServiceImpl implements ProfileService {
-
-    private static final Set<String> IMAGE_EXTENSIONS = new HashSet<>(Arrays.asList(
-            "jpg", "jpeg", "png", "gif", "webp", "bmp"
-    ));
 
     private final CaptchaUtils captchaUtils;
 
@@ -76,6 +77,8 @@ public class ProfileServiceImpl implements ProfileService {
     private final EmailService emailService;
 
     private final FileService fileService;
+
+    private final FileMetadataMapper fileMetadataMapper;
 
     private final FileStorageServiceFactory fileStorageServiceFactory;
 
@@ -185,18 +188,33 @@ public class ProfileServiceImpl implements ProfileService {
             return;
         }
 
-        String extension = getFileExtension(avatarPath);
-        if (!IMAGE_EXTENSIONS.contains(extension)) {
+        LambdaQueryWrapper<FileMetadata> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FileMetadata::getFilePath, avatarPath);
+        FileMetadata fileMetadata = fileMetadataMapper.selectOne(queryWrapper);
+        if (fileMetadata == null) {
+            throw new BusinessException("头像文件不存在");
+        }
+
+        String extension = FileConstants.normalizeExtension(fileMetadata.getSuffix());
+        if (StrUtil.isBlank(extension)) {
+            extension = FileConstants.normalizeExtension(getFileExtension(fileMetadata.getFilePath()));
+        }
+        if (!FileConstants.isImageExtension(extension)) {
             throw new BusinessException("头像格式不支持");
         }
 
-        response.setContentType(getImageContentType(extension));
+        String contentType = FileConstants.getImageContentType(extension);
+        if (StrUtil.isBlank(contentType)) {
+            throw new BusinessException("头像格式不支持");
+        }
+
+        response.setContentType(contentType);
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
         response.setHeader("Pragma", "no-cache");
 
-        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
-        try (InputStream inputStream = storageService.download(avatarPath);
+        FileStorageService storageService = resolveAvatarStorageService(fileMetadata.getPlatform());
+        try (InputStream inputStream = storageService.download(fileMetadata.getFilePath());
              ServletOutputStream outputStream = response.getOutputStream()) {
             byte[] buffer = new byte[8192];
             int bytesRead;
@@ -323,23 +341,14 @@ public class ProfileServiceImpl implements ProfileService {
     }
 
     /**
-     * 根据扩展名获取图片内容类型
+     * 解析头像文件存储服务
      */
-    private String getImageContentType(String extension) {
-        switch (extension) {
-            case "jpg":
-            case "jpeg":
-                return "image/jpeg";
-            case "png":
-                return "image/png";
-            case "gif":
-                return "image/gif";
-            case "webp":
-                return "image/webp";
-            case "bmp":
-                return "image/bmp";
-            default:
-                return "application/octet-stream";
+    private FileStorageService resolveAvatarStorageService(String platform) {
+        try {
+            StoragePlatform storagePlatform = StoragePlatform.valueOf(platform);
+            return fileStorageServiceFactory.getFileStorageService(storagePlatform);
+        } catch (Exception e) {
+            throw new BusinessException("头像存储平台不支持");
         }
     }
 
