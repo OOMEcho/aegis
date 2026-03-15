@@ -178,12 +178,14 @@ INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `re
 ('system:operateLog:export', '操作日志-导出', 'A', '0', '接口权限', 1),
 ('system:file:upload', '文件管理-上传', 'A', '0', '接口权限', 1),
 ('system:file:uploadBatch', '文件管理-批量上传', 'A', '0', '接口权限', 1),
+('system:file:list', '文件管理-分页列表', 'A', '0', '接口权限', 1),
 ('system:file:tempDownload', '文件管理-临时下载URL', 'A', '0', '接口权限', 1),
 ('system:file:download', '文件管理-下载', 'A', '0', '接口权限', 1),
 ('system:file:localDownload', '文件管理-本地临时下载', 'A', '0', '接口权限', 1),
 ('system:file:uploadPlatform', '文件管理-指定平台上传', 'A', '0', '接口权限', 1),
 ('system:file:delete', '文件管理-删除', 'A', '0', '接口权限', 1),
-('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '接口权限', 1);
+('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '接口权限', 1),
+('system:file:presignedComplete', '文件管理-预签名上传入库', 'A', '0', '接口权限', 1);
 
 INSERT INTO `t_menu` (`id`, `menu_code`, `menu_name`, `parent_id`, `order_num`, `name`, `path`, `menu_type`, `icon`, `hidden`, `status`, `create_by`) VALUES
 (1, 'system', '系统管理', 0, 1, 'System', '/system', 'D', 'icon-shezhi', 0, '0', 1),
@@ -290,12 +292,14 @@ INSERT INTO `t_resource` (`request_method`, `request_uri`, `perm_code`, `status`
 ('GET', '/operateLog/export', 'system:operateLog:export', '0', '操作日志-导出', 1),
 ('POST', '/file/upload', 'system:file:upload', '0', '文件管理-上传', 1),
 ('POST', '/file/upload/batch', 'system:file:uploadBatch', '0', '文件管理-批量上传', 1),
+('GET', '/file/pageList', 'system:file:list', '0', '文件管理-分页列表', 1),
 ('GET', '/file/temporary-download-url', 'system:file:tempDownload', '0', '文件管理-临时下载URL', 1),
 ('GET', '/file/download', 'system:file:download', '0', '文件管理-下载', 1),
 ('GET', '/file/localDownload/**', 'system:file:localDownload', '0', '文件管理-本地临时下载', 1),
 ('POST', '/file/upload/*', 'system:file:uploadPlatform', '0', '文件管理-指定平台上传', 1),
 ('DELETE', '/file/delete', 'system:file:delete', '0', '文件管理-删除', 1),
-('GET', '/file/presigned-upload-url', 'system:file:presignedUpload', '0', '文件管理-预签名上传URL', 1);
+('GET', '/file/presigned-upload-url', 'system:file:presignedUpload', '0', '文件管理-预签名上传URL', 1),
+('POST', '/file/presigned-upload-complete', 'system:file:presignedComplete', '0', '文件管理-预签名上传入库', 1);
 
 INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:manage'),
@@ -426,12 +430,14 @@ INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:operateLog:export'),
 (1974474475076329473, 'system:file:upload'),
 (1974474475076329473, 'system:file:uploadBatch'),
+(1974474475076329473, 'system:file:list'),
 (1974474475076329473, 'system:file:tempDownload'),
 (1974474475076329473, 'system:file:download'),
 (1974474475076329473, 'system:file:localDownload'),
 (1974474475076329473, 'system:file:uploadPlatform'),
 (1974474475076329473, 'system:file:delete'),
 (1974474475076329473, 'system:file:presignedUpload'),
+(1974474475076329473, 'system:file:presignedComplete'),
 (2017523437851455490, 'system:manage'),
 (2017523437851455490, 'system:user:page'),
 (2017523437851455490, 'system:role:page'),
