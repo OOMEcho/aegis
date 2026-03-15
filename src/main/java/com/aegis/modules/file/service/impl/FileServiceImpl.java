@@ -5,15 +5,20 @@ import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.aegis.common.constant.FileConstants;
+import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.common.file.FileStorageServiceFactory;
 import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.file.config.FileUploadProperties;
 import com.aegis.common.file.service.FileStorageService;
+import com.aegis.modules.file.domain.dto.FileMetadataPageDTO;
+import com.aegis.modules.file.domain.dto.PresignedUploadCompleteDTO;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import com.aegis.modules.file.mapper.FileMetadataMapper;
 import com.aegis.modules.file.service.FileService;
+import com.aegis.utils.PageUtils;
 import com.aegis.utils.ResponseUtils;
+import com.aegis.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import lombok.RequiredArgsConstructor;
@@ -29,10 +34,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.InputStream;
 import java.time.Duration;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -56,6 +58,20 @@ public class FileServiceImpl implements FileService {
 
     @Value("${file.upload.local.secret-key}")
     private String secretKey;
+
+    @Override
+    public PageVO<FileMetadata> pageList(FileMetadataPageDTO dto) {
+        LambdaQueryWrapper<FileMetadata> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.like(StrUtil.isNotBlank(dto.getOriginalFileName()), FileMetadata::getOriginalFileName, dto.getOriginalFileName())
+                .eq(StrUtil.isNotBlank(dto.getPlatform()), FileMetadata::getPlatform, dto.getPlatform())
+                .like(StrUtil.isNotBlank(dto.getContentType()), FileMetadata::getContentType, dto.getContentType())
+                .orderByDesc(FileMetadata::getUploadTime);
+
+        return PageUtils.of(dto).pagingAndConvert(fileMetadataMapper, queryWrapper, metadata -> {
+            populateAccessUrl(metadata);
+            return metadata;
+        });
+    }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -236,6 +252,51 @@ public class FileServiceImpl implements FileService {
         response.put("filePath", filePath);
         response.put("expiresIn", "600"); // 秒
         return response;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public FileMetadata completePresignedUpload(PresignedUploadCompleteDTO dto) {
+        String filePath = dto.getFilePath().trim();
+
+        LambdaQueryWrapper<FileMetadata> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FileMetadata::getFilePath, filePath);
+        FileMetadata existed = fileMetadataMapper.selectOne(queryWrapper);
+        if (ObjectUtils.isNotNull(existed)) {
+            populateAccessUrl(existed);
+            return existed;
+        }
+
+        FileStorageService storageService = fileStorageServiceFactory.getFileStorageService();
+        if (!storageService.exists(filePath)) {
+            throw new BusinessException("文件不存在或上传未完成");
+        }
+
+        Long fileSize = dto.getFileSize();
+        if (ObjectUtils.isNull(fileSize) || fileSize < 0) {
+            throw new BusinessException("文件大小参数无效");
+        }
+
+        String originalFileName = dto.getOriginalFileName().trim();
+        String suffix = FileUtil.extName(originalFileName);
+        if (StrUtil.isBlank(suffix)) {
+            suffix = FileUtil.extName(filePath);
+        }
+
+        FileMetadata metadata = new FileMetadata()
+                .setCreateBy(SecurityUtils.getUserId())
+                .setFileName(FileUtil.getName(filePath))
+                .setOriginalFileName(originalFileName)
+                .setSuffix(suffix)
+                .setFilePath(filePath)
+                .setFileSize(fileSize)
+                .setContentType(StrUtil.blankToDefault(dto.getContentType(), "application/octet-stream"))
+                .setPlatform(fileUploadProperties.getPlatform().name())
+                .setUploadTime(new Date());
+
+        fileMetadataMapper.insert(metadata);
+        populateAccessUrl(metadata);
+        return metadata;
     }
 
     @Override

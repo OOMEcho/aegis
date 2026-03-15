@@ -1,21 +1,25 @@
 package com.aegis.modules.file.controller;
 
+import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.duplicate.PreventDuplicateSubmit;
 import com.aegis.common.file.StoragePlatform;
 import com.aegis.common.limiter.RateLimiter;
 import com.aegis.common.log.BusinessType;
 import com.aegis.common.log.OperationLog;
+import com.aegis.modules.file.domain.dto.FileMetadataPageDTO;
+import com.aegis.modules.file.domain.dto.PresignedUploadCompleteDTO;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import com.aegis.modules.file.service.FileService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +36,12 @@ import java.util.Map;
 public class FileServiceController {
 
     private final FileService fileService;
+
+    @Operation(summary = "文件分页列表")
+    @GetMapping("/pageList")
+    public PageVO<FileMetadata> pageList(FileMetadataPageDTO dto) {
+        return fileService.pageList(dto);
+    }
 
     @Operation(summary = "文件上传")
     @PostMapping("/upload")
@@ -104,5 +114,13 @@ public class FileServiceController {
     @OperationLog(moduleTitle = "获取预签名上传URL", businessType = BusinessType.EXPORT)
     public Map<String, String> getPresignedUploadUrl(@RequestParam String fileName, @RequestParam(required = false) String directory) {
         return fileService.getPresignedUploadUrl(fileName, directory);
+    }
+
+    @Operation(summary = "预签名上传完成入库")
+    @PostMapping("/presigned-upload-complete")
+    @PreventDuplicateSubmit
+    @OperationLog(moduleTitle = "预签名上传完成入库", businessType = BusinessType.IMPORT)
+    public FileMetadata presignedUploadComplete(@Validated @RequestBody PresignedUploadCompleteDTO dto) {
+        return fileService.completePresignedUpload(dto);
     }
 }

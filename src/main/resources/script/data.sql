@@ -1,5 +1,7 @@
-INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (1, NULL, NULL, now(), now(), 0, 1, NULL, 1966151295895171074, 'admin', '$2a$10$GHoUDIvjIXO9ey5sd5D1YOL/YpIWca4PxzrnSepjEG3v8MQcoaFXS', '管理员', '228389787@qq.com', '0', '18888888888', '2025/09/25/e5ced7eae4ac4a82abbaf6fd2155c509.jpg', '0', '127.0.0.1', now());
+INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (1, NULL, NULL, now(), now(), 0, 1, NULL, 1966151295895171074, 'admin', '$2a$10$GHoUDIvjIXO9ey5sd5D1YOL/YpIWca4PxzrnSepjEG3v8MQcoaFXS', '管理员', '228389787@qq.com', '0', '18888888888', '2026/03/15/a88e33f25a8e41c1b4ea27f87b9b0a29.jpg', '0', '127.0.0.1', now());
 INSERT INTO `t_user` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `dept_id`, `username`, `password`, `nickname`, `email`, `sex`, `phone`, `avatar`, `status`, `last_login_ip`, `last_login_time`) VALUES (2017511555723767810, NULL, 1, now(), now(), 0, 1, NULL, 1971211910191857665, 'visitor', '$2a$10$3VwrVo5..iav/GtXko1OGe9oYZO3X.ivu.xoS1ro1Rrsaw3likKGS', '访客', '123456789@qq.com', '1', NULL, NULL, '0', '127.0.0.1', now());
+
+INSERT INTO `t_file_metadata` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `file_name`, `original_file_name`, `suffix`, `file_path`, `file_size`, `content_type`, `platform`, `upload_time`, `md5`) VALUES (2033123581413605377, 1, NULL, now(), now(), 0, 1, NULL, 'a88e33f25a8e41c1b4ea27f87b9b0a29.jpg', 'work.jpg', 'jpg', '2026/03/15/a88e33f25a8e41c1b4ea27f87b9b0a29.jpg', 92412, 'image/jpeg', 'MINIO', now(), '5c102e0ff25003f71837962f6b3e8773');
 
 INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `dept_check_strictly`, `status`) VALUES (1974474475076329473, 1, NULL, now(), now(), 0, 1, NULL, '系统管理员', 'admin', 1, '1', 1, '0');
 INSERT INTO `t_role` (`id`, `create_by`, `update_by`, `create_time`, `update_time`, `deleted`, `version`, `remark`, `role_name`, `role_code`, `order_num`, `data_scope`, `dept_check_strictly`, `status`) VALUES (2017523437851455490, 1, 1, now(), now(), 0, 1, NULL, '普通用户', 'common', 2, '1', 1, '0');
@@ -176,12 +178,14 @@ INSERT INTO `t_permission` (`perm_code`, `perm_name`, `perm_type`, `status`, `re
 ('system:operateLog:export', '操作日志-导出', 'A', '0', '接口权限', 1),
 ('system:file:upload', '文件管理-上传', 'A', '0', '接口权限', 1),
 ('system:file:uploadBatch', '文件管理-批量上传', 'A', '0', '接口权限', 1),
+('system:file:list', '文件管理-分页列表', 'A', '0', '接口权限', 1),
 ('system:file:tempDownload', '文件管理-临时下载URL', 'A', '0', '接口权限', 1),
 ('system:file:download', '文件管理-下载', 'A', '0', '接口权限', 1),
 ('system:file:localDownload', '文件管理-本地临时下载', 'A', '0', '接口权限', 1),
 ('system:file:uploadPlatform', '文件管理-指定平台上传', 'A', '0', '接口权限', 1),
 ('system:file:delete', '文件管理-删除', 'A', '0', '接口权限', 1),
-('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '接口权限', 1);
+('system:file:presignedUpload', '文件管理-预签名上传URL', 'A', '0', '接口权限', 1),
+('system:file:presignedComplete', '文件管理-预签名上传入库', 'A', '0', '接口权限', 1);
 
 INSERT INTO `t_menu` (`id`, `menu_code`, `menu_name`, `parent_id`, `order_num`, `name`, `path`, `menu_type`, `icon`, `hidden`, `status`, `create_by`) VALUES
 (1, 'system', '系统管理', 0, 1, 'System', '/system', 'D', 'icon-shezhi', 0, '0', 1),
@@ -288,12 +292,14 @@ INSERT INTO `t_resource` (`request_method`, `request_uri`, `perm_code`, `status`
 ('GET', '/operateLog/export', 'system:operateLog:export', '0', '操作日志-导出', 1),
 ('POST', '/file/upload', 'system:file:upload', '0', '文件管理-上传', 1),
 ('POST', '/file/upload/batch', 'system:file:uploadBatch', '0', '文件管理-批量上传', 1),
+('GET', '/file/pageList', 'system:file:list', '0', '文件管理-分页列表', 1),
 ('GET', '/file/temporary-download-url', 'system:file:tempDownload', '0', '文件管理-临时下载URL', 1),
 ('GET', '/file/download', 'system:file:download', '0', '文件管理-下载', 1),
 ('GET', '/file/localDownload/**', 'system:file:localDownload', '0', '文件管理-本地临时下载', 1),
 ('POST', '/file/upload/*', 'system:file:uploadPlatform', '0', '文件管理-指定平台上传', 1),
 ('DELETE', '/file/delete', 'system:file:delete', '0', '文件管理-删除', 1),
-('GET', '/file/presigned-upload-url', 'system:file:presignedUpload', '0', '文件管理-预签名上传URL', 1);
+('GET', '/file/presigned-upload-url', 'system:file:presignedUpload', '0', '文件管理-预签名上传URL', 1),
+('POST', '/file/presigned-upload-complete', 'system:file:presignedComplete', '0', '文件管理-预签名上传入库', 1);
 
 INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:manage'),
@@ -424,12 +430,14 @@ INSERT INTO `t_role_permission` (`role_id`, `perm_code`) VALUES
 (1974474475076329473, 'system:operateLog:export'),
 (1974474475076329473, 'system:file:upload'),
 (1974474475076329473, 'system:file:uploadBatch'),
+(1974474475076329473, 'system:file:list'),
 (1974474475076329473, 'system:file:tempDownload'),
 (1974474475076329473, 'system:file:download'),
 (1974474475076329473, 'system:file:localDownload'),
 (1974474475076329473, 'system:file:uploadPlatform'),
 (1974474475076329473, 'system:file:delete'),
 (1974474475076329473, 'system:file:presignedUpload'),
+(1974474475076329473, 'system:file:presignedComplete'),
 (2017523437851455490, 'system:manage'),
 (2017523437851455490, 'system:user:page'),
 (2017523437851455490, 'system:role:page'),

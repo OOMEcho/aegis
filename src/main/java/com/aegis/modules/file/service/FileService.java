@@ -1,6 +1,9 @@
 package com.aegis.modules.file.service;
 
+import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.file.StoragePlatform;
+import com.aegis.modules.file.domain.dto.FileMetadataPageDTO;
+import com.aegis.modules.file.domain.dto.PresignedUploadCompleteDTO;
 import com.aegis.modules.file.domain.entity.FileMetadata;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,6 +18,14 @@ import java.util.Map;
  * @Description: 文件服务业务层
  */
 public interface FileService {
+
+    /**
+     * 文件分页列表
+     *
+     * @param dto 查询参数
+     * @return 分页数据
+     */
+    PageVO<FileMetadata> pageList(FileMetadataPageDTO dto);
 
     /**
      * 上传单个文件
@@ -84,6 +95,14 @@ public interface FileService {
      * @return 包含上传URL和必要表单字段的Map
      */
     Map<String, String> getPresignedUploadUrl(String fileName, String directory);
+
+    /**
+     * 预签名上传完成后入库
+     *
+     * @param dto 完成信息
+     * @return 文件元数据
+     */
+    FileMetadata completePresignedUpload(PresignedUploadCompleteDTO dto);
 
     /**
      * 获取文件的临时下载链接

@@ -79,7 +79,7 @@ file:
     public-base-url: https://example.cn
     # 本地存储配置
     local:
-      path: /opt/uploads/
+      path: /opt/uploads
       secret-key: local-file-secret-key
     # Minio配置
     minio:
