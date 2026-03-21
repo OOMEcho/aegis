@@ -19,7 +19,7 @@ public final class SecurityUtils {
 
     /**
      * 请求级别的用户缓存，避免同一请求内多次查库
-     * 由 JwtTokenFilter 在 finally 中调用 clearCurrentUser() 清理
+     * 由 TokenAuthFilter 在 finally 中调用 clearCurrentUser() 清理
      */
     private static final ThreadLocal<User> CURRENT_USER_CACHE = new ThreadLocal<>();
 

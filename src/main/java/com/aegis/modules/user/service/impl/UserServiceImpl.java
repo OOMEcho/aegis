@@ -1,7 +1,6 @@
 package com.aegis.modules.user.service.impl;
 
 import com.aegis.common.constant.CommonConstants;
-import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.domain.vo.PageVO;
 import com.aegis.common.exception.BusinessException;
 import com.aegis.modules.dept.domain.entity.Dept;
@@ -15,7 +14,7 @@ import com.aegis.modules.user.mapper.UserRoleMapper;
 import com.aegis.modules.user.service.UserConvert;
 import com.aegis.modules.user.service.UserService;
 import com.aegis.utils.PageUtils;
-import com.aegis.utils.RedisUtils;
+import com.aegis.utils.TokenService;
 import com.aegis.utils.SecurityUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
@@ -27,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -47,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserConvert userConvert;
 
-    private final RedisUtils redisUtils;
+    private final TokenService tokenService;
 
     @Override
     public PageVO<UserVO> pageList(UserDTO dto) {
@@ -228,18 +226,7 @@ public class UserServiceImpl implements UserService {
             return CommonConstants.SUCCESS_MESSAGE;
         }
 
-        String username = user.getUsername();
-        String accessKey = RedisConstants.USER_TOKEN_JTI + username;
-        String jti = redisUtils.get(accessKey);
-        if (StringUtils.isNotBlank(jti)) {
-            long expireSeconds = redisUtils.getExpire(accessKey, TimeUnit.SECONDS);
-            if (expireSeconds > 0) {
-                redisUtils.set(RedisConstants.BLACKLIST_TOKEN + jti, "logout", expireSeconds, TimeUnit.SECONDS);
-            }
-            redisUtils.delete(accessKey);
-        }
-
-        redisUtils.delete(RedisConstants.USER_REFRESH_JTI + username);
+        tokenService.invalidateSession(user.getUsername());
 
         return CommonConstants.SUCCESS_MESSAGE;
     }
@@ -273,8 +260,7 @@ public class UserServiceImpl implements UserService {
         }
 
         for (UserVO userVo : userList) {
-            String key = RedisConstants.USER_TOKEN_JTI + userVo.getUsername();
-            userVo.setOnline(redisUtils.hasKey(key));
+            userVo.setOnline(tokenService.isOnline(userVo.getUsername()));
         }
     }
 

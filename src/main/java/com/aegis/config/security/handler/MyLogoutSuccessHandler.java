@@ -2,11 +2,9 @@ package com.aegis.config.security.handler;
 
 import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
-import com.aegis.common.constant.RedisConstants;
 import com.aegis.config.security.LoginSecurityProperties;
-import com.aegis.utils.JwtTokenUtil;
-import com.aegis.utils.RedisUtils;
 import com.aegis.utils.ResponseUtils;
+import com.aegis.utils.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;
@@ -17,7 +15,6 @@ import org.springframework.stereotype.Component;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: xuesong.lei
@@ -28,9 +25,7 @@ import java.util.concurrent.TimeUnit;
 @RequiredArgsConstructor
 public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 
-    private final RedisUtils redisUtils;
-
-    private final JwtTokenUtil jwtTokenUtil;
+    private final TokenService tokenService;
 
     private final LoginSecurityProperties loginSecurityProperties;
 
@@ -39,19 +34,7 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
         String header = request.getHeader(HttpHeaders.AUTHORIZATION);
         if (StrUtil.isNotBlank(header) && header.startsWith(CommonConstants.TOKEN_PREFIX)) {
             String accessToken = header.substring(CommonConstants.TOKEN_PREFIX.length()).trim();
-
-            // 将 access_token 加入黑名单，防止后续使用
-            long expireSeconds = jwtTokenUtil.getAccessTokenExpireSeconds(accessToken);
-            final String jti = jwtTokenUtil.getJti(accessToken);
-            if (expireSeconds > 0) {
-                redisUtils.set(RedisConstants.BLACKLIST_TOKEN + jti, "logout", expireSeconds, TimeUnit.SECONDS);
-            }
-
-            String username = jwtTokenUtil.getUsernameFromToken(accessToken);
-            if (StrUtil.isNotBlank(username)) {
-                redisUtils.delete(RedisConstants.USER_TOKEN_JTI + username);
-                redisUtils.delete(RedisConstants.USER_REFRESH_JTI + username);
-            }
+            tokenService.invalidateByAccessToken(accessToken);
         }
 
         // 删除 Cookie 中的 refreshToken

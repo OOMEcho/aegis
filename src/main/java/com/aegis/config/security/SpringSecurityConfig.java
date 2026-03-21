@@ -1,6 +1,6 @@
 package com.aegis.config.security;
 
-import com.aegis.config.security.customize.JwtTokenFilter;
+import com.aegis.config.security.customize.TokenAuthFilter;
 import com.aegis.config.security.customize.MultiLoginAuthenticationFilter;
 import com.aegis.config.security.handler.*;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
-    private final JwtTokenFilter jwtTokenFilter;
+    private final TokenAuthFilter tokenAuthFilter;
 
     private final MyAccessDeniedHandler myAccessDeniedHandler;
 
@@ -64,7 +64,7 @@ public class SpringSecurityConfig {
                         .accessDeniedHandler(myAccessDeniedHandler)// 无权限处理
                 )
                 .logout(logout -> logout.logoutSuccessHandler(myLogoutSuccessHandler))// 退出登录处理
-                .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(tokenAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .addFilterAt(multiLoginAuthenticationFilter(authenticationManager), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
                         .anyRequest().access(myAuthorizationManager))
