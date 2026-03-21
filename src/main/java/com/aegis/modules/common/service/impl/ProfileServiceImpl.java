@@ -279,11 +279,22 @@ public class ProfileServiceImpl implements ProfileService {
         User currentUser = SecurityUtils.getCurrentUser();
 
         LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(StringUtils.isNotBlank(dto.getEmail()), User::getEmail, dto.getEmail())
-                .or()
-                .eq(StringUtils.isNotBlank(dto.getPhone()), User::getPhone, dto.getPhone())
-                .ne(User::getId, currentUser.getId());
-        if (userMapper.selectCount(wrapper) > 0) {
+        wrapper.ne(User::getId, currentUser.getId());
+
+        boolean hasEmail = StringUtils.isNotBlank(dto.getEmail());
+        boolean hasPhone = StringUtils.isNotBlank(dto.getPhone());
+
+        if (hasEmail && hasPhone) {
+            wrapper.and(w -> w.eq(User::getEmail, dto.getEmail())
+                    .or()
+                    .eq(User::getPhone, dto.getPhone()));
+        } else if (hasEmail) {
+            wrapper.eq(User::getEmail, dto.getEmail());
+        } else if (hasPhone) {
+            wrapper.eq(User::getPhone, dto.getPhone());
+        }
+
+        if ((hasEmail || hasPhone) && userMapper.selectCount(wrapper) > 0) {
             throw new BusinessException("邮箱或手机号已存在");
         }
 
