@@ -457,6 +457,7 @@ services:
 感谢以下开源项目：
 
 - 🔥 [JetBrains](https://www.jetbrains.com/)- 世界最好的IDE
+- 🔥 [LINUX DO](https://linux.do/)- 全网最火社区
 - [Spring Boot](https://spring.io/projects/spring-boot) - 基础框架
 - [Spring Security](https://spring.io/projects/spring-security)- 安全框架
 - [MyBatis-Plus](https://baomidou.com/) - ORM增强工具
