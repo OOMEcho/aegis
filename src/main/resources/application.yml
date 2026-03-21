@@ -99,12 +99,10 @@ file:
       secret-key: your-secret-key
       bucket-name: your-bucket-name
 
-# JWT配置
-jwt:
-  issuer: aegis
-  secret: mySecretKeyForJWTTokenGenerationThatShouldBeLongEnough
-  access-token-expiration: 900  # 15分钟
-  refresh-token-expiration: 604800  # 7天
+# Token配置
+token:
+  access-expiration: 900  # 15分钟
+  refresh-expiration: 604800  # 7天
 
 # 安全登录配置
 security:

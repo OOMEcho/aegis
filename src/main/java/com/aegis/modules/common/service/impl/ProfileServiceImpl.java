@@ -3,7 +3,6 @@ package com.aegis.modules.common.service.impl;
 import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.common.constant.FileConstants;
-import com.aegis.common.constant.RedisConstants;
 import com.aegis.common.domain.vo.CaptchaVO;
 import com.aegis.common.event.DataChangePublisher;
 import com.aegis.common.exception.BusinessException;
@@ -31,7 +30,11 @@ import com.aegis.modules.user.domain.vo.UserVO;
 import com.aegis.modules.user.mapper.UserMapper;
 import com.aegis.modules.user.mapper.UserRoleMapper;
 import com.aegis.modules.user.service.UserConvert;
-import com.aegis.utils.*;
+import com.aegis.utils.CaptchaUtils;
+import com.aegis.utils.RsaUtils;
+import com.aegis.utils.SecurityUtils;
+import com.aegis.utils.TokenService;
+import com.aegis.utils.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +51,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @Author: xuesong.lei
@@ -61,7 +63,7 @@ public class ProfileServiceImpl implements ProfileService {
 
     private final CaptchaUtils captchaUtils;
 
-    private final JwtTokenUtil jwtTokenUtil;
+    private final TokenService tokenService;
 
     private final UserConvert userConvert;
 
@@ -84,8 +86,6 @@ public class ProfileServiceImpl implements ProfileService {
     private final FileStorageServiceFactory fileStorageServiceFactory;
 
     private final DataChangePublisher dataChangePublisher;
-
-    private final RedisUtils redisUtils;
 
     private final LoginSecurityProperties loginSecurityProperties;
 
@@ -116,33 +116,30 @@ public class ProfileServiceImpl implements ProfileService {
             throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
         }
 
-        // 验证 refresh_token 签名
-        if (!jwtTokenUtil.validateToken(refreshToken) || !jwtTokenUtil.isRefreshToken(refreshToken)) {
+        // 验证 refresh token 是否有效
+        String username = tokenService.validateRefreshToken(refreshToken);
+        if (username == null) {
             throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
         }
 
-        String username = jwtTokenUtil.getUsernameFromToken(refreshToken);
-        String refreshJti = jwtTokenUtil.getJti(refreshToken);
-        String refreshKey = RedisConstants.USER_REFRESH_JTI + username;
-        String currentRefreshJti = redisUtils.get(refreshKey);
-        if (StrUtil.isBlank(currentRefreshJti) || !currentRefreshJti.equals(refreshJti)) {
+        // 验证是否为用户当前的 refresh token
+        if (!tokenService.isCurrentRefreshToken(refreshToken, username)) {
             throw new BusinessException(ResultCodeEnum.NOT_LOGGED_IN);
         }
 
+        // 使旧 session 失效
+        tokenService.invalidateSession(username);
+
+        // 加载最新权限并创建新 session
         String authorities = loadAuthoritiesByUsername(username);
-        JwtTokenUtil.TokenResponse tokenResponse = jwtTokenUtil.refreshAccessToken(refreshToken, authorities);
-        String accessJti = jwtTokenUtil.getJti(tokenResponse.getAccessToken());
-        Long accessExpireSeconds = jwtTokenUtil.getAccessTokenExpireSeconds(tokenResponse.getAccessToken());
-        redisUtils.set(RedisConstants.USER_TOKEN_JTI + username, accessJti, accessExpireSeconds, TimeUnit.SECONDS);
+        TokenService.TokenResponse tokenResponse = tokenService.createSession(username, authorities);
 
-        String newRefreshJti = jwtTokenUtil.getJti(tokenResponse.getRefreshToken());
-        redisUtils.set(refreshKey, newRefreshJti, jwtTokenUtil.getRefreshTokenExpiration(), TimeUnit.SECONDS);
-
+        // 更新 refresh token cookie
         Cookie cookie = new Cookie(CommonConstants.REFRESH_TOKEN_COOKIE, tokenResponse.getRefreshToken());
         cookie.setHttpOnly(true);
         cookie.setPath(loginSecurityProperties.getCookiePath());
         cookie.setSecure(loginSecurityProperties.isCookieSecure());
-        cookie.setMaxAge(Math.toIntExact(jwtTokenUtil.getRefreshTokenExpiration()));
+        cookie.setMaxAge(Math.toIntExact(tokenService.getRefreshExpiration()));
         response.addCookie(cookie);
 
         return tokenResponse.getAccessToken();

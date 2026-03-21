@@ -207,23 +207,27 @@ public class DemoResetServiceImpl implements DemoResetService {
     private void clearRedisCache() {
         log.info("开始清理 Redis 缓存...");
 
-        // 1. 清理用户 token（使所有用户下线）
-        deleteKeysByPattern(RedisConstants.USER_TOKEN_JTI + "*");
-        log.info("已清理用户 token 缓存");
+        // 1. 清理用户 session（使所有用户下线）
+        deleteKeysByPattern(RedisConstants.SESSION + "*");
+        log.info("已清理用户 session 缓存");
 
-        // 2. 清理 refresh token
-        deleteKeysByPattern(RedisConstants.USER_REFRESH_JTI + "*");
+        // 2. 清理用户 session 反向索引
+        deleteKeysByPattern(RedisConstants.USER_SESSION + "*");
+        log.info("已清理用户 session 索引缓存");
+
+        // 3. 清理 refresh token
+        deleteKeysByPattern(RedisConstants.REFRESH + "*");
         log.info("已清理 refresh token 缓存");
 
-        // 3. 清理黑名单 token
-        deleteKeysByPattern(RedisConstants.BLACKLIST_TOKEN + "*");
-        log.info("已清理黑名单 token 缓存");
+        // 4. 清理用户 refresh 反向索引
+        deleteKeysByPattern(RedisConstants.USER_REFRESH + "*");
+        log.info("已清理用户 refresh 索引缓存");
 
-        // 4. 清理资源缓存
+        // 5. 清理资源缓存
         redisUtils.delete(RedisConstants.RESOURCES);
         log.info("已清理资源缓存");
 
-        // 5. 清理白名单缓存
+        // 6. 清理白名单缓存
         redisUtils.delete(RedisConstants.WHITELIST);
         log.info("已清理白名单缓存");
 

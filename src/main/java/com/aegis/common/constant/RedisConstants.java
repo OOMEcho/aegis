@@ -28,19 +28,24 @@ public class RedisConstants {
     public static final String WHITELIST = "whitelist";
 
     /**
-     * 黑名单令牌 key 前缀
+     * Access token session key 前缀
      */
-    public static final String BLACKLIST_TOKEN = "blacklist_token:";
+    public static final String SESSION = "session:";
 
     /**
-     * 用户当前 access_token 的 jti
+     * 用户当前 session 反向索引（用于单设备登录控制）
      */
-    public static final String USER_TOKEN_JTI = "user_token_jti:";
+    public static final String USER_SESSION = "user_session:";
 
     /**
-     * 用户当前 refresh_token 的 jti
+     * Refresh token key 前缀
      */
-    public static final String USER_REFRESH_JTI = "user_refresh_jti:";
+    public static final String REFRESH = "refresh:";
+
+    /**
+     * 用户当前 refresh token 反向索引
+     */
+    public static final String USER_REFRESH = "user_refresh:";
 
     /**
      * 滑块验证码 key

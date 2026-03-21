@@ -19,7 +19,7 @@ Aegis是一个功能完整的企业级RBAC(Role-Based Access Control)权限管�
 ### ✨ 核心特性
 
 - 🔐 **多样化认证**: 支持密码、邮箱、短信多种登录方式
-- 🔑 **JWT无状态认证**: 基于JWT的Token认证机制，支持Token刷新与黑名单控制
+- 🔑 **Token认证**: 基于Opaque Token + Redis的认证机制，支持Token刷新与即时失效
 - 🧩 **会话控制**: 单设备登录、在线状态展示、支持强制下线
 - 🛡️ **细粒度权限控制**: 权限编码驱动菜单与资源，URL级、按钮级、数据级多层权限控制
 - 📊 **数据权限**: 支持按用户、部门、自定义等多种数据权限范围
@@ -60,7 +60,7 @@ Aegis是一个功能完整的企业级RBAC(Role-Based Access Control)权限管�
 |------|--------|------|
 | Spring Boot | 2.7.18 | 基础框架 |
 | Spring Security | 5.7.11 | 安全框架 |
-| JWT | 0.13.0 | JWT Token |
+| Redis | -      | Token会话存储 |
 | MyBatis-Plus | 3.5.12 | ORM框架 |
 | Redis | -      | 缓存中间件 |
 | MySQL | 5.7+   | 关系型数据库 |
@@ -120,11 +120,10 @@ spring:
     username: your_email@163.com
     password: your_email_authorization_code  # 邮箱授权码，不是登录密码
 
-# JWT配置
-jwt:
-  secret: mySecretKeyForJWTTokenGenerationThatShouldBeLongEnough
-  access-token-expiration: 900   # 15分钟
-  refresh-token-expiration: 604800  # 7天
+# Token配置
+token:
+  access-expiration: 900   # 15分钟
+  refresh-expiration: 604800  # 7天
 
 # 文件存储配置
 file:
