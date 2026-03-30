@@ -22,9 +22,10 @@ import java.time.Duration;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/27 21:24
- * @Description: 阿里云OSS文件存储服务实现
+ * 阿里云OSS文件存储服务实现
+ *
+ * @author xuesong.lei
+ * @since 2025/08/27 21:24
  */
 @Slf4j
 @Service(FileConstants.ALIYUN)

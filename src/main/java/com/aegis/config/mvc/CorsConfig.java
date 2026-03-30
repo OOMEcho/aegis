@@ -13,9 +13,10 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/3 10:24
- * @Description: CORS 跨域配置
+ * CORS 跨域配置
+ *
+ * @author xuesong.lei
+ * @since 2026/2/3 10:24
  */
 @Slf4j
 @Configuration

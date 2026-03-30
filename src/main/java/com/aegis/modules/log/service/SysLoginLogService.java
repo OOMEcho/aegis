@@ -7,9 +7,10 @@ import com.aegis.modules.log.domain.entity.SysLoginLog;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 16:28
- * @Description: 登录日志业务层
+ * 登录日志业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 16:28
  */
 public interface SysLoginLogService {
 

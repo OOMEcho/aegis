@@ -5,9 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/21 15:35
- * @Description: 定时任务配置类
+ * 定时任务配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/21 15:35
  */
 @Data
 @Configuration

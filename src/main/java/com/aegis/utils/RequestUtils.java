@@ -11,9 +11,10 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 22:55
- * @Description: 请求工具类
+ * 请求工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 22:55
  */
 public final class RequestUtils {
 

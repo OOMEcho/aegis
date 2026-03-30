@@ -23,9 +23,10 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 9:58
- * @Description: 防重复提交切面
+ * 防重复提交切面
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 9:58
  */
 @Aspect
 @Slf4j

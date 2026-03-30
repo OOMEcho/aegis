@@ -19,9 +19,10 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/24 9:59
- * @Description: 自定义授权管理器
+ * 自定义授权管理器
+ *
+ * @author xuesong.lei
+ * @since 2025/9/24 9:59
  */
 @Component
 @RequiredArgsConstructor

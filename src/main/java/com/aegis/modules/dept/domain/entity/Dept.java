@@ -13,9 +13,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:44:18
- * @Description: 部门信息表
+ * 部门信息表
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:44:18
  * @TableName t_dept
  */
 @Data

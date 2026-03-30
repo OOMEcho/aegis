@@ -10,9 +10,10 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 15:46
- * @Description: 用户注册DTO
+ * 用户注册DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 15:46
  */
 @Data
 @Schema(description = "用户注册DTO")

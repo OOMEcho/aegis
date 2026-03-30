@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/30 22:15
- * @Description: 自定义用户认证服务
+ * 自定义用户认证服务
+ *
+ * @author xuesong.lei
+ * @since 2025/8/30 22:15
  */
 @Component
 @RequiredArgsConstructor

@@ -17,9 +17,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/31 12:12
- * @Description: Opaque Token 服务，替代 JWT 实现
+ * Opaque Token 服务，替代 JWT 实现
+ *
+ * @author xuesong.lei
+ * @since 2025/8/31 12:12
  */
 @Component
 @RequiredArgsConstructor

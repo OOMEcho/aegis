@@ -18,9 +18,10 @@ import java.io.InputStream;
 import java.time.Duration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/27 21:43
- * @Description: Minio文件存储服务实现
+ * Minio文件存储服务实现
+ *
+ * @author xuesong.lei
+ * @since 2025/8/27 21:43
  */
 @Slf4j
 @Service(FileConstants.MINIO)

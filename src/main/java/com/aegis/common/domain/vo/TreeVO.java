@@ -12,9 +12,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/11 22:10
- * @Description: 树形结构VO
+ * 树形结构VO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/11 22:10
  */
 @Data
 @Schema(description = "树形结构VO")

@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 16:27
- * @Description: 登录日志接口
+ * 登录日志接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 16:27
  */
 @RestController
 @Tag(name = "登录日志接口")

@@ -10,9 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/23 18:08
- * @Description: Mybatis-Plus 配置
+ * Mybatis-Plus 配置
+ *
+ * @author xuesong.lei
+ * @since 2025/08/23 18:08
  */
 @Configuration
 public class MybatisPlusConfig {

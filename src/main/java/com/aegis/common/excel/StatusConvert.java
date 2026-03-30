@@ -7,9 +7,10 @@ import cn.idev.excel.metadata.data.WriteCellData;
 import com.aegis.common.constant.CommonConstants;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 21:26
- * @Description: 操作状态转换类
+ * 操作状态转换类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 21:26
  */
 public class StatusConvert implements Converter<String> {
 

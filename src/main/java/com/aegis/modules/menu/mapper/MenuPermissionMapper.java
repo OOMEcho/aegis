@@ -4,9 +4,10 @@ import com.aegis.modules.menu.domain.entity.MenuPermission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026-01-13
- * @Description: 针对表【t_menu_permission(菜单与权限关联表)】的数据库操作Mapper
+ * 针对表【t_menu_permission(菜单与权限关联表)】的数据库操作Mapper
+ *
+ * @author xuesong.lei
+ * @since 2026-01-13
  * @Entity: com.aegis.modules.menu.domain.entity.MenuPermission
  */
 public interface MenuPermissionMapper extends BaseMapper<MenuPermission> {

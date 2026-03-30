@@ -6,9 +6,10 @@ import com.aegis.modules.common.domain.vo.DashboardVO;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/2 15:17
- * @Description: 首页业务层
+ * 首页业务层
+ *
+ * @author xuesong.lei
+ * @since 2026/2/2 15:17
  */
 public interface DashboardService {
 

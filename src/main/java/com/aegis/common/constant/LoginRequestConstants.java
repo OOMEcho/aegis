@@ -1,9 +1,10 @@
 package com.aegis.common.constant;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 22:03
- * @Description: 登录方式常量
+ * 登录方式常量
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 22:03
  */
 public class LoginRequestConstants {
 

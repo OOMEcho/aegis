@@ -6,9 +6,10 @@ import com.aegis.common.exception.BusinessException;
 import java.util.regex.Pattern;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/23 15:42
- * @Description: 路径工具类
+ * 路径工具类
+ *
+ * @author xuesong.lei
+ * @since 2026/1/23 15:42
  */
 public final class PathUtil {
 

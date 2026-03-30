@@ -27,9 +27,10 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 22:39
- * @Description: 登录失败处理逻辑
+ * 登录失败处理逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 22:39
  */
 @Slf4j
 @Component

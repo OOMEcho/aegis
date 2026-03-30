@@ -7,9 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 14:14
- * @Description: SpringDoc配置类
+ * SpringDoc配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 14:14
  */
 @Configuration
 public class OpenApiConfig {

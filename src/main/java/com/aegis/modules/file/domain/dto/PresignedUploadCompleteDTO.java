@@ -6,9 +6,10 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/3/15 15:42
- * @Description: 预签名上传完成入库DTO
+ * 预签名上传完成入库DTO
+ *
+ * @author xuesong.lei
+ * @since 2026/3/15 15:42
  */
 @Data
 @Schema(description = "预签名上传完成入库DTO")

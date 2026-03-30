@@ -8,9 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/27 14:07
- * @Description: 部门VO
+ * 部门VO
+ *
+ * @author xuesong.lei
+ * @since 2026/2/27 14:07
  */
 @Data
 @Schema(description = "部门VO")

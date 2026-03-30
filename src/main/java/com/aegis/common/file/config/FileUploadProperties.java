@@ -6,9 +6,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/27 21:24
- * @Description: 文件上传配置
+ * 文件上传配置
+ *
+ * @author xuesong.lei
+ * @since 2025/08/27 21:24
  */
 @Data
 @Component

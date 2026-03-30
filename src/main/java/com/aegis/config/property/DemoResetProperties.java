@@ -5,9 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/3 11:57
- * @Description: 演示数据重置配置属性
+ * 演示数据重置配置属性
+ *
+ * @author xuesong.lei
+ * @since 2026/2/3 11:57
  */
 @Data
 @Component

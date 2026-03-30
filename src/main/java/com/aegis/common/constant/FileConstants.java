@@ -12,9 +12,10 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/28 11:05
- * @Description: 文件常量
+ * 文件常量
+ *
+ * @author xuesong.lei
+ * @since 2025/8/28 11:05
  */
 public class FileConstants {
 

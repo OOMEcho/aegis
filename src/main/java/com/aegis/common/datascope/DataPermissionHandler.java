@@ -14,9 +14,10 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/10 14:08
- * @Description: 数据权限处理器
+ * 数据权限处理器
+ *
+ * @author xuesong.lei
+ * @since 2025/09/10 14:08
  */
 @Component
 @RequiredArgsConstructor

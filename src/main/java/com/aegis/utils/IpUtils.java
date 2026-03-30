@@ -7,9 +7,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/20 12:25
- * @Description: Ip工具类
+ * Ip工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/20 12:25
  */
 public final class IpUtils {
 

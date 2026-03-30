@@ -7,9 +7,10 @@ import com.aegis.modules.permission.domain.vo.PermissionVO;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/12 23:18
- * @Description: 权限业务层
+ * 权限业务层
+ *
+ * @author xuesong.lei
+ * @since 2026/1/12 23:18
  */
 public interface PermissionService {
 

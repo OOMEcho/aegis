@@ -5,9 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/20 14:28
- * @Description: 时间工具类
+ * 时间工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/20 14:28
  */
 public final class DateUtils {
 

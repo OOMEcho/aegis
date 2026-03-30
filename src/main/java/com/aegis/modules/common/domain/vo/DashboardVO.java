@@ -4,9 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/2
- * @Description: Dashboard统计VO
+ * Dashboard统计VO
+ *
+ * @author xuesong.lei
+ * @since 2026/2/2
  */
 @Data
 @Schema(description = "Dashboard统计VO")

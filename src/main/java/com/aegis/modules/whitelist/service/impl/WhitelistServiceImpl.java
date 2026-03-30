@@ -21,9 +21,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 10:35
- * @Description: 白名单业务实现层
+ * 白名单业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 10:35
  */
 @Service
 @RequiredArgsConstructor

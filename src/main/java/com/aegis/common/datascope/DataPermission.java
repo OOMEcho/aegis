@@ -9,9 +9,10 @@ import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/10 14:08
- * @Description: 数据权限注解
+ * 数据权限注解
+ *
+ * @author xuesong.lei
+ * @since 2025/09/10 14:08
  */
 @Target({TYPE, METHOD})
 @Retention(RUNTIME)

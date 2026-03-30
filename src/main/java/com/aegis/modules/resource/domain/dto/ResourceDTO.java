@@ -9,9 +9,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/12 23:26
- * @Description: 资源DTO
+ * 资源DTO
+ *
+ * @author xuesong.lei
+ * @since 2026/1/12 23:26
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

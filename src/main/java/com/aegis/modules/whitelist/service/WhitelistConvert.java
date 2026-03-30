@@ -6,9 +6,10 @@ import com.aegis.modules.whitelist.domain.vo.WhitelistVO;
 import org.mapstruct.Mapper;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 22:27
- * @Description: 白名单实体类转换
+ * 白名单实体类转换
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 22:27
  */
 @Mapper(componentModel = "spring")
 public interface WhitelistConvert {

@@ -10,11 +10,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.io.Serializable;
 
 /**
-* @Author: xuesong.lei
-* @Date: 2026-01-13
-* @Description: 角色与权限关联表
-* @TableName t_role_permission
-*/
+ * 角色与权限关联表
+ *
+ * @author xuesong.lei
+ * @since 2026-01-13
+ * @TableName t_role_permission
+ */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)

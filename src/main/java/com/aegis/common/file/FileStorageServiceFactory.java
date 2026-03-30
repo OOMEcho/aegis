@@ -10,9 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.Map;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/27 21:24
- * @Description: 文件存储服务工厂
+ * 文件存储服务工厂
+ *
+ * @author xuesong.lei
+ * @since 2025/08/27 21:24
  */
 @Service
 @RequiredArgsConstructor

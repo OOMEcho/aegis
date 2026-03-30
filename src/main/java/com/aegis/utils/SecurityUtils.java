@@ -11,9 +11,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/22 14:20
- * @Description: Security工具类
+ * Security工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/22 14:20
  */
 public final class SecurityUtils {
 

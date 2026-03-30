@@ -22,9 +22,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/12 23:18
- * @Description: 权限业务实现层
+ * 权限业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2026/1/12 23:18
  */
 @Service
 @RequiredArgsConstructor

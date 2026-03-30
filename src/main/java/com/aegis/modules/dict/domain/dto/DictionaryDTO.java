@@ -12,9 +12,10 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Null;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 16:17
- * @Description: 字典DTO
+ * 字典DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 16:17
  */
 @Data
 @Schema(description = "字典DTO")

@@ -7,8 +7,8 @@ import org.jsoup.safety.Safelist;
  * HTML内容清理工具类
  * 用于清理富文本内容，防止XSS攻击
  *
- * @Author: xuesong.lei
- * @Date: 2025/9/16
+ * @author xuesong.lei
+ * @since 2025/9/16
  */
 public final class HtmlSanitizer {
 

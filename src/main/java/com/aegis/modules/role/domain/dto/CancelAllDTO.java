@@ -7,9 +7,10 @@ import jakarta.validation.constraints.NotNull;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/13 18:41
- * @Description: 批量选择角色授权用户DTO
+ * 批量选择角色授权用户DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/09/13 18:41
  */
 @Data
 @Schema(description = "批量选择角色授权用户DTO")

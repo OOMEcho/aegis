@@ -13,9 +13,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026-01-13
- * @Description: 功能权限表
+ * 功能权限表
+ *
+ * @author xuesong.lei
+ * @since 2026-01-13
  * @TableName t_permission
  */
 @Data

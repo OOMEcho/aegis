@@ -5,9 +5,10 @@ import org.slf4j.MDC;
 import java.util.UUID;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/12/01 09:26
- * @Description: TraceId 工具类，用于全链路日志追踪
+ * TraceId 工具类，用于全链路日志追踪
+ *
+ * @author xuesong.lei
+ * @since 2025/12/01 09:26
  */
 public final class TraceIdUtils {
 

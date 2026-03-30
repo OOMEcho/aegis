@@ -24,9 +24,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/25 22:30
- * @Description: SpringSecurity配置类
+ * SpringSecurity配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/8/25 22:30
  */
 @Configuration
 @RequiredArgsConstructor

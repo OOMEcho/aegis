@@ -10,9 +10,10 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/13 14:40
- * @Description: 菜单DTO
+ * 菜单DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/13 14:40
  */
 @Data
 @Schema(description = "菜单DTO")

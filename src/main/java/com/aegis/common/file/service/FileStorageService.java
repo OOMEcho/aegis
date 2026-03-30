@@ -7,9 +7,10 @@ import java.io.InputStream;
 import java.time.Duration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/27 21:24
- * @Description: 文件存储服务接口
+ * 文件存储服务接口
+ *
+ * @author xuesong.lei
+ * @since 2025/08/27 21:24
  */
 public interface FileStorageService {
 

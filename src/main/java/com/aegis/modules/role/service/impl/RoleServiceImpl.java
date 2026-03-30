@@ -32,9 +32,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/10 14:07
- * @Description: 角色业务实现层
+ * 角色业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/10 14:07
  */
 @Service
 @RequiredArgsConstructor

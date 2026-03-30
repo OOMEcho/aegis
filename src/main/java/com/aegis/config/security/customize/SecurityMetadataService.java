@@ -21,9 +21,10 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/24 10:04
- * @Description: 安全元数据服务，提供URL权限映射
+ * 安全元数据服务，提供URL权限映射
+ *
+ * @author xuesong.lei
+ * @since 2025/9/24 10:04
  */
 @Component
 @RequiredArgsConstructor

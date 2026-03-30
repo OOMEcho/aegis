@@ -4,9 +4,10 @@ import com.aegis.common.mask.MaskTypeEnum;
 import org.springframework.util.StringUtils;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/20 13:45
- * @Description: 数据脱敏工具类
+ * 数据脱敏工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/20 13:45
  */
 public final class DataMaskUtil {
 

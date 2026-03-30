@@ -13,9 +13,10 @@ import org.springframework.stereotype.Service;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 16:14
- * @Description: 短信业务实现层
+ * 短信业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 16:14
  */
 @Service
 @RequiredArgsConstructor

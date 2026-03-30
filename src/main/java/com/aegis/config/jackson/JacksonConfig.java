@@ -6,9 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 16:08
- * @Description: Jackson 配置类，解决前端 Long 类型精度丢失问题
+ * Jackson 配置类，解决前端 Long 类型精度丢失问题
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 16:08
  */
 @Configuration
 public class JacksonConfig {

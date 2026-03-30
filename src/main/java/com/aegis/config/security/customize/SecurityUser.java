@@ -12,9 +12,10 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/30 22:00
- * @Description: Security用户VO
+ * Security用户VO
+ *
+ * @author xuesong.lei
+ * @since 2025/8/30 22:00
  */
 @Data
 public class SecurityUser implements UserDetails {

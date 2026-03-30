@@ -8,9 +8,10 @@ import java.io.Serial;
 import java.io.Serializable;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 13:08
- * @Description: 统一返回格式
+ * 统一返回格式
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 13:08
  */
 @Data
 @Schema(description = "统一返回格式")

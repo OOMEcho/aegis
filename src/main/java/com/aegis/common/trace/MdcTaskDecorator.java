@@ -6,9 +6,10 @@ import org.springframework.core.task.TaskDecorator;
 import java.util.Map;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/12/01 09:32
- * @Description: MDC 上下文传递装饰器，用于在异步任务中传递 TraceId
+ * MDC 上下文传递装饰器，用于在异步任务中传递 TraceId
+ *
+ * @author xuesong.lei
+ * @since 2025/12/01 09:32
  */
 public class MdcTaskDecorator implements TaskDecorator {
 

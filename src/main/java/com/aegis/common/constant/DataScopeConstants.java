@@ -1,9 +1,10 @@
 package com.aegis.common.constant;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/10 14:15
- * @Description: 数据权限常量类
+ * 数据权限常量类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/10 14:15
  */
 public class DataScopeConstants {
 

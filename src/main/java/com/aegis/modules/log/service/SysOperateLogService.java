@@ -7,9 +7,10 @@ import com.aegis.modules.log.domain.entity.SysOperateLog;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/23 14:50
- * @Description: 系统操作日志业务层
+ * 系统操作日志业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/8/23 14:50
  */
 public interface SysOperateLogService {
 

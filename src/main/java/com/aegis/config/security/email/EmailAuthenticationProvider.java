@@ -17,9 +17,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/3 11:16
- * @Description: 邮箱登录认证逻辑
+ * 邮箱登录认证逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/9/3 11:16
  */
 @Component
 @RequiredArgsConstructor

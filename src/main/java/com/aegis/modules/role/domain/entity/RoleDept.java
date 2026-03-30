@@ -10,9 +10,10 @@ import lombok.experimental.Accessors;
 import java.io.Serializable;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:48:29
- * @Description: 角色和部门关联表
+ * 角色和部门关联表
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:48:29
  * @TableName t_role_dept
  */
 @Data

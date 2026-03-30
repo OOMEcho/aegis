@@ -17,9 +17,10 @@ import java.util.Date;
 import java.util.Objects;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/28 21:24
- * @Description: 抽象文件存储服务，提供通用方法
+ * 抽象文件存储服务，提供通用方法
+ *
+ * @author xuesong.lei
+ * @since 2025/08/28 21:24
  */
 public abstract class AbstractFileStorageService implements FileStorageService {
 

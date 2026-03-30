@@ -14,9 +14,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 22:55
- * @Description: 可重复读取的Request包装器
+ * 可重复读取的Request包装器
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 22:55
  */
 public class RepeatableHttpServletRequestWrapper extends HttpServletRequestWrapper {
 

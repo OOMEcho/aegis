@@ -22,9 +22,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 10:32
- * @Description: 个人接口
+ * 个人接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 10:32
  */
 @Tag(name = "个人接口")
 @RestController

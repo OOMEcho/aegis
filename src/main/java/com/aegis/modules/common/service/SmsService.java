@@ -1,9 +1,10 @@
 package com.aegis.modules.common.service;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 16:14
- * @Description: 短信业务层
+ * 短信业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 16:14
  */
 public interface SmsService {
 

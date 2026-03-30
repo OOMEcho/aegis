@@ -1,9 +1,10 @@
 package com.aegis.common.constant;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 15:08
- * @Description: 通用常量
+ * 通用常量
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 15:08
  */
 public class CommonConstants {
 

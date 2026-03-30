@@ -10,9 +10,10 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/31 22:51
- * @Description: 角色数据权限DTO
+ * 角色数据权限DTO
+ *
+ * @author xuesong.lei
+ * @since 2026/1/31 22:51
  */
 @Data
 @Schema(description = "角色数据权限DTO")

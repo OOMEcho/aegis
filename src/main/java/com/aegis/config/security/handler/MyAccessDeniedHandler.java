@@ -21,9 +21,10 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 22:35
- * @Description: 权限拒绝处理逻辑
+ * 权限拒绝处理逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 22:35
  */
 @Component
 @RequiredArgsConstructor

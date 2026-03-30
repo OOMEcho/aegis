@@ -8,9 +8,10 @@ import org.springframework.util.Assert;
 import java.util.Collection;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 21:54
- * @Description: 邮箱Authentication实现
+ * 邮箱Authentication实现
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 21:54
  */
 public class EmailAuthenticationToken extends AbstractAuthenticationToken {
 

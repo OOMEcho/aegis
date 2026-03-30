@@ -11,9 +11,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 13:08
- * @Description: 统一返回结果包装类
+ * 统一返回结果包装类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 13:08
  */
 @RestControllerAdvice(basePackages = "com.aegis")
 public class ResultResponseWrapper implements ResponseBodyAdvice<Object> {
