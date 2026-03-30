@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/23 14:48
- * @Description: 系统操作日志接口
+ * 系统操作日志接口
+ *
+ * @author xuesong.lei
+ * @since 2025/8/23 14:48
  */
 @RestController
 @Api(tags = "系统操作日志接口")

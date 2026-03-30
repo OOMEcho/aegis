@@ -6,9 +6,10 @@ import cn.idev.excel.enums.CellDataTypeEnum;
 import cn.idev.excel.metadata.data.WriteCellData;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 21:23
- * @Description: 业务类型转换类
+ * 业务类型转换类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 21:23
  */
 public class BusinessTypeConvert implements Converter<Integer> {
 

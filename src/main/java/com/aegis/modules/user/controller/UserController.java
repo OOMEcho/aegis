@@ -16,9 +16,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/4 13:43
- * @Description: 用户接口
+ * 用户接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/4 13:43
  */
 @RestController
 @Api(tags = "用户接口")

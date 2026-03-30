@@ -24,9 +24,10 @@ import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/31 20:11
- * @Description: 滑块验证码工具类
+ * 滑块验证码工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/8/31 20:11
  */
 @Slf4j
 @Component

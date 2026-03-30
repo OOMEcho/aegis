@@ -3,9 +3,10 @@ package com.aegis.modules.common.service;
 import com.aegis.modules.common.domain.vo.DemoResetVO;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/3 11:57
- * @Description: 演示数据重置服务
+ * 演示数据重置服务
+ *
+ * @author xuesong.lei
+ * @since 2026/2/3 11:57
  */
 public interface DemoResetService {
 

@@ -1,9 +1,10 @@
 package com.aegis.common.log;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 15:24
- * @Description: 业务类型枚举
+ * 业务类型枚举
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 15:24
  */
 public enum BusinessType {
 

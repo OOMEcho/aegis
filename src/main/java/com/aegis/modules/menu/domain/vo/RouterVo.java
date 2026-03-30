@@ -9,9 +9,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 11:00
- * @Description: 前端路由VO
+ * 前端路由VO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 11:00
  */
 @Data
 @ApiModel("前端路由VO")

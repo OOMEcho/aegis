@@ -21,9 +21,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:48:46
- * @Description: 登录日志表
+ * 登录日志表
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:48:46
  * @TableName t_sys_login_log
  */
 @Data

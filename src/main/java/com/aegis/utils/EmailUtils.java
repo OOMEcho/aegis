@@ -23,9 +23,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/24 15:10
- * @Description: 邮箱工具类, 支持多种邮件发送方式：简单文本、HTML、批量发送等
+ * 邮箱工具类, 支持多种邮件发送方式：简单文本、HTML、批量发送等
+ *
+ * @author xuesong.lei
+ * @since 2025/8/24 15:10
  */
 @Slf4j
 @Component

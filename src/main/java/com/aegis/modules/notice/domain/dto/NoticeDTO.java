@@ -17,9 +17,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/16 21:49
- * @Description: 通知DTO
+ * 通知DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/16 21:49
  */
 @Data
 @ApiModel("通知DTO")

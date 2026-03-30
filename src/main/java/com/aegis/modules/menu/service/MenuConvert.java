@@ -6,9 +6,10 @@ import com.aegis.modules.menu.domain.vo.MenuVO;
 import org.mapstruct.Mapper;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/13 16:20
- * @Description: 菜单类型转换类
+ * 菜单类型转换类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/13 16:20
  */
 @Mapper(componentModel = "spring")
 public interface MenuConvert {

@@ -17,9 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 16:08
- * @Description: 字典接口
+ * 字典接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 16:08
  */
 @RestController
 @Api(tags = "字典接口")

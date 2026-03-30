@@ -7,9 +7,10 @@ import com.aegis.modules.dept.domain.vo.DeptVO;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/9 14:28
- * @Description: 部门业务层
+ * 部门业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/9 14:28
  */
 public interface DeptService {
 

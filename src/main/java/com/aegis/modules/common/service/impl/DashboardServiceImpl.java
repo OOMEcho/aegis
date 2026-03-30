@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/2 15:17
- * @Description: 首页业务实现层
+ * 首页业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2026/2/2 15:17
  */
 @Service
 @RequiredArgsConstructor

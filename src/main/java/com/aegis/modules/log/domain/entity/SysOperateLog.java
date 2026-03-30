@@ -23,9 +23,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-21 22:39:10
- * @Description: 操作日志表
+ * 操作日志表
+ *
+ * @author xuesong.lei
+ * @since 2025-08-21 22:39:10
  * @TableName t_sys_operate_log
  */
 @Data

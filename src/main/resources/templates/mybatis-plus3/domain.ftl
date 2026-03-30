@@ -33,9 +33,10 @@ import java.util.Date;
 </#if>
 
 /**
-* @Author: xuesong.lei
-* @Date: ${.now?string('yyyy-MM-dd HH:mm:ss')}
-* @Description: ${tableClass.remark!}
+* ${tableClass.remark!}
+*
+* @author: xuesong.lei
+* @since: ${.now?string('yyyy-MM-dd HH:mm')}
 * @TableName ${tableClass.tableName}
 */
 @Data

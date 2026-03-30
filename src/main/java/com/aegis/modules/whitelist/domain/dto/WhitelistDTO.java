@@ -13,9 +13,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 11:44
- * @Description: 白名单DTO
+ * 白名单DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 11:44
  */
 @Data
 @ApiModel("白名单DTO")

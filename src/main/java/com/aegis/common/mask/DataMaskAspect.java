@@ -23,9 +23,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/20 13:50
- * @Description: 数据脱敏切面
+ * 数据脱敏切面
+ *
+ * @author xuesong.lei
+ * @since 2025/9/20 13:50
  */
 @Slf4j
 @Aspect

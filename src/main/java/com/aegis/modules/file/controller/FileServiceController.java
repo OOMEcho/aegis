@@ -24,9 +24,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/28 21:24
- * @Description: 文件服务接口
+ * 文件服务接口
+ *
+ * @author xuesong.lei
+ * @since 2025/8/28 21:24
  */
 @Slf4j
 @RestController

@@ -5,9 +5,10 @@ import com.aegis.modules.user.domain.dto.UserDTO;
 import com.aegis.modules.user.domain.vo.UserVO;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/4 22:50
- * @Description: 用户业务层
+ * 用户业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/4 22:50
  */
 public interface UserService {
 

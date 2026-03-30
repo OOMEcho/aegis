@@ -17,9 +17,10 @@ import java.util.Base64;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/14 17:34
- * @Description: RSA加密工具类
+ * RSA加密工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/09/14 17:34
  */
 @Slf4j
 @Component

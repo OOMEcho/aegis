@@ -18,9 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 22:35
- * @Description: 匿名用户访问无权限资源时（即未登录，或者登录状态过期失效）的处理逻辑
+ * 匿名用户访问无权限资源时（即未登录，或者登录状态过期失效）的处理逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 22:35
  */
 @Component
 @RequiredArgsConstructor

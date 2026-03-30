@@ -32,9 +32,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/10 14:08
- * @Description: 数据权限拦截器
+ * 数据权限拦截器
+ *
+ * @author xuesong.lei
+ * @since 2025/09/10 14:08
  */
 @Slf4j
 public class DataPermissionInterceptor implements InnerInterceptor {

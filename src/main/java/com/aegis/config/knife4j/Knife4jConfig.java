@@ -10,9 +10,10 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 14:14
- * @Description: Knife4j配置类
+ * Knife4j配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 14:14
  */
 @Configuration
 public class Knife4jConfig {

@@ -19,9 +19,10 @@ import java.nio.file.Files;
 import java.time.Duration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/27 21:24
- * @Description: 本地文件存储服务实现
+ * 本地文件存储服务实现
+ *
+ * @author xuesong.lei
+ * @since 2025/08/27 21:24
  */
 @Slf4j
 @Service(FileConstants.LOCAL)

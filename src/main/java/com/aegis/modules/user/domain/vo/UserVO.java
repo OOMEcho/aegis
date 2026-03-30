@@ -14,9 +14,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/13 18:44
- * @Description: 用户VO
+ * 用户VO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/13 18:44
  */
 @Data
 @ApiModel("用户VO")

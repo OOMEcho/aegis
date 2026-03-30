@@ -16,9 +16,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 23:05
- * @Description: 自定义决策管理器
+ * 自定义决策管理器
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 23:05
  */
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {

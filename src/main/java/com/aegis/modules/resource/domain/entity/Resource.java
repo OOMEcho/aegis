@@ -14,9 +14,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026-01-11 15:58:32
- * @Description: 资源(URL)与权限映射表
+ * 资源(URL)与权限映射表
+ *
+ * @author xuesong.lei
+ * @since 2026-01-11 15:58:32
  * @TableName t_resource
  */
 @Data

@@ -9,9 +9,10 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotNull;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/13 18:41
- * @Description: 用户和角色DTO
+ * 用户和角色DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/09/13 18:41
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

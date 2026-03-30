@@ -30,9 +30,10 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/3 14:42
- * @Description: 演示数据重置服务实现层
+ * 演示数据重置服务实现层
+ *
+ * @author xuesong.lei
+ * @since 2026/2/3 14:42
  */
 @Slf4j
 @Service

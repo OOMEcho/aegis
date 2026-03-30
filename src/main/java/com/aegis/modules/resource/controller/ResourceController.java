@@ -15,9 +15,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/12 23:11
- * @Description: 资源管理接口
+ * 资源管理接口
+ *
+ * @author xuesong.lei
+ * @since 2026/1/12 23:11
  */
 @RestController
 @Api(tags = "资源管理接口")

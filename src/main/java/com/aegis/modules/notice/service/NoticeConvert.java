@@ -8,9 +8,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/16 22:37
- * @Description: 通知类型转换类
+ * 通知类型转换类
+ *
+ * @author xuesong.lei
+ * @since 2025/9/16 22:37
  */
 @Mapper(componentModel = "spring")
 public interface NoticeConvert {

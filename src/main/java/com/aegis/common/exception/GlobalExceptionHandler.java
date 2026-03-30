@@ -17,9 +17,10 @@ import javax.validation.ValidationException;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 17:20
- * @Description: 全局异常处理
+ * 全局异常处理
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 17:20
  */
 @Slf4j
 @RestControllerAdvice

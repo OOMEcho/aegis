@@ -5,9 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/2
- * @Description: Dashboard统计VO
+ * Dashboard统计VO
+ *
+ * @author xuesong.lei
+ * @since 2026/2/2
  */
 @Data
 @ApiModel("Dashboard统计VO")

@@ -14,9 +14,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:51:58
- * @Description: 字典表
+ * 字典表
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:51:58
  * @TableName t_dictionary
  */
 @Data

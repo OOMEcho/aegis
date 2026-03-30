@@ -16,9 +16,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/10 14:11
- * @Description: 菜单接口
+ * 菜单接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/10 14:11
  */
 @RestController
 @Api(tags = "菜单接口")

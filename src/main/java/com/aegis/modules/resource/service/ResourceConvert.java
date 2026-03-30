@@ -6,9 +6,10 @@ import com.aegis.modules.resource.domain.vo.ResourceVO;
 import org.mapstruct.Mapper;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/12 23:20
- * @Description: 资源类型转换类
+ * 资源类型转换类
+ *
+ * @author xuesong.lei
+ * @since 2026/1/12 23:20
  */
 @Mapper(componentModel = "spring")
 public interface ResourceConvert {

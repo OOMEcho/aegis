@@ -5,9 +5,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/23 18:08
- * @Description: 分页DTO
+ * 分页DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/08/23 18:08
  */
 @Data
 @ApiModel("分页DTO")

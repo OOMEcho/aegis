@@ -7,9 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/23 18:08
- * @Description: Mybatis-Plus 自动填充配置
+ * Mybatis-Plus 自动填充配置
+ *
+ * @author xuesong.lei
+ * @since 2025/08/23 18:08
  */
 @Component
 public class MPMetaObjectHandler implements MetaObjectHandler {

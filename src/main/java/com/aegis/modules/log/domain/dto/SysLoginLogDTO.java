@@ -10,9 +10,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/7 21:30
- * @Description: 登录日志DTO
+ * 登录日志DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/7 21:30
  */
 @Data
 @ApiModel("登录日志DTO")

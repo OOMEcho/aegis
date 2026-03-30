@@ -15,9 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/3 11:57
- * @Description: 演示数据重置接口
+ * 演示数据重置接口
+ *
+ * @author xuesong.lei
+ * @since 2026/2/3 11:57
  */
 @Api(tags = "演示数据重置接口")
 @RestController

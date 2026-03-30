@@ -4,9 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/07 16:24
- * @Description: 数据变更事件
+ * 数据变更事件
+ *
+ * @author xuesong.lei
+ * @since 2025/09/07 16:24
  */
 @Getter
 @AllArgsConstructor

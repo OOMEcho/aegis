@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/2 15:16
- * @Description: 首页接口
+ * 首页接口
+ *
+ * @author xuesong.lei
+ * @since 2026/2/2 15:16
  */
 @Api(tags = "首页接口")
 @RestController

@@ -8,9 +8,10 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/13 18:48
- * @Description: 角色对应的菜单树或部门树
+ * 角色对应的菜单树或部门树
+ *
+ * @author xuesong.lei
+ * @since 2025/9/13 18:48
  */
 @Data
 @ApiModel("角色对应的菜单树或部门树")

@@ -17,9 +17,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/23 18:08
- * @Description: 分页工具类
+ * 分页工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/23 18:08
  */
 public final class PageUtils {
 

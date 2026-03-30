@@ -8,9 +8,10 @@ import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/11 15:30
- * @Description: 数据权限AOP切面
+ * 数据权限AOP切面
+ *
+ * @author xuesong.lei
+ * @since 2025/09/11 15:30
  */
 @Slf4j
 @Aspect

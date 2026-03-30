@@ -9,9 +9,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/16 22:06
- * @Description: 通知VO
+ * 通知VO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/16 22:06
  */
 @Data
 @ApiModel("通知VO")

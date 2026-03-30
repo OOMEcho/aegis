@@ -15,9 +15,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-09-04 13:46:14
- * @Description: 白名单表
+ * 白名单表
+ *
+ * @author xuesong.lei
+ * @since 2025-09-04 13:46:14
  * @TableName t_whitelist
  */
 @Data

@@ -10,9 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 10:51
- * @Description: 个人业务层
+ * 个人业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 10:51
  */
 public interface ProfileService {
 

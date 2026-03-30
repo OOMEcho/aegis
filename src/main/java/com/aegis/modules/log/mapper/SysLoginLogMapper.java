@@ -8,9 +8,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:48:46
- * @Description: 针对表【t_sys_login_log(登录日志表)】的数据库操作Mapper
+ * 针对表【t_sys_login_log(登录日志表)】的数据库操作Mapper
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:48:46
  * @Entity: com.aegis.modules.log.domain.entity.SysLoginLog
  */
 public interface SysLoginLogMapper extends BaseMapper<SysLoginLog> {

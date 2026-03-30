@@ -6,9 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 13:08
- * @Description: 自定义校验逻辑
+ * 自定义校验逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 13:08
  */
 public class EnumStringValidator implements ConstraintValidator<EnumString, String> {
 

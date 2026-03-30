@@ -30,9 +30,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 20:32
- * @Description: 将表单登录替换为JSON格式登录，多种登录方式集合，并增加滑块验证码校验
+ * 将表单登录替换为JSON格式登录，多种登录方式集合，并增加滑块验证码校验
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 20:32
  */
 public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

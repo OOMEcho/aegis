@@ -5,9 +5,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/21 15:35
- * @Description: 定时任务配置
+ * 定时任务配置
+ *
+ * @author xuesong.lei
+ * @since 2025/9/21 15:35
  */
 @Configuration
 @EnableScheduling

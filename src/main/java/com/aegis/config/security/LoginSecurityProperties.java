@@ -5,9 +5,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/1/11
- * @Description: 登录安全配置类
+ * 登录安全配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/1/11
  */
 @Data
 @Configuration

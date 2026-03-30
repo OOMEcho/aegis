@@ -6,9 +6,10 @@ import com.aegis.modules.dict.domain.vo.DictionaryVO;
 import org.mapstruct.Mapper;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/08 22:23
- * @Description: 字典实体类转换
+ * 字典实体类转换
+ *
+ * @author xuesong.lei
+ * @since 2025/09/08 22:23
  */
 @Mapper(componentModel = "spring")
 public interface DictionaryConvert {

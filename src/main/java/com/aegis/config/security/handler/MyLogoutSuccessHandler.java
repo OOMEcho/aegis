@@ -17,9 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 22:47
- * @Description: 注销登录处理逻辑
+ * 注销登录处理逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 22:47
  */
 @Component
 @RequiredArgsConstructor

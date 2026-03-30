@@ -2,9 +2,10 @@ package com.aegis.common.limiter;
 
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/19 10:29
- * @Description: 限流类型
+ * 限流类型
+ *
+ * @author xuesong.lei
+ * @since 2025/09/19 10:29
  */
 public enum LimitType {
 

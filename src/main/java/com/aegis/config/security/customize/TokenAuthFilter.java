@@ -22,9 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 23:10
- * @Description: Token认证过滤器
+ * Token认证过滤器
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 23:10
  */
 @Component
 @RequiredArgsConstructor

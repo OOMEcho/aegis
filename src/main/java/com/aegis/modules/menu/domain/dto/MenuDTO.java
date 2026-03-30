@@ -12,9 +12,10 @@ import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/13 14:40
- * @Description: 菜单DTO
+ * 菜单DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/13 14:40
  */
 @Data
 @ApiModel("菜单DTO")

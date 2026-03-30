@@ -22,9 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 10:32
- * @Description: 个人接口
+ * 个人接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 10:32
  */
 @Api(tags = "个人接口")
 @RestController

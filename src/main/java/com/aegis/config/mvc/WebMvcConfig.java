@@ -8,9 +8,10 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/27 21:24
- * @Description: 静态资源配置
+ * 静态资源配置
+ *
+ * @author xuesong.lei
+ * @since 2025/08/27 21:24
  */
 @Configuration
 @RequiredArgsConstructor

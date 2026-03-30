@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/16 21:59
- * @Description: 通知用户接口
+ * 通知用户接口
+ *
+ * @author xuesong.lei
+ * @since 2025/9/16 21:59
  */
 @RestController
 @Api(tags = "通知用户接口")

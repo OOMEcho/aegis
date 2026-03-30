@@ -7,9 +7,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/07 16:24
- * @Description: 数据变更发布器
+ * 数据变更发布器
+ *
+ * @author xuesong.lei
+ * @since 2025/09/07 16:24
  */
 @Component
 @RequiredArgsConstructor

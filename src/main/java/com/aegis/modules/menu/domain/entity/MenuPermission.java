@@ -11,11 +11,12 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.Serializable;
 
 /**
-* @Author: xuesong.lei
-* @Date: 2026-01-11 16:00:25
-* @Description: 菜单与权限关联表
-* @TableName t_menu_permission
-*/
+ * 菜单与权限关联表
+ *
+ * @author xuesong.lei
+ * @since 2026-01-11 16:00:25
+ * @TableName t_menu_permission
+ */
 @Data
 @Accessors(chain = true)
 @EqualsAndHashCode(callSuper = false)

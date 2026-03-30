@@ -3,9 +3,10 @@ package com.aegis.common.validator;
 import javax.validation.groups.Default;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 13:08
- * @Description: 分组校验
+ * 分组校验
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 13:08
  */
 public interface ValidGroup extends Default {
 

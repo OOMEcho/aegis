@@ -27,9 +27,10 @@ import java.time.Duration;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/27 21:45
- * @Description: 腾讯云OSS文件存储服务实现
+ * 腾讯云OSS文件存储服务实现
+ *
+ * @author xuesong.lei
+ * @since 2025/8/27 21:45
  */
 @Slf4j
 @Service(FileConstants.TENCENT)

@@ -1,9 +1,10 @@
 package com.aegis.common.constant;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/31 19:57
- * @Description: Redis常量
+ * Redis常量
+ *
+ * @author xuesong.lei
+ * @since 2025/8/31 19:57
  */
 public class RedisConstants {
 

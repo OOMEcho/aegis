@@ -10,9 +10,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/3 10:24
- * @Description: CORS 跨域配置属性
+ * CORS 跨域配置属性
+ *
+ * @author xuesong.lei
+ * @since 2026/2/3 10:24
  */
 @Data
 @Component

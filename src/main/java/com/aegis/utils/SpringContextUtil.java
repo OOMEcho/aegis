@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 15:24
- * @Description: Spring上下文工具类，用于在非Spring管理的类中获取Spring容器中的Bean
+ * Spring上下文工具类，用于在非Spring管理的类中获取Spring容器中的Bean
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 15:24
  */
 @Getter
 @Component

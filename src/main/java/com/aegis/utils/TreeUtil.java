@@ -8,9 +8,10 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/20 15:24
- * @Description: 树形工具类
+ * 树形工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/20 15:24
  */
 public final class TreeUtil {
 

@@ -26,9 +26,10 @@ import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 21:32
- * @Description: 日志记录切面
+ * 日志记录切面
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 21:32
  */
 @Aspect
 @Slf4j

@@ -6,9 +6,10 @@ import com.aegis.modules.menu.domain.vo.MenuVO;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/10 14:11
- * @Description: 菜单业务层
+ * 菜单业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/10 14:11
  */
 public interface MenuService {
 

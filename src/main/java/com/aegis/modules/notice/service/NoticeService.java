@@ -5,9 +5,10 @@ import com.aegis.modules.notice.domain.dto.NoticeDTO;
 import com.aegis.modules.notice.domain.vo.NoticeAdminVO;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/10 14:09
- * @Description: 通知业务层
+ * 通知业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/10 14:09
  */
 public interface NoticeService {
 

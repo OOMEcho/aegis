@@ -7,9 +7,10 @@ import javax.validation.ConstraintValidatorContext;
 import java.lang.reflect.Field;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/13 15:43
- * @Description: 条件必填字段校验逻辑
+ * 条件必填字段校验逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/09/13 15:43
  */
 public class ConditionalRequiredFieldsValidator implements ConstraintValidator<ConditionalRequiredFields, Object> {
 

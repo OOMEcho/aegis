@@ -21,9 +21,10 @@ import org.springframework.stereotype.Service;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/16 22:00
- * @Description: 通知用户业务实现层
+ * 通知用户业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/16 22:00
  */
 @Service
 @RequiredArgsConstructor

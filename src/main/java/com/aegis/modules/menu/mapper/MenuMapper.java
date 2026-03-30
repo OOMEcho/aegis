@@ -7,9 +7,10 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:47:13
- * @Description: 针对表【t_menu(菜单表)】的数据库操作Mapper
+ * 针对表【t_menu(菜单表)】的数据库操作Mapper
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:47:13
  * @Entity: com.aegis.modules.menu.domain.entity.Menu
  */
 public interface MenuMapper extends BaseMapper<Menu> {

@@ -10,9 +10,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/23 18:08
- * @Description: 分页响应VO
+ * 分页响应VO
+ *
+ * @author xuesong.lei
+ * @since 2025/08/23 18:08
  */
 @Data
 @ApiModel("分页响应VO")

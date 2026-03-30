@@ -10,9 +10,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/28 10:12
- * @Description: 阿里云OSS配置类
+ * 阿里云OSS配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/8/28 10:12
  */
 @Configuration
 @ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "aliyun_oss")

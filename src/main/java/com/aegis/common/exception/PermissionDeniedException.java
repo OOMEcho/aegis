@@ -5,9 +5,10 @@ import org.springframework.security.access.AccessDeniedException;
 import java.util.Set;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/1/17 22:41
- * @Description: 携带权限详情的访问拒绝异常
+ * 携带权限详情的访问拒绝异常
+ *
+ * @author xuesong.lei
+ * @since 2026/1/17 22:41
  */
 @Getter
 public class PermissionDeniedException extends AccessDeniedException {

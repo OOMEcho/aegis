@@ -5,9 +5,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/21 21:32
- * @Description: 自定义异常
+ * 自定义异常
+ *
+ * @author xuesong.lei
+ * @since 2025/08/21 21:32
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

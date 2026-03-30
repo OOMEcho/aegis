@@ -3,9 +3,10 @@ package com.aegis.common.mask;
 import lombok.Getter;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/20 13:45
- * @Description: 脱敏类型枚举
+ * 脱敏类型枚举
+ *
+ * @author xuesong.lei
+ * @since 2025/9/20 13:45
  */
 @Getter
 public enum MaskTypeEnum {

@@ -5,9 +5,10 @@ import com.aegis.modules.whitelist.domain.dto.WhitelistDTO;
 import com.aegis.modules.whitelist.domain.vo.WhitelistVO;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 10:35
- * @Description: 白名单业务层
+ * 白名单业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 10:35
  */
 public interface WhitelistService {
 

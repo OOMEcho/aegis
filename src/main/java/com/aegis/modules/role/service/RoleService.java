@@ -9,9 +9,10 @@ import com.aegis.modules.user.domain.vo.UserVO;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/10 14:07
- * @Description: 角色业务层
+ * 角色业务层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/10 14:07
  */
 public interface RoleService {
 

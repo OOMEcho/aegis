@@ -5,9 +5,10 @@ import lombok.Data;
 import java.util.Set;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/10 14:08
- * @Description: 数据权限上下文
+ * 数据权限上下文
+ *
+ * @author xuesong.lei
+ * @since 2025/09/10 14:08
  */
 @Data
 public class DataPermissionContext {

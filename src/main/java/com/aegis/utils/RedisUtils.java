@@ -13,9 +13,10 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/20 13:08
- * @Description: Redis工具类
+ * Redis工具类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/20 13:08
  */
 @Component
 @RequiredArgsConstructor

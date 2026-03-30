@@ -15,9 +15,10 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-09-09 15:53:06
- * @Description: 文件元数据表
+ * 文件元数据表
+ *
+ * @author xuesong.lei
+ * @since 2025-09-09 15:53:06
  * @TableName t_file_metadata
  */
 @Data

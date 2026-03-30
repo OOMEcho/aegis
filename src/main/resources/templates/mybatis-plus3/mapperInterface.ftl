@@ -7,9 +7,10 @@ import ${tableClass.fullClassName};
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
-* @Author: xuesong.lei
-* @Date: ${.now?string('yyyy-MM-dd HH:mm:ss')}
-* @Description: 针对表【${tableClass.tableName}<#if tableClass.remark?has_content>(${tableClass.remark!})</#if>】的数据库操作Mapper
+* 针对表【${tableClass.tableName}<#if tableClass.remark?has_content>(${tableClass.remark!})</#if>】的数据库操作Mapper
+*
+* @author: xuesong.lei
+* @since: ${.now?string('yyyy-MM-dd HH:mm')}
 * @Entity: ${tableClass.fullClassName}
 */
 public interface ${mapperInterface.fileName} extends BaseMapper<${tableClass.shortClassName}> {

@@ -14,9 +14,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025-08-30 10:47:13
- * @Description: 菜单表
+ * 菜单表
+ *
+ * @author xuesong.lei
+ * @since 2025-08-30 10:47:13
  * @TableName t_menu
  */
 @Data

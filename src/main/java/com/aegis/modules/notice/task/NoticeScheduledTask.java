@@ -12,9 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/18 14:15
- * @Description: 通知定时任务器
+ * 通知定时任务器
+ *
+ * @author xuesong.lei
+ * @since 2025/9/18 14:15
  */
 @Slf4j
 @Component

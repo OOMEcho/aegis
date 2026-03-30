@@ -8,9 +8,10 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/09/19 15:09
- * @Description: 异步线程处理配置类
+ * 异步线程处理配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/09/19 15:09
  */
 @Configuration
 public class SyncConfiguration {

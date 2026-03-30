@@ -9,9 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/08/28 10:24
- * @Description: Minio配置类
+ * Minio配置类
+ *
+ * @author xuesong.lei
+ * @since 2025/08/28 10:24
  */
 @Configuration
 @ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "minio")

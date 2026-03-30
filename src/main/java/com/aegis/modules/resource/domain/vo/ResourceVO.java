@@ -8,9 +8,10 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2026/2/27 14:07
- * @Description: 资源VO
+ * 资源VO
+ *
+ * @author xuesong.lei
+ * @since 2026/2/27 14:07
  */
 @Data
 @ApiModel("资源VO")

@@ -11,9 +11,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/14 15:46
- * @Description: 用户注册DTO
+ * 用户注册DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/14 15:46
  */
 @Data
 @ApiModel("用户注册DTO")

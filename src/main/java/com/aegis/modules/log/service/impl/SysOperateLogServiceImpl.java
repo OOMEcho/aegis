@@ -19,9 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/23 14:50
- * @Description: 系统操作日志业务实现层
+ * 系统操作日志业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2025/8/23 14:50
  */
 @Slf4j
 @Service

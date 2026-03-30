@@ -18,9 +18,10 @@ import java.util.concurrent.TimeUnit;
 import java.security.SecureRandom;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/3 15:18
- * @Description: 邮箱业务实现层
+ * 邮箱业务实现层
+ *
+ * @author xuesong.lei
+ * @since 2025/9/3 15:18
  */
 @Service
 @RequiredArgsConstructor

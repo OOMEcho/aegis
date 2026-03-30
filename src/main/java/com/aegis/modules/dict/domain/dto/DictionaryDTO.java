@@ -13,9 +13,10 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/8 16:17
- * @Description: 字典DTO
+ * 字典DTO
+ *
+ * @author xuesong.lei
+ * @since 2025/9/8 16:17
  */
 @Data
 @ApiModel("字典DTO")

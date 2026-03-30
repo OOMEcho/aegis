@@ -23,9 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/9/2 22:39
- * @Description: 登录成功逻辑
+ * 登录成功逻辑
+ *
+ * @author xuesong.lei
+ * @since 2025/9/2 22:39
  */
 @Component
 @RequiredArgsConstructor
