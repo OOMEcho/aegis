@@ -20,7 +20,7 @@ import java.util.List;
  * 权限管理接口
  *
  * @author xuesong.lei
- * @since 2026/1/12 23:11
+ * @since 2026-01-12
  */
 @RestController
 @Api(tags = "权限管理接口")

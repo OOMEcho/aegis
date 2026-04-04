@@ -16,7 +16,7 @@ import javax.validation.constraints.Null;
  * 白名单DTO
  *
  * @author xuesong.lei
- * @since 2025/9/8 11:44
+ * @since 2025-09-08
  */
 @Data
 @ApiModel("白名单DTO")

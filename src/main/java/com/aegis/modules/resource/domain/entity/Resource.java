@@ -17,7 +17,7 @@ import java.util.Date;
  * 资源(URL)与权限映射表
  *
  * @author xuesong.lei
- * @since 2026-01-11 15:58:32
+ * @since 2026-01-11
  * @TableName t_resource
  */
 @Data

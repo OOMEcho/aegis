@@ -10,7 +10,7 @@ import java.util.List;
  * 针对表【t_menu(菜单表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:47:13
+ * @since 2025-08-30
  * @Entity: com.aegis.modules.menu.domain.entity.Menu
  */
 public interface MenuMapper extends BaseMapper<Menu> {

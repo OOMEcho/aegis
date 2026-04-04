@@ -8,7 +8,7 @@ import java.util.UUID;
  * TraceId 工具类，用于全链路日志追踪
  *
  * @author xuesong.lei
- * @since 2025/12/01 09:26
+ * @since 2025-12-01
  */
 public final class TraceIdUtils {
 

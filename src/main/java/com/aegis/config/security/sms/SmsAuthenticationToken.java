@@ -11,7 +11,7 @@ import java.util.Collection;
  * 短信Authentication实现
  *
  * @author xuesong.lei
- * @since 2025/9/2 21:58
+ * @since 2025-09-02
  */
 public class SmsAuthenticationToken extends AbstractAuthenticationToken {
 

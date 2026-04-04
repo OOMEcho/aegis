@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * 用户和角色DTO
  *
  * @author xuesong.lei
- * @since 2025/09/13 18:41
+ * @since 2025-09-13
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

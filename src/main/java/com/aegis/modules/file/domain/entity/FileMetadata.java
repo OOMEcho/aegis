@@ -18,7 +18,7 @@ import java.util.Date;
  * 文件元数据表
  *
  * @author xuesong.lei
- * @since 2025-09-09 15:53:06
+ * @since 2025-09-09
  * @TableName t_file_metadata
  */
 @Data

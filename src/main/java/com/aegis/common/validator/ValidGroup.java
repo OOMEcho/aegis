@@ -6,7 +6,7 @@ import javax.validation.groups.Default;
  * 分组校验
  *
  * @author xuesong.lei
- * @since 2025/08/21 13:08
+ * @since 2025-08-21
  */
 public interface ValidGroup extends Default {
 

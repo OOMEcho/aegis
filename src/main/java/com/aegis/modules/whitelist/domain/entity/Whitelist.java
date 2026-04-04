@@ -18,7 +18,7 @@ import java.util.Date;
  * 白名单表
  *
  * @author xuesong.lei
- * @since 2025-09-04 13:46:14
+ * @since 2025-09-04
  * @TableName t_whitelist
  */
 @Data

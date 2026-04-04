@@ -14,7 +14,7 @@ import java.nio.charset.StandardCharsets;
  * 请求工具类
  *
  * @author xuesong.lei
- * @since 2025/9/7 22:55
+ * @since 2025-09-07
  */
 public final class RequestUtils {
 

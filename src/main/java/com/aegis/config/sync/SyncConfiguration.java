@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor;
  * 异步线程处理配置类
  *
  * @author xuesong.lei
- * @since 2025/09/19 15:09
+ * @since 2025-09-19
  */
 @Configuration
 public class SyncConfiguration {

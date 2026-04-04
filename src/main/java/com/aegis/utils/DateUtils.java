@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit;
  * 时间工具类
  *
  * @author xuesong.lei
- * @since 2025/08/20 14:28
+ * @since 2025-08-20
  */
 public final class DateUtils {
 

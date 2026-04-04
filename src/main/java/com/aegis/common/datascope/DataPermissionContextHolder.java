@@ -7,7 +7,7 @@ import lombok.Data;
  * 数据权限上下文持有者 - 线程本地变量
  *
  * @author xuesong.lei
- * @since 2025/09/11 15:30
+ * @since 2025-09-11
  */
 public class DataPermissionContextHolder {
 

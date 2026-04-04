@@ -24,7 +24,7 @@ import java.util.List;
  * 限流处理切面
  *
  * @author xuesong.lei
- * @since 2025/09/19 10:29
+ * @since 2025-09-19
  */
 @Slf4j
 @Aspect

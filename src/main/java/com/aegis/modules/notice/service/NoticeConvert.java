@@ -11,7 +11,7 @@ import org.mapstruct.Mapping;
  * 通知类型转换类
  *
  * @author xuesong.lei
- * @since 2025/9/16 22:37
+ * @since 2025-09-16
  */
 @Mapper(componentModel = "spring")
 public interface NoticeConvert {

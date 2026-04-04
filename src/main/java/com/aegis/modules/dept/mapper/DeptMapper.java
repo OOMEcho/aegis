@@ -11,7 +11,7 @@ import java.util.Set;
  * 针对表【t_dept(部门信息表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:44:18
+ * @since 2025-08-30
  * @Entity: com.aegis.modules.dept.domain.entity.Dept
  */
 public interface DeptMapper extends BaseMapper<Dept> {

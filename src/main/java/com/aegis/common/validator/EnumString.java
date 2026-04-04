@@ -14,7 +14,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 自定义校验注解
  *
  * @author xuesong.lei
- * @since 2025/08/21 13:08
+ * @since 2025-08-21
  */
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)

@@ -20,7 +20,7 @@ import java.util.List;
  * 通知DTO
  *
  * @author xuesong.lei
- * @since 2025/9/16 21:49
+ * @since 2025-09-16
  */
 @Data
 @ApiModel("通知DTO")

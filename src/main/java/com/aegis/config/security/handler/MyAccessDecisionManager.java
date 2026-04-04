@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
  * 自定义决策管理器
  *
  * @author xuesong.lei
- * @since 2025/9/2 23:05
+ * @since 2025-09-02
  */
 @Component
 public class MyAccessDecisionManager implements AccessDecisionManager {

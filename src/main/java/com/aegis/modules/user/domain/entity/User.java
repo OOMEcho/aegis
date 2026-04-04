@@ -18,7 +18,7 @@ import java.util.List;
  * 用户信息表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:48:56
+ * @since 2025-08-30
  * @TableName t_user
  */
 @Data

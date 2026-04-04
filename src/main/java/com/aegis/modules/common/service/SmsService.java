@@ -4,7 +4,7 @@ package com.aegis.modules.common.service;
  * 短信业务层
  *
  * @author xuesong.lei
- * @since 2025/9/14 16:14
+ * @since 2025-09-14
  */
 public interface SmsService {
 

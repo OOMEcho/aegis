@@ -8,7 +8,7 @@ import com.aegis.modules.notice.domain.vo.NoticeVO;
  * 通知用户业务层
  *
  * @author xuesong.lei
- * @since 2025/9/16 22:00
+ * @since 2025-09-16
  */
 public interface NoticeUserService {
 

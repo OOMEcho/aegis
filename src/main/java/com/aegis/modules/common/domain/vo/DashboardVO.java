@@ -8,7 +8,7 @@ import lombok.Data;
  * Dashboard统计VO
  *
  * @author xuesong.lei
- * @since 2026/2/2
+ * @since 2026-02-02
  */
 @Data
 @ApiModel("Dashboard统计VO")

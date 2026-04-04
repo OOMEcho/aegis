@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
  * 菜单DTO
  *
  * @author xuesong.lei
- * @since 2025/9/13 14:40
+ * @since 2025-09-13
  */
 @Data
 @ApiModel("菜单DTO")

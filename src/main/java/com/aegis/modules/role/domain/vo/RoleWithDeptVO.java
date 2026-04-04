@@ -11,7 +11,7 @@ import java.util.List;
  * 角色对应的菜单树或部门树
  *
  * @author xuesong.lei
- * @since 2025/9/13 18:48
+ * @since 2025-09-13
  */
 @Data
 @ApiModel("角色对应的菜单树或部门树")

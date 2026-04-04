@@ -17,7 +17,7 @@ import java.util.Date;
  * 功能权限表
  *
  * @author xuesong.lei
- * @since 2026-01-11 15:57:26
+ * @since 2026-01-11
  * @TableName t_permission
  */
 @Data

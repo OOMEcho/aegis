@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
  * 预签名上传完成入库DTO
  *
  * @author xuesong.lei
- * @since 2026/3/15 15:42
+ * @since 2026-03-15
  */
 @Data
 @ApiModel("预签名上传完成入库DTO")

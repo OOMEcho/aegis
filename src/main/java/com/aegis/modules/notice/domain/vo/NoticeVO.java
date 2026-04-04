@@ -12,7 +12,7 @@ import java.util.Date;
  * 通知VO
  *
  * @author xuesong.lei
- * @since 2025/9/16 22:06
+ * @since 2025-09-16
  */
 @Data
 @ApiModel("通知VO")

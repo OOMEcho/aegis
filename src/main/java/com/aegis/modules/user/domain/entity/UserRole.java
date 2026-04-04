@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 用户和角色关联表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:49:13
+ * @since 2025-08-30
  * @TableName t_user_role
  */
 @Data

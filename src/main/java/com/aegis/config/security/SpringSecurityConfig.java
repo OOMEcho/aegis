@@ -27,7 +27,7 @@ import java.util.List;
  * SpringSecurity配置类
  *
  * @author xuesong.lei
- * @since 2025/8/25 22:30
+ * @since 2025-08-25
  */
 @Configuration
 @RequiredArgsConstructor

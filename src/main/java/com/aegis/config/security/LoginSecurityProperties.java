@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * 登录安全配置类
  *
  * @author xuesong.lei
- * @since 2025/1/11
+ * @since 2025-01-11
  */
 @Data
 @Configuration

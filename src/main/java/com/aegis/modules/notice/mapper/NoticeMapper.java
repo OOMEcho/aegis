@@ -9,7 +9,7 @@ import java.util.List;
  * 针对表【t_notice(通知公告表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-09-16 21:39:03
+ * @since 2025-09-16
  * @Entity: com.aegis.modules.notice.domain.entity.Notice
  */
 public interface NoticeMapper extends BaseMapper<Notice> {

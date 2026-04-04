@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 资源业务实现层
  *
  * @author xuesong.lei
- * @since 2026/1/12 23:16
+ * @since 2026-01-12
  */
 @Service
 @RequiredArgsConstructor

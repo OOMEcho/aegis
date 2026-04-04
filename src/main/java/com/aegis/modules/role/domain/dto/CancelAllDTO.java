@@ -11,7 +11,7 @@ import java.util.List;
  * 批量选择角色授权用户DTO
  *
  * @author xuesong.lei
- * @since 2025/09/13 18:41
+ * @since 2025-09-13
  */
 @Data
 @ApiModel("批量选择角色授权用户DTO")

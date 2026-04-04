@@ -14,7 +14,7 @@ import java.io.Serializable;
  * 角色与权限关联表
  *
  * @author xuesong.lei
- * @since 2026-01-11 16:00:56
+ * @since 2026-01-11
  * @TableName t_role_permission
  */
 @Data

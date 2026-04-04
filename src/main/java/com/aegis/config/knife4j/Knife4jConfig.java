@@ -13,7 +13,7 @@ import springfox.documentation.spring.web.plugins.Docket;
  * Knife4j配置类
  *
  * @author xuesong.lei
- * @since 2025/9/7 14:14
+ * @since 2025-09-07
  */
 @Configuration
 public class Knife4jConfig {

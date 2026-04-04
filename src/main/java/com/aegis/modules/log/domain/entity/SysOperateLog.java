@@ -26,7 +26,7 @@ import java.time.LocalDateTime;
  * 操作日志表
  *
  * @author xuesong.lei
- * @since 2025-08-21 22:39:10
+ * @since 2025-08-21
  * @TableName t_sys_operate_log
  */
 @Data

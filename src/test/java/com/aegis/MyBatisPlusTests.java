@@ -23,9 +23,10 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/23 14:56
- * @Description: MP测试类
+ * MP测试类
+ *
+ * @author xuesong.lei
+ * @since 2025-09-23
  */
 @MybatisPlusTest
 @Rollback(false)// 设置为false可以查看测试数据

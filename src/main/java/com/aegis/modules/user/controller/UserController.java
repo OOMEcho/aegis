@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
  * 用户接口
  *
  * @author xuesong.lei
- * @since 2025/9/4 13:43
+ * @since 2025-09-04
  */
 @RestController
 @Api(tags = "用户接口")

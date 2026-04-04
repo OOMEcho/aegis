@@ -5,7 +5,7 @@ package com.aegis.common.limiter;
  * 限流类型
  *
  * @author xuesong.lei
- * @since 2025/09/19 10:29
+ * @since 2025-09-19
  */
 public enum LimitType {
 

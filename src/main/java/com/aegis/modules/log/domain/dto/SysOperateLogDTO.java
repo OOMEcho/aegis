@@ -13,7 +13,7 @@ import java.util.Date;
  * 操作日志DTO
  *
  * @author xuesong.lei
- * @since 2025/9/7 17:52
+ * @since 2025-09-07
  */
 @Data
 @ApiModel("操作日志DTO")

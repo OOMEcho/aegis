@@ -7,7 +7,7 @@ import lombok.Getter;
  * 数据变更事件
  *
  * @author xuesong.lei
- * @since 2025/09/07 16:24
+ * @since 2025-09-07
  */
 @Getter
 @AllArgsConstructor

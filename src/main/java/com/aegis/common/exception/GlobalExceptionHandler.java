@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * 全局异常处理
  *
  * @author xuesong.lei
- * @since 2025/08/21 17:20
+ * @since 2025-08-21
  */
 @Slf4j
 @RestControllerAdvice

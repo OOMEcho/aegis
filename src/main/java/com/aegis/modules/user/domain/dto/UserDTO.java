@@ -18,7 +18,7 @@ import java.util.List;
  * 用户DTO
  *
  * @author xuesong.lei
- * @since 2025/9/14 18:31
+ * @since 2025-09-14
  */
 @Data
 @ApiModel("用户DTO")

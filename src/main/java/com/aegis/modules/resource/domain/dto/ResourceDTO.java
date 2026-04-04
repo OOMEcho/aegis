@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
  * 资源DTO
  *
  * @author xuesong.lei
- * @since 2026/1/12 23:26
+ * @since 2026-01-12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

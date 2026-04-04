@@ -11,7 +11,7 @@ import java.util.Date;
  * 白名单VO
  *
  * @author xuesong.lei
- * @since 2026/2/27 14:07
+ * @since 2026-02-27
  */
 @Data
 @ApiModel("白名单VO")

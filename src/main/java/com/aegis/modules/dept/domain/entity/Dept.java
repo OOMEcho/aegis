@@ -17,7 +17,7 @@ import java.util.List;
  * 部门信息表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:44:18
+ * @since 2025-08-30
  * @TableName t_dept
  */
 @Data

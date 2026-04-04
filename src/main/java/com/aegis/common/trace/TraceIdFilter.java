@@ -16,7 +16,7 @@ import java.io.IOException;
  * TraceId 过滤器，为每个请求生成或传递 TraceId
  *
  * @author xuesong.lei
- * @since 2025/12/01 09:36
+ * @since 2025-12-01
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)

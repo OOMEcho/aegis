@@ -9,7 +9,7 @@ import java.util.List;
  * 自定义校验逻辑
  *
  * @author xuesong.lei
- * @since 2025/08/21 13:08
+ * @since 2025-08-21
  */
 public class EnumStringValidator implements ConstraintValidator<EnumString, String> {
 

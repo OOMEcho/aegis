@@ -17,7 +17,7 @@ import java.util.Date;
  * 字典表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:51:58
+ * @since 2025-08-30
  * @TableName t_dictionary
  */
 @Data

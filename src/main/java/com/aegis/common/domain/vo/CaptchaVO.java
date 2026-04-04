@@ -8,7 +8,7 @@ import lombok.Data;
  * 滑块验证码VO
  *
  * @author xuesong.lei
- * @since 2025/8/31 20:10
+ * @since 2025-08-31
  */
 @Data
 @ApiModel("滑块验证码VO")

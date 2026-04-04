@@ -4,7 +4,7 @@ package com.aegis.common.log;
  * 业务类型枚举
  *
  * @author xuesong.lei
- * @since 2025/08/21 15:24
+ * @since 2025-08-21
  */
 public enum BusinessType {
 

@@ -9,7 +9,7 @@ import lombok.Data;
  * 邮箱验证码DTO
  *
  * @author xuesong.lei
- * @since 2025/9/2 15:51
+ * @since 2025-09-02
  */
 @Data
 @ApiModel("邮箱验证码DTO")

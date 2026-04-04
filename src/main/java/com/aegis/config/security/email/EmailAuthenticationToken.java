@@ -11,7 +11,7 @@ import java.util.Collection;
  * 邮箱Authentication实现
  *
  * @author xuesong.lei
- * @since 2025/9/2 21:54
+ * @since 2025-09-02
  */
 public class EmailAuthenticationToken extends AbstractAuthenticationToken {
 

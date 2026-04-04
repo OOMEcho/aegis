@@ -13,7 +13,7 @@ import org.springframework.util.ObjectUtils;
  * 自定义用户认证服务
  *
  * @author xuesong.lei
- * @since 2025/8/30 22:15
+ * @since 2025-08-30
  */
 @Component
 @RequiredArgsConstructor

@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  * 白名单业务实现层
  *
  * @author xuesong.lei
- * @since 2025/9/8 10:35
+ * @since 2025-09-08
  */
 @Service
 @RequiredArgsConstructor

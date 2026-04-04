@@ -20,7 +20,7 @@ import org.springframework.util.Assert;
  * 邮箱登录认证逻辑
  *
  * @author xuesong.lei
- * @since 2025/9/3 11:16
+ * @since 2025-09-03
  */
 @Component
 @RequiredArgsConstructor

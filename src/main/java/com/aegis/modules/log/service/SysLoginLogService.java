@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * 登录日志业务层
  *
  * @author xuesong.lei
- * @since 2025/9/7 16:28
+ * @since 2025-09-07
  */
 public interface SysLoginLogService {
 

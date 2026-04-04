@@ -9,7 +9,7 @@ import java.util.List;
  * 针对表【t_permission(功能权限表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2026-01-11 15:57:26
+ * @since 2026-01-11
  * @Entity: com.aegis.modules.permission.domain.entity.Permission
  */
 public interface PermissionMapper extends BaseMapper<Permission> {

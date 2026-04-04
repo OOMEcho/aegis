@@ -30,7 +30,7 @@ import java.util.Date;
  * 腾讯云OSS文件存储服务实现
  *
  * @author xuesong.lei
- * @since 2025/8/27 21:45
+ * @since 2025-08-27
  */
 @Slf4j
 @Service(FileConstants.TENCENT)

@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  * 权限拒绝处理逻辑
  *
  * @author xuesong.lei
- * @since 2025/9/2 22:35
+ * @since 2025-09-02
  */
 @Component
 @RequiredArgsConstructor

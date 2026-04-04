@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * 系统操作日志接口
  *
  * @author xuesong.lei
- * @since 2025/8/23 14:48
+ * @since 2025-08-23
  */
 @RestController
 @Api(tags = "系统操作日志接口")

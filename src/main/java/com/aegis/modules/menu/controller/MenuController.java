@@ -19,7 +19,7 @@ import java.util.List;
  * 菜单接口
  *
  * @author xuesong.lei
- * @since 2025/9/10 14:11
+ * @since 2025-09-10
  */
 @RestController
 @Api(tags = "菜单接口")

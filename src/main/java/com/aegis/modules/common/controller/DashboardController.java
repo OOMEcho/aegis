@@ -17,7 +17,7 @@ import java.util.List;
  * 首页接口
  *
  * @author xuesong.lei
- * @since 2026/2/2 15:16
+ * @since 2026-02-02
  */
 @Api(tags = "首页接口")
 @RestController

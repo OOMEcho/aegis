@@ -12,7 +12,7 @@ import java.util.List;
  * 前端路由VO
  *
  * @author xuesong.lei
- * @since 2025/9/14 11:00
+ * @since 2025-09-14
  */
 @Data
 @ApiModel("前端路由VO")

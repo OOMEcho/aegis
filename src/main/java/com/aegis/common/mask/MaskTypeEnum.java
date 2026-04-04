@@ -6,7 +6,7 @@ import lombok.Getter;
  * 脱敏类型枚举
  *
  * @author xuesong.lei
- * @since 2025/9/20 13:45
+ * @since 2025-09-20
  */
 @Getter
 public enum MaskTypeEnum {

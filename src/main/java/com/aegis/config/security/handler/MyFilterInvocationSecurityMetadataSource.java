@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * 该类的主要功能就是通过当前的请求地址，获取该地址需要的权限编码(perm_code)
  *
  * @author xuesong.lei
- * @since 2025/9/2 23:04
+ * @since 2025-09-02
  */
 @Component
 @RequiredArgsConstructor

@@ -7,9 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 /**
- * @Author: xuesong.lei
- * @Date: 2025/8/24 17:23
- * @Description: 邮箱测试
+ * 邮箱测试
+ *
+ * @author xuesong.lei
+ * @since 2025-09-23
  */
 @SpringBootTest
 @ActiveProfiles("dev")

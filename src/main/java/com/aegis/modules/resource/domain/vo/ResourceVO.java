@@ -11,7 +11,7 @@ import java.util.Date;
  * 资源VO
  *
  * @author xuesong.lei
- * @since 2026/2/27 14:07
+ * @since 2026-02-27
  */
 @Data
 @ApiModel("资源VO")

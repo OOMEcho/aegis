@@ -4,7 +4,7 @@ package com.aegis.common.constant;
  * 数据权限常量类
  *
  * @author xuesong.lei
- * @since 2025/9/10 14:15
+ * @since 2025-09-10
  */
 public class DataScopeConstants {
 

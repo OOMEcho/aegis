@@ -8,7 +8,7 @@ import com.aegis.modules.user.domain.vo.UserVO;
  * 用户业务层
  *
  * @author xuesong.lei
- * @since 2025/9/4 22:50
+ * @since 2025-09-04
  */
 public interface UserService {
 

@@ -17,7 +17,7 @@ import java.util.Date;
  * 通知接收记录表
  *
  * @author xuesong.lei
- * @since 2025-09-16 21:39:42
+ * @since 2025-09-16
  * @TableName t_notice_user
  */
 @Data

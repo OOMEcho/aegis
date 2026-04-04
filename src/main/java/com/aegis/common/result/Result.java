@@ -11,7 +11,7 @@ import java.io.Serializable;
  * 统一返回格式
  *
  * @author xuesong.lei
- * @since 2025/08/21 13:08
+ * @since 2025-08-21
  */
 @Data
 @ApiModel("统一返回格式")

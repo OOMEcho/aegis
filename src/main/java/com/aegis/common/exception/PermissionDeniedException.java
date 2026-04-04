@@ -8,7 +8,7 @@ import java.util.Set;
  * 携带权限详情的访问拒绝异常
  *
  * @author xuesong.lei
- * @since 2026/1/17 22:41
+ * @since 2026-01-17
  */
 @Getter
 public class PermissionDeniedException extends AccessDeniedException {

@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  * 路径工具类
  *
  * @author xuesong.lei
- * @since 2026/1/23 15:42
+ * @since 2026-01-23
  */
 public final class PathUtil {
 

@@ -17,7 +17,7 @@ import java.util.Date;
  * 角色信息表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:48:14
+ * @since 2025-08-30
  * @TableName t_role
  */
 @Data

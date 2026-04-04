@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * Mybatis-Plus 配置
  *
  * @author xuesong.lei
- * @since 2025/08/23 18:08
+ * @since 2025-08-23
  */
 @Configuration
 public class MybatisPlusConfig {

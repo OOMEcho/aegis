@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * 白名单接口
  *
  * @author xuesong.lei
- * @since 2025/9/8 10:34
+ * @since 2025-09-08
  */
 @RestController
 @Api(tags = "白名单接口")

@@ -6,7 +6,7 @@ import lombok.Getter;
  * 状态码枚举
  *
  * @author xuesong.lei
- * @since 2025/08/21 13:08
+ * @since 2025-08-21
  */
 @Getter
 public enum ResultCodeEnum {

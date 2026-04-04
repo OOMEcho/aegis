@@ -24,7 +24,7 @@ import java.util.Date;
  * 登录日志表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:48:46
+ * @since 2025-08-30
  * @TableName t_sys_login_log
  */
 @Data

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
  * 角色取消授权用户DTO
  *
  * @author xuesong.lei
- * @since 2025/09/13 18:41
+ * @since 2025-09-13
  */
 @Data
 @ApiModel("角色取消授权用户DTO")

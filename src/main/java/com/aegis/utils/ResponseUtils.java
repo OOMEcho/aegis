@@ -15,7 +15,7 @@ import java.nio.charset.StandardCharsets;
  * 响应工具类
  *
  * @author xuesong.lei
- * @since 2025/9/4 22:55
+ * @since 2025-09-04
  */
 @Slf4j
 public final class ResponseUtils {

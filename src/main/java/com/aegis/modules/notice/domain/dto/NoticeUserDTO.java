@@ -10,7 +10,7 @@ import lombok.EqualsAndHashCode;
  * 通知用户DTO
  *
  * @author xuesong.lei
- * @since 2025/9/16 22:07
+ * @since 2025-09-16
  */
 @Data
 @ApiModel("通知用户DTO")

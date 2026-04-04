@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
  * 树形工具类
  *
  * @author xuesong.lei
- * @since 2025/08/20 15:24
+ * @since 2025-08-20
  */
 public final class TreeUtil {
 

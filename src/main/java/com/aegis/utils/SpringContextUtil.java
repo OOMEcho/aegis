@@ -13,7 +13,7 @@ import java.util.Map;
  * Spring上下文工具类，用于在非Spring管理的类中获取Spring容器中的Bean
  *
  * @author xuesong.lei
- * @since 2025/08/21 15:24
+ * @since 2025-08-21
  */
 @Getter
 @Component

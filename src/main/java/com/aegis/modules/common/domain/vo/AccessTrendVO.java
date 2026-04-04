@@ -8,7 +8,7 @@ import lombok.Data;
  * 访问趋势VO
  *
  * @author xuesong.lei
- * @since 2026/2/2
+ * @since 2026-02-02
  */
 @Data
 @ApiModel("访问趋势VO")

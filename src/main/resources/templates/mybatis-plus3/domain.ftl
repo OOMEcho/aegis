@@ -36,7 +36,7 @@ import java.util.Date;
 * ${tableClass.remark!}
 *
 * @author: xuesong.lei
-* @since: ${.now?string('yyyy-MM-dd HH:mm')}
+* @since: ${.now?string('yyyy-MM-dd')}
 * @TableName ${tableClass.tableName}
 */
 @Data

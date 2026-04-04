@@ -17,7 +17,7 @@ import java.util.List;
  * 菜单表
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:47:13
+ * @since 2025-08-30
  * @TableName t_menu
  */
 @Data
