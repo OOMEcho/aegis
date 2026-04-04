@@ -10,7 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
  * 邮箱测试
  *
  * @author xuesong.lei
- * @since 2025/8/24 17:23
+ * @since 2025-08-24
  */
 @SpringBootTest
 @ActiveProfiles("dev")

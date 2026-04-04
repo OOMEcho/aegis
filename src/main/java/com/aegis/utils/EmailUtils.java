@@ -26,7 +26,7 @@ import java.util.Map;
  * 邮箱工具类, 支持多种邮件发送方式：简单文本、HTML、批量发送等
  *
  * @author xuesong.lei
- * @since 2025/8/24 15:10
+ * @since 2025-08-24
  */
 @Slf4j
 @Component

@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * 安全元数据服务，提供URL权限映射
  *
  * @author xuesong.lei
- * @since 2025/9/24 10:04
+ * @since 2025-09-24
  */
 @Component
 @RequiredArgsConstructor

@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
  * 数据脱敏工具类
  *
  * @author xuesong.lei
- * @since 2025/9/20 13:45
+ * @since 2025-09-20
  */
 public final class DataMaskUtil {
 

@@ -13,7 +13,7 @@ import jakarta.validation.constraints.Null;
  * 部门DTO
  *
  * @author xuesong.lei
- * @since 2025/9/9 17:56
+ * @since 2025-09-09
  */
 @Data
 @Schema(description = "部门DTO")

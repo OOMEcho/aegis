@@ -8,7 +8,7 @@ import lombok.Data;
  * 用户名密码DTO
  *
  * @author xuesong.lei
- * @since 2025/9/2 21:26
+ * @since 2025-09-02
  */
 @Data
 @Schema(description = "用户名密码DTO")

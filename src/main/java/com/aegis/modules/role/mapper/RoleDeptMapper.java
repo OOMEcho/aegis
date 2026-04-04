@@ -10,7 +10,7 @@ import java.util.List;
  * 针对表【t_role_dept(角色和部门关联表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:48:29
+ * @since 2025-08-30
  * @Entity: com.aegis.modules.role.domain.entity.RoleDept
  */
 public interface RoleDeptMapper extends BaseMapper<RoleDept> {

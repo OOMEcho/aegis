@@ -8,7 +8,7 @@ import lombok.EqualsAndHashCode;
  * 自定义异常
  *
  * @author xuesong.lei
- * @since 2025/08/21 21:32
+ * @since 2025-08-21
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

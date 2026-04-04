@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * 演示数据重置配置属性
  *
  * @author xuesong.lei
- * @since 2026/2/3 11:57
+ * @since 2026-02-03
  */
 @Data
 @Component

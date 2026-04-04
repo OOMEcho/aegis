@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
  * 角色取消授权用户DTO
  *
  * @author xuesong.lei
- * @since 2025/09/13 18:41
+ * @since 2025-09-13
  */
 @Data
 @Schema(description = "角色取消授权用户DTO")

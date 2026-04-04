@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * 菜单类型转换类
  *
  * @author xuesong.lei
- * @since 2025/9/13 16:20
+ * @since 2025-09-13
  */
 @Mapper(componentModel = "spring")
 public interface MenuConvert {

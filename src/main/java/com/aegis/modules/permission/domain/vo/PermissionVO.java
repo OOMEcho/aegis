@@ -8,6 +8,9 @@ import java.util.Date;
 
 /**
  * 权限VO
+ *
+ * @author xuesong.lei
+ * @since 2026-02-27
  */
 @Data
 @Schema(description = "权限VO")

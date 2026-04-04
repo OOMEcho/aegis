@@ -8,7 +8,7 @@ import com.aegis.modules.whitelist.domain.vo.WhitelistVO;
  * 白名单业务层
  *
  * @author xuesong.lei
- * @since 2025/9/8 10:35
+ * @since 2025-09-08
  */
 public interface WhitelistService {
 

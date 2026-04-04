@@ -4,7 +4,7 @@ package com.aegis.common.constant;
  * 通用常量
  *
  * @author xuesong.lei
- * @since 2025/08/21 15:08
+ * @since 2025-08-21
  */
 public class CommonConstants {
 

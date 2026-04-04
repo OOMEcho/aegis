@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 防止重复提交注解
  *
  * @author xuesong.lei
- * @since 2025/08/21 13:39
+ * @since 2025-08-21
  */
 @Target(METHOD)
 @Retention(RUNTIME)

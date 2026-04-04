@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * 白名单实体类转换
  *
  * @author xuesong.lei
- * @since 2025/9/8 22:27
+ * @since 2025-09-08
  */
 @Mapper(componentModel = "spring")
 public interface WhitelistConvert {

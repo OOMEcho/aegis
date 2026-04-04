@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
  * 数据权限拦截器
  *
  * @author xuesong.lei
- * @since 2025/09/10 14:08
+ * @since 2025-09-10
  */
 @Slf4j
 public class DataPermissionInterceptor implements InnerInterceptor {

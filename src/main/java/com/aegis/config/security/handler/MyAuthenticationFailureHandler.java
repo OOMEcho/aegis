@@ -30,7 +30,7 @@ import java.util.Objects;
  * 登录失败处理逻辑
  *
  * @author xuesong.lei
- * @since 2025/9/2 22:39
+ * @since 2025-09-02
  */
 @Slf4j
 @Component

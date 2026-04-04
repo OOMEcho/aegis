@@ -10,7 +10,7 @@ import java.util.Date;
  * Mybatis-Plus 自动填充配置
  *
  * @author xuesong.lei
- * @since 2025/08/23 18:08
+ * @since 2025-08-23
  */
 @Component
 public class MPMetaObjectHandler implements MetaObjectHandler {

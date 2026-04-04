@@ -8,7 +8,7 @@ import com.aegis.modules.resource.domain.vo.ResourceVO;
  * 资源业务层
  *
  * @author xuesong.lei
- * @since 2026/1/12 23:16
+ * @since 2026-01-12
  */
 public interface ResourceService {
 

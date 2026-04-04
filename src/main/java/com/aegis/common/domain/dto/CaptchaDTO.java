@@ -7,7 +7,7 @@ import lombok.Data;
  * 滑块验证码DTO
  *
  * @author xuesong.lei
- * @since 2025/9/2 21:25
+ * @since 2025-09-02
  */
 @Data
 @Schema(description = "滑块验证码DTO")

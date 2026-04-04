@@ -17,7 +17,7 @@ import java.util.Set;
  * 数据权限处理器
  *
  * @author xuesong.lei
- * @since 2025/09/10 14:08
+ * @since 2025-09-10
  */
 @Component
 @RequiredArgsConstructor

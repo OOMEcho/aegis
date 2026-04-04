@@ -27,7 +27,7 @@ import java.util.concurrent.TimeUnit;
  * 滑块验证码工具类
  *
  * @author xuesong.lei
- * @since 2025/8/31 20:11
+ * @since 2025-08-31
  */
 @Slf4j
 @Component

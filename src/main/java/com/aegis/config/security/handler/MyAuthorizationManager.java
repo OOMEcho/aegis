@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * 自定义授权管理器
  *
  * @author xuesong.lei
- * @since 2025/9/24 9:59
+ * @since 2025-09-24
  */
 @Component
 @RequiredArgsConstructor

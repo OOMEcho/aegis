@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
  * 数据权限AOP切面
  *
  * @author xuesong.lei
- * @since 2025/09/11 15:30
+ * @since 2025-09-11
  */
 @Slf4j
 @Aspect

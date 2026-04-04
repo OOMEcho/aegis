@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 针对表【t_sys_operate_log(操作日志表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-08-21 22:39:10
+ * @since 2025-08-21
  * @Entity: com.aegis.modules.log.domain.entity.SysOperateLog
  */
 public interface SysOperateLogMapper extends BaseMapper<SysOperateLog> {

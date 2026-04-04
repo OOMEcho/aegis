@@ -9,7 +9,7 @@ import lombok.EqualsAndHashCode;
  * 文件元数据分页查询DTO
  *
  * @author xuesong.lei
- * @since 2026/3/15 15:42
+ * @since 2026-03-15
  */
 @Data
 @Schema(description = "文件元数据分页查询DTO")

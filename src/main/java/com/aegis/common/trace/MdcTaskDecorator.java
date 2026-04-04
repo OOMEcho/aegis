@@ -9,7 +9,7 @@ import java.util.Map;
  * MDC 上下文传递装饰器，用于在异步任务中传递 TraceId
  *
  * @author xuesong.lei
- * @since 2025/12/01 09:32
+ * @since 2025-12-01
  */
 public class MdcTaskDecorator implements TaskDecorator {
 

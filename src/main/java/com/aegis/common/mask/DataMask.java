@@ -12,7 +12,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
  * 数据脱敏注解
  *
  * @author xuesong.lei
- * @since 2025/9/20 13:45
+ * @since 2025-09-20
  */
 @Target({FIELD, METHOD})
 @Retention(RUNTIME)

@@ -13,7 +13,7 @@ import lombok.Data;
  * 菜单DTO
  *
  * @author xuesong.lei
- * @since 2025/9/13 14:40
+ * @since 2025-09-13
  */
 @Data
 @Schema(description = "菜单DTO")

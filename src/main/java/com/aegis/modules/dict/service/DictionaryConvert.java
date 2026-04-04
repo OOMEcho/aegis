@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * 字典实体类转换
  *
  * @author xuesong.lei
- * @since 2025/09/08 22:23
+ * @since 2025-09-08
  */
 @Mapper(componentModel = "spring")
 public interface DictionaryConvert {

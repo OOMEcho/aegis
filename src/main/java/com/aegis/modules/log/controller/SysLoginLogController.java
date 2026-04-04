@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * 登录日志接口
  *
  * @author xuesong.lei
- * @since 2025/9/7 16:27
+ * @since 2025-09-07
  */
 @RestController
 @Tag(name = "登录日志接口")

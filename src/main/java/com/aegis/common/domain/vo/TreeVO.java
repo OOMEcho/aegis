@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * 树形结构VO
  *
  * @author xuesong.lei
- * @since 2025/9/11 22:10
+ * @since 2025-09-11
  */
 @Data
 @Schema(description = "树形结构VO")

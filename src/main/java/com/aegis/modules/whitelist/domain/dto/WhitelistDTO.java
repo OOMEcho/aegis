@@ -15,7 +15,7 @@ import jakarta.validation.constraints.Null;
  * 白名单DTO
  *
  * @author xuesong.lei
- * @since 2025/9/8 11:44
+ * @since 2025-09-08
  */
 @Data
 @Schema(description = "白名单DTO")

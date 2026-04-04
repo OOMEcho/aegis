@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * 分页工具类
  *
  * @author xuesong.lei
- * @since 2025/08/23 18:08
+ * @since 2025-08-23
  */
 public final class PageUtils {
 

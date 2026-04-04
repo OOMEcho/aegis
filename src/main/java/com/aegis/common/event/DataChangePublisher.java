@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
  * 数据变更发布器
  *
  * @author xuesong.lei
- * @since 2025/09/07 16:24
+ * @since 2025-09-07
  */
 @Component
 @RequiredArgsConstructor

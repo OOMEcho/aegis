@@ -12,7 +12,7 @@ import lombok.EqualsAndHashCode;
  * 权限DTO
  *
  * @author xuesong.lei
- * @since 2026/1/12 23:20
+ * @since 2026-01-12
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

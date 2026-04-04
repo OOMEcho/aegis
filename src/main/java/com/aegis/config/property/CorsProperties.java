@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
  * CORS 跨域配置属性
  *
  * @author xuesong.lei
- * @since 2026/2/3 10:24
+ * @since 2026-02-03
  */
 @Data
 @Component

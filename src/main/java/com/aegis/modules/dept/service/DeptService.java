@@ -10,7 +10,7 @@ import java.util.List;
  * 部门业务层
  *
  * @author xuesong.lei
- * @since 2025/9/9 14:28
+ * @since 2025-09-09
  */
 public interface DeptService {
 

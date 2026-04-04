@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 演示数据重置接口
  *
  * @author xuesong.lei
- * @since 2026/2/3 11:57
+ * @since 2026-02-03
  */
 @Tag(name = "演示数据重置接口")
 @RestController

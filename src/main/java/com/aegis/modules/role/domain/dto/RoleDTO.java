@@ -17,7 +17,7 @@ import java.util.List;
  * 角色DTO
  *
  * @author xuesong.lei
- * @since 2025/9/13 17:25
+ * @since 2025-09-13
  */
 @Data
 @Schema(description = "角色DTO")

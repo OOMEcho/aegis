@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
  * 定时任务配置类
  *
  * @author xuesong.lei
- * @since 2025/9/21 15:35
+ * @since 2025-09-21
  */
 @Data
 @Configuration

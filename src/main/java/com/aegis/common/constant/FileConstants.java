@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  * 文件常量
  *
  * @author xuesong.lei
- * @since 2025/8/28 11:05
+ * @since 2025-08-28
  */
 public class FileConstants {
 

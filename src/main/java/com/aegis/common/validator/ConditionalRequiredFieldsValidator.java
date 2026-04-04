@@ -10,7 +10,7 @@ import java.lang.reflect.Field;
  * 条件必填字段校验逻辑
  *
  * @author xuesong.lei
- * @since 2025/09/13 15:43
+ * @since 2025-09-13
  */
 public class ConditionalRequiredFieldsValidator implements ConstraintValidator<ConditionalRequiredFields, Object> {
 

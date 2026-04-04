@@ -24,7 +24,7 @@ import java.util.Date;
  * 通知用户业务实现层
  *
  * @author xuesong.lei
- * @since 2025/9/16 22:00
+ * @since 2025-09-16
  */
 @Service
 @RequiredArgsConstructor

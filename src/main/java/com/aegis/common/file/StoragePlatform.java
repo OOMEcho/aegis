@@ -6,7 +6,7 @@ import lombok.Getter;
  * 存储平台枚举
  *
  * @author xuesong.lei
- * @since 2025/08/27 21:24
+ * @since 2025-08-27
  */
 @Getter
 public enum StoragePlatform {

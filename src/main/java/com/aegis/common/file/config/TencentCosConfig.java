@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
  * 腾讯云COS配置类
  *
  * @author xuesong.lei
- * @since 2025/8/28 10:12
+ * @since 2025-08-28
  */
 @Configuration
 @ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "tencent_cos")

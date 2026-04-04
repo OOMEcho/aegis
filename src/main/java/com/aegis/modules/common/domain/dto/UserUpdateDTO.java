@@ -10,7 +10,7 @@ import jakarta.validation.constraints.Size;
  * 用户修改信息DTO
  *
  * @author xuesong.lei
- * @since 2025/9/14 17:13
+ * @since 2025-09-14
  */
 @Data
 @Schema(description = "用户修改信息DTO")

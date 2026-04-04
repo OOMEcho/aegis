@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
  * Security用户VO
  *
  * @author xuesong.lei
- * @since 2025/8/30 22:00
+ * @since 2025-08-30
  */
 @Data
 public class SecurityUser implements UserDetails {

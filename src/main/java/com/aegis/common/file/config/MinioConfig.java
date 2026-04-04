@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  * Minio配置类
  *
  * @author xuesong.lei
- * @since 2025/08/28 10:24
+ * @since 2025-08-28
  */
 @Configuration
 @ConditionalOnProperty(prefix = "file.upload", name = "platform", havingValue = "minio")

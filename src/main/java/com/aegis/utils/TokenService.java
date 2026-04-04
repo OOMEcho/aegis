@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * Opaque Token 服务，替代 JWT 实现
  *
  * @author xuesong.lei
- * @since 2025/8/31 12:12
+ * @since 2025-08-31
  */
 @Component
 @RequiredArgsConstructor

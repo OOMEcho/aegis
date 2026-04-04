@@ -11,7 +11,7 @@ import java.util.List;
  * 针对表【t_sys_login_log(登录日志表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:48:46
+ * @since 2025-08-30
  * @Entity: com.aegis.modules.log.domain.entity.SysLoginLog
  */
 public interface SysLoginLogMapper extends BaseMapper<SysLoginLog> {

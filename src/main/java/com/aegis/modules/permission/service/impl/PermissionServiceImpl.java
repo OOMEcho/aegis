@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
  * 权限业务实现层
  *
  * @author xuesong.lei
- * @since 2026/1/12 23:18
+ * @since 2026-01-12
  */
 @Service
 @RequiredArgsConstructor

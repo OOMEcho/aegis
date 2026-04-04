@@ -7,7 +7,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * 针对表【t_user(用户信息表)】的数据库操作Mapper
  *
  * @author xuesong.lei
- * @since 2025-08-30 10:48:56
+ * @since 2025-08-30
  * @Entity: com.aegis.modules.user.domain.entity.User
  */
 public interface UserMapper extends BaseMapper<User> {

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * 静态资源配置
  *
  * @author xuesong.lei
- * @since 2025/08/27 21:24
+ * @since 2025-08-27
  */
 @Configuration
 @RequiredArgsConstructor

@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * 用户信息转换类
  *
  * @author xuesong.lei
- * @since 2025/9/14 11:29
+ * @since 2025-09-14
  */
 @Mapper(componentModel = "spring")
 public interface UserConvert {

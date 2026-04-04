@@ -15,7 +15,7 @@ import jakarta.validation.constraints.Null;
  * 字典DTO
  *
  * @author xuesong.lei
- * @since 2025/9/8 16:17
+ * @since 2025-09-08
  */
 @Data
 @Schema(description = "字典DTO")

@@ -16,7 +16,7 @@ import java.util.Collections;
  * CORS 跨域配置
  *
  * @author xuesong.lei
- * @since 2026/2/3 10:24
+ * @since 2026-02-03
  */
 @Slf4j
 @Configuration

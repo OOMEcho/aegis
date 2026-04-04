@@ -20,7 +20,7 @@ import java.util.List;
  * 字典接口
  *
  * @author xuesong.lei
- * @since 2025/9/8 16:08
+ * @since 2025-09-08
  */
 @RestController
 @Tag(name = "字典接口")

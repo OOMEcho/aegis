@@ -9,7 +9,7 @@ import org.mapstruct.Mapper;
  * 角色类型转换类
  *
  * @author xuesong.lei
- * @since 2025/9/13 17:24
+ * @since 2025-09-13
  */
 @Mapper(componentModel = "spring")
 public interface RoleConvert {

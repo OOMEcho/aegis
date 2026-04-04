@@ -34,7 +34,7 @@ import java.util.Map;
  * 将表单登录替换为JSON格式登录，多种登录方式集合，并增加滑块验证码校验
  *
  * @author xuesong.lei
- * @since 2025/9/2 20:32
+ * @since 2025-09-02
  */
 public class MultiLoginAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 

@@ -7,7 +7,7 @@ import org.springframework.security.core.AuthenticationException;
  * 登录异常处理器
  *
  * @author xuesong.lei
- * @since 2025/8/30 22:41
+ * @since 2025-08-30
  */
 public class LoginException extends AuthenticationException {
 

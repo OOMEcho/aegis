@@ -8,7 +8,7 @@ import lombok.Data;
  * 短信登录DTO
  *
  * @author xuesong.lei
- * @since 2025/9/2 22:11
+ * @since 2025-09-02
  */
 @Data
 @Schema(description = "短信登录DTO")

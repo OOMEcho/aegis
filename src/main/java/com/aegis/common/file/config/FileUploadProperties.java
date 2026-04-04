@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * 文件上传配置
  *
  * @author xuesong.lei
- * @since 2025/08/27 21:24
+ * @since 2025-08-27
  */
 @Data
 @Component

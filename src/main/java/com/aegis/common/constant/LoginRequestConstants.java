@@ -4,7 +4,7 @@ package com.aegis.common.constant;
  * 登录方式常量
  *
  * @author xuesong.lei
- * @since 2025/9/2 22:03
+ * @since 2025-09-02
  */
 public class LoginRequestConstants {
 

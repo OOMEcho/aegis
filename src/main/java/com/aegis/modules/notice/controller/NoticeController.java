@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
  * 通知接口
  *
  * @author xuesong.lei
- * @since 2025/9/10 14:09
+ * @since 2025-09-10
  */
 @RestController
 @Tag(name = "通知接口")
