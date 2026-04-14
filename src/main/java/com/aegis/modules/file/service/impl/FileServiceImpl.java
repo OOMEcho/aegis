@@ -186,6 +186,16 @@ public class FileServiceImpl implements FileService {
             throw new BusinessException("文件不存在");
         }
 
+        String cdnAccessUrl = buildCdnAccessUrl(fileMetadata);
+        if (StrUtil.isNotBlank(cdnAccessUrl)) {
+            try {
+                response.sendRedirect(cdnAccessUrl);
+                return;
+            } catch (Exception e) {
+                log.warn("预览重定向到CDN失败，回退流式输出, id={}", id, e);
+            }
+        }
+
         String suffix = FileConstants.normalizeExtension(fileMetadata.getSuffix());
         if (!FileConstants.isImageExtension(suffix)) {
             throw new BusinessException("不支持预览的文件类型");
@@ -327,6 +337,33 @@ public class FileServiceImpl implements FileService {
         return response;
     }
 
+    @Override
+    public String resolvePublicAccessUrl(String filePath) {
+        if (StrUtil.isBlank(filePath)) {
+            return filePath;
+        }
+
+        String normalized = filePath.trim();
+        String lowerUrl = normalized.toLowerCase();
+        if (lowerUrl.startsWith("http://") || lowerUrl.startsWith("https://")) {
+            return normalized;
+        }
+
+        LambdaQueryWrapper<FileMetadata> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(FileMetadata::getFilePath, normalized);
+        FileMetadata metadata = fileMetadataMapper.selectOne(queryWrapper);
+        if (ObjectUtils.isNull(metadata) || ObjectUtils.isNull(metadata.getId())) {
+            return normalized;
+        }
+
+        try {
+            return buildAccessUrl(metadata);
+        } catch (Exception e) {
+            log.warn("解析文件公开访问URL失败, filePath={}", normalized, e);
+            return normalized;
+        }
+    }
+
     private String buildFilePath(String directory, String fileName) {
         if (StrUtil.isNotBlank(directory)) {
             directory = directory.trim();
@@ -362,16 +399,45 @@ public class FileServiceImpl implements FileService {
         if (ObjectUtils.isNull(metadata) || ObjectUtils.isNull(metadata.getId())) {
             return;
         }
-        metadata.setAccessUrl(buildAccessUrl(metadata.getId()));
+        metadata.setAccessUrl(buildAccessUrl(metadata));
     }
 
-    private String buildAccessUrl(Long fileId) {
+    private String buildAccessUrl(FileMetadata metadata) {
+        String cdnAccessUrl = buildCdnAccessUrl(metadata);
+        if (StrUtil.isNotBlank(cdnAccessUrl)) {
+            return cdnAccessUrl;
+        }
+
+        Long fileId = metadata.getId();
+        if (ObjectUtils.isNull(fileId)) {
+            throw new BusinessException("文件ID不能为空");
+        }
+
         String publicBaseUrl = fileUploadProperties.getPublicBaseUrl();
         if (StrUtil.isBlank(publicBaseUrl)) {
             throw new BusinessException("请先配置 file.upload.public-base-url");
         }
         String baseUrl = StrUtil.removeSuffix(publicBaseUrl.trim(), "/");
         return baseUrl + "/file/preview/" + fileId;
+    }
+
+    private String buildCdnAccessUrl(FileMetadata metadata) {
+        if (ObjectUtils.isNull(metadata) || StrUtil.isBlank(metadata.getFilePath()) || !isMinioPlatform(metadata.getPlatform())) {
+            return null;
+        }
+
+        String cdnBaseUrl = fileUploadProperties.getCdnBaseUrl();
+        if (StrUtil.isBlank(cdnBaseUrl)) {
+            return null;
+        }
+
+        String baseUrl = StrUtil.removeSuffix(cdnBaseUrl.trim(), "/");
+        String relativePath = StrUtil.removePrefix(metadata.getFilePath().trim(), "/");
+        return baseUrl + FileConstants.SEPARATOR + relativePath;
+    }
+
+    private boolean isMinioPlatform(String platform) {
+        return StoragePlatform.MINIO.name().equals(platform);
     }
 
     private String normalizePublicDownloadUrl(String downloadUrl) {

@@ -26,6 +26,11 @@ public class FileUploadProperties {
      */
     private String publicBaseUrl;
 
+    /**
+     * 对外可访问的CDN基础地址，用于拼接文件直链URL
+     */
+    private String cdnBaseUrl;
+
     @Data
     public static class LocalConfig {
         private String secretKey;
