@@ -113,4 +113,12 @@ public interface FileService {
      * @return 包含下载URL和过期时间的Map
      */
     Map<String, String> getTemporaryDownloadUrl(String filePath, long expirationSeconds);
+
+    /**
+     * 将文件路径解析为可公开访问的URL。
+     *
+     * @param filePath 文件路径或已有URL
+     * @return 可访问URL；无法解析时返回原值
+     */
+    String resolvePublicAccessUrl(String filePath);
 }

@@ -77,6 +77,8 @@ file:
     platform: LOCAL
     # 对外可访问的后端基础地址（用于拼接文件访问URL）
     public-base-url: https://example.cn
+    # 对外可访问的CDN基础地址（建议包含bucket前缀）
+    cdn-base-url: https://cdn.example.cn/aegis
     # 本地存储配置
     local:
       path: /opt/uploads
