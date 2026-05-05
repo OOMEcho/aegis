@@ -33,7 +33,7 @@ import com.aegis.modules.user.service.UserConvert;
 import com.aegis.utils.CaptchaUtils;
 import com.aegis.utils.RsaUtils;
 import com.aegis.utils.SecurityUtils;
-import com.aegis.utils.TokenService;
+import com.aegis.config.security.customize.TokenService;
 import com.aegis.utils.TreeUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;

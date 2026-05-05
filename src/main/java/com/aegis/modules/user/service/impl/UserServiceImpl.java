@@ -15,7 +15,7 @@ import com.aegis.modules.user.service.UserConvert;
 import com.aegis.modules.user.service.UserService;
 import com.aegis.utils.PageUtils;
 import com.aegis.utils.SecurityUtils;
-import com.aegis.utils.TokenService;
+import com.aegis.config.security.customize.TokenService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.ObjectUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
