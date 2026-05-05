@@ -16,6 +16,8 @@
 Aegis是一个功能完整的企业级RBAC(Role-Based Access Control)权限管理系统，采用前后端分离架构设计。系统以权限为核心，
 通过用户 -> 角色 -> 权限完成授权，菜单路由与接口资源都通过权限进行关联和控制，可作为企业应用开发的基础框架。
 
+本仓库为 **JDK 1.8 + Spring Boot 2.7.18 + Spring Security 5.7.11** 版本，与 JDK 21 版本（[aegis (jdk21 分支)](https://github.com/OOMEcho/aegis/tree/jdk21)）功能保持一致。
+
 ### ✨ 核心特性
 
 - 🔐 **多样化认证**: 支持密码、邮箱、短信多种登录方式
@@ -37,6 +39,7 @@ Aegis是一个功能完整的企业级RBAC(Role-Based Access Control)权限管�
 ## 🔗 相关项目
 
 - 点击跳转[前端仓库](https://github.com/OOMEcho/aegis-vue)
+- 点击跳转[JDK 21 版本后端仓库](https://github.com/OOMEcho/aegis/tree/jdk21)
 
 ## 🌐 在线演示
 
