@@ -1,6 +1,7 @@
-package com.aegis.utils;
+package com.aegis.config.security.customize;
 
 import com.aegis.common.constant.RedisConstants;
+import com.aegis.utils.RedisUtils;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

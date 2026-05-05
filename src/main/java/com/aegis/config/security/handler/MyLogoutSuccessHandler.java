@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.aegis.common.constant.CommonConstants;
 import com.aegis.config.security.LoginSecurityProperties;
 import com.aegis.utils.ResponseUtils;
-import com.aegis.utils.TokenService;
+import com.aegis.config.security.customize.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.core.Authentication;

@@ -9,7 +9,7 @@ import com.aegis.modules.user.domain.entity.User;
 import com.aegis.modules.user.mapper.UserMapper;
 import com.aegis.utils.IpUtils;
 import com.aegis.utils.ResponseUtils;
-import com.aegis.utils.TokenService;
+import com.aegis.config.security.customize.TokenService;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import eu.bitwalker.useragentutils.UserAgent;
 import lombok.RequiredArgsConstructor;
