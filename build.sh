@@ -31,7 +31,8 @@ fi
 
 echo "5. 启动Docker容器..."
 docker run -d -it --restart=always \
-  -p 8088:8088 \
+  --network app-network \
+  -p 127.0.0.1:8088:8088 \
   -v /home/aegis/config:/aegis/config \
   -v /home/aegis/logs:/aegis/logs \
   --name aegis \
